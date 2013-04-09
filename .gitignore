@@ -3,3 +3,7 @@
 
 # MacOS
 .DS_Store
+
+# Eclipse configuration
+.classpath
+.project
