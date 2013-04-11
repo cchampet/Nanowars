@@ -35,10 +35,8 @@ public class Renderer {
 			throw new IOException();
 		}
 		
-		System.out.println(bgImage.getImageLoadStatus());
-		
 		this.background.setBounds(0, 0, WIDTH, HEIGHT);
-		//this.background.setIcon(bgImage.getImage());
+		this.background.setIcon(bgImage);
 		c.add(this.background);
 		
 		
