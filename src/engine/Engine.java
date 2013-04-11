@@ -19,6 +19,11 @@ public class Engine {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		
+		//Create a test base
+		Base b = new Base(50, 50, 8);
+		renderer.renderABase(b);
+		
 		renderer.render();
 	}
 }
