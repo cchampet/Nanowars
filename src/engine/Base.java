@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.vecmath.Vector2f;
 
 public class Base {
+	public static final int MAX_CAPACITY = 100;
+	
 	private final Vector2f position;
 	private int capacity;
 	private int nbAgents;
@@ -25,10 +27,10 @@ public class Base {
 		int baseSize = capacity;
 		Image originalImage = img.getImage();
 		Image resizedImage = originalImage.getScaledInstance(baseSize, baseSize, Image.SCALE_FAST);
-		img.setImage(resizedImage);
+		ImageIcon newIcon = new ImageIcon(resizedImage);
 		
 		//Attach the base sprite
-		this.baseSprite.setIcon(img);
+		this.baseSprite.setIcon(newIcon);
 		this.baseSprite.setBounds((int)this.position.x - baseSize/2, (int)this.position.y - baseSize/2, baseSize, baseSize);
 	}
 	

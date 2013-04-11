@@ -1,10 +1,36 @@
 package engine;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import renderer.Renderer;
 
 public class Engine {
+	private static final int MAP_SCALE =  5;
+	private static final ArrayList<Base> bases = new ArrayList<Base>();
+	
+	public static void loadMap(String filepath, Renderer r) throws IOException{
+		BufferedImage map = ImageIO.read(new File(filepath));
+		Raster mapData = map.getData();
+		
+		//For each pixels
+		for(int y=0;y<map.getHeight();++y){
+			for(int x=0;x<map.getWidth();++x){
+				//if the pixel is not black, add a base
+				float pixel = mapData.getSampleFloat(x, y, 0);
+				if(pixel > 50.f){
+					Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixel/255.)));
+					r.renderABase(newBase);
+					bases.add(newBase);
+				}
+			}
+		}
+	}
 	
 	/**
 	 * @param args
@@ -12,18 +38,22 @@ public class Engine {
 	 */
 	public static void main(String[] args){
 		//Create the Renderer
-		Renderer renderer = new Renderer("Nano WAAAARS!!!");
+		Renderer r = new Renderer("Nano WAAAARS!!!");
 		try {
-			renderer.init();
+			r.init();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 		
-		//Create a test base
-		Base b = new Base(400, 300, 200);
-		renderer.renderABase(b);
+		//load the map
+		try {
+			loadMap("./tex/datamap.png", r);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
 		
-		renderer.render();
+		r.render();
 	}
 }
