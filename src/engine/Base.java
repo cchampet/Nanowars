@@ -22,14 +22,14 @@ public class Base {
 	
 	public void setSprite(ImageIcon img){
 		//Resize the base sprite
-		int baseSize = 10*capacity;
+		int baseSize = capacity;
 		Image originalImage = img.getImage();
 		Image resizedImage = originalImage.getScaledInstance(baseSize, baseSize, Image.SCALE_FAST);
 		img.setImage(resizedImage);
 		
 		//Attach the base sprite
 		this.baseSprite.setIcon(img);
-		this.baseSprite.setBounds((int)this.position.x, (int)this.position.y, baseSize, baseSize);
+		this.baseSprite.setBounds((int)this.position.x - baseSize/2, (int)this.position.y - baseSize/2, baseSize, baseSize);
 	}
 	
 	public JLabel getSprite(){

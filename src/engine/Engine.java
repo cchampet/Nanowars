@@ -21,7 +21,7 @@ public class Engine {
 		}
 		
 		//Create a test base
-		Base b = new Base(50, 50, 8);
+		Base b = new Base(400, 300, 200);
 		renderer.renderABase(b);
 		
 		renderer.render();
