@@ -10,9 +10,15 @@ public class Engine {
 	 * @param args
 	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		//Create the Renderer
 		Renderer renderer = new Renderer("Nano WAAAARS!!!");
-		renderer.init();
+		try {
+			renderer.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		renderer.render();
 	}
 }

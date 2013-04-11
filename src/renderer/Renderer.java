@@ -38,8 +38,9 @@ public class Renderer {
 		this.background.setBounds(0, 0, WIDTH, HEIGHT);
 		this.background.setIcon(bgImage);
 		c.add(this.background);
-		
-		
+	}
+	
+	public void render(){
 		this.f.setVisible(true);
 	}
 }
