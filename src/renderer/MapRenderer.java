@@ -26,7 +26,8 @@ public class MapRenderer {
 	}
 	
 	public void renderABase(Base b){
-		
+		b.setSprite(this.baseImage);
+		c.add(b.getSprite());
 	}
 	
 	public void init() throws IOException{
@@ -37,7 +38,7 @@ public class MapRenderer {
 		}		
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
-		c.add(this.background);
+		//c.add(this.background);
 		
 		//Load the base image
 		this.baseImage = new ImageIcon("./tex/base.png");

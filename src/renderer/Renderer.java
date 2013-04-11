@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import engine.Base;
+
 public class Renderer {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
@@ -29,5 +31,9 @@ public class Renderer {
 	
 	public void render(){
 		this.f.setVisible(true);
+	}
+	
+	public void renderABase(Base b){
+		this.mapRend.renderABase(b);
 	}
 }
