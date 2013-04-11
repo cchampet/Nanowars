@@ -7,12 +7,14 @@ import javax.vecmath.Vector2f;
 public class Base {
 	private final Vector2f position;
 	private int capacity;
+	private int nbAgents;
 	private final JLabel baseSprite;
 	
 	public Base(int posX, int posY, int capacity){
 		super();
 		this.position = new Vector2f(posX, posY);
 		this.capacity = capacity;
+		this.nbAgents = capacity/2;
 		this.baseSprite = new JLabel();
 	}
 	
