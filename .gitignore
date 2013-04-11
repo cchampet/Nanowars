@@ -7,3 +7,6 @@
 # Eclipse configuration
 .classpath
 .project
+
+# Texture image
+/tex
