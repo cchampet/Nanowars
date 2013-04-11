@@ -1,6 +1,9 @@
 # .class
 /bin
 
+# Javadoc
+/doc
+
 # MacOS
 .DS_Store
 

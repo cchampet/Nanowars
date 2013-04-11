@@ -10,10 +10,26 @@ import javax.imageio.ImageIO;
 
 import renderer.Renderer;
 
+/**
+ * 
+ * Engine Class is the physic engine class which run the program.
+ * Contain the main function and create the renderer and every useful elements.
+ * 
+ * @author Jijidici
+ *
+ */
+
 public class Engine {
 	private static final int MAP_SCALE =  5;
 	private static final ArrayList<Base> bases = new ArrayList<Base>();
 	
+	/**
+	 * This method load the map from a datamap image.
+	 * 
+	 * @param filepath path of the datamap grey-scale image
+	 * @param r render, used to render the base after they are created
+	 * @throws IOException
+	 */
 	public static void loadMap(String filepath, Renderer r) throws IOException{
 		BufferedImage map = ImageIO.read(new File(filepath));
 		Raster mapData = map.getData();
@@ -33,7 +49,7 @@ public class Engine {
 	}
 	
 	/**
-	 * @param args
+	 * @param args input arguments
 	 * @throws IOException 
 	 */
 	public static void main(String[] args){
