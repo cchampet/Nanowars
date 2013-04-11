@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import engine.Base;
 
 public class MapRenderer {
+	private final int BACKGROUND_LAYER = 0;
+	private final int GAME_LAYER = 100;
+	
 	private JLabel background;
 	private ImageIcon baseImage;
 	private Container c;
@@ -27,7 +30,7 @@ public class MapRenderer {
 	
 	public void renderABase(Base b){
 		b.setSprite(this.baseImage);
-		c.add(b.getSprite());
+		c.add(b.getSprite(), new Integer(GAME_LAYER));
 	}
 	
 	public void init() throws IOException{
@@ -38,7 +41,7 @@ public class MapRenderer {
 		}		
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
-		//c.add(this.background);
+		c.add(this.background, new Integer(BACKGROUND_LAYER));
 		
 		//Load the base image
 		this.baseImage = new ImageIcon("./tex/base.png");

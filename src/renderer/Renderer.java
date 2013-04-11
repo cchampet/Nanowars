@@ -15,7 +15,7 @@ public class Renderer {
 	public Renderer(String frameTitle){
 		super();
 		this.f = new JFrame(frameTitle);
-		this.mapRend = new MapRenderer(this.f.getContentPane(), WIDTH, HEIGHT);
+		this.mapRend = new MapRenderer(this.f.getLayeredPane(), WIDTH, HEIGHT);
 	}
 	
 	public void init() throws IOException{
