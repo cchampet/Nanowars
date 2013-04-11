@@ -1,5 +1,7 @@
 package engine;
 
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.vecmath.Vector2f;
@@ -19,8 +21,15 @@ public class Base {
 	}
 	
 	public void setSprite(ImageIcon img){
+		//Resize the base sprite
+		int baseSize = 10*capacity;
+		Image originalImage = img.getImage();
+		Image resizedImage = originalImage.getScaledInstance(baseSize, baseSize, Image.SCALE_FAST);
+		img.setImage(resizedImage);
+		
+		//Attach the base sprite
 		this.baseSprite.setIcon(img);
-		this.baseSprite.setBounds(0, 0, capacity, capacity);
+		this.baseSprite.setBounds((int)this.position.x, (int)this.position.y, baseSize, baseSize);
 	}
 	
 	public JLabel getSprite(){
