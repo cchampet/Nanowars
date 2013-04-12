@@ -19,9 +19,14 @@ import renderer.Renderer;
  *
  */
 
-public class Engine {
+public class Engine extends Thread {
+	private static final int FRAME_RATE =  60;
+	private static final int MILLISECOND_PER_FRAME =  1000 / FRAME_RATE;
+	private static long nbFrame = 0;
+	
 	private static final int MAP_SCALE =  5;
 	private static final ArrayList<Base> bases = new ArrayList<Base>();
+	
 	
 	/**
 	 * This method load the map from a datamap image.
@@ -52,7 +57,7 @@ public class Engine {
 	 * @param args input arguments
 	 * @throws IOException 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args){		
 		//Create the Renderer
 		Renderer r = new Renderer("Nano WAAAARS!!!");
 		try {
@@ -69,7 +74,26 @@ public class Engine {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
+
 		r.render();
+		
+		// loop of our application
+		while(true) {
+			long begin = System.currentTimeMillis();
+
+			// what we have to do in each frame
+			Engine.nbFrame++;
+			System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
+			
+			long end = System.currentTimeMillis();
+			// wait if it's too fast, we need to wait 
+			if ((end - begin) < Engine.MILLISECOND_PER_FRAME) {
+				try {
+					Engine.sleep(Engine.MILLISECOND_PER_FRAME - (end - begin));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }

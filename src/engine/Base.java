@@ -19,6 +19,7 @@ public class Base {
 	
 	private final Vector2f position;
 	private int capacity;
+	@SuppressWarnings("unused")
 	private int nbAgents;
 	private final JLabel baseSprite;
 	

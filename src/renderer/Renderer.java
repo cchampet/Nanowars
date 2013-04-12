@@ -17,9 +17,10 @@ import engine.Base;
 public class Renderer {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
+	
 	private JFrame f;
 	private MapRenderer mapRend;
-	
+		
 	/**
 	 * Constructor asking for the window title.
 	 * @param frameTitle - String containing the title of the game.
