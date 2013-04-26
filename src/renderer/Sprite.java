@@ -12,11 +12,14 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class Sprite extends JPanel{
+	public static int spriteID = 0;
+	private int id;
 	private int size;
 	private BufferedImage image;
 	
 	public Sprite(){
 		super();
+		this.id = Sprite.spriteID++;
 		this.size = 100;
 		this.image = null;
 		this.setOpaque(false);
@@ -36,5 +39,9 @@ public class Sprite extends JPanel{
 	
 	public void setImage(BufferedImage img){
 		this.image = img;
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 }
