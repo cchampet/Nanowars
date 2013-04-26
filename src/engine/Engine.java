@@ -1,14 +1,6 @@
 package engine;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import renderer.Renderer;
 
 /**
  * 
@@ -24,36 +16,13 @@ public class Engine extends Thread {
 	private static final int MILLISECOND_PER_FRAME =  1000 / FRAME_RATE;
 	private static long nbFrame = 0;
 	
-	private static final int MAP_SCALE =  5;
-	
 	/**
 	 * Data of out game
 	 */
 	private static final ArrayList<Base> bases = new ArrayList<Base>();
 	
-	/**
-	 * This method load the map from a datamap image.
-	 * 
-	 * @param filepath path of the datamap grey-scale image
-	 * @param r render, used to render the base after they are created
-	 * @throws IOException
-	 */
-	public void loadMap(String filepath, Renderer r) throws IOException{
-		BufferedImage map = ImageIO.read(new File(filepath));
-		Raster mapData = map.getData();
-		
-		//For each pixels
-		for(int y=0;y<map.getHeight();++y){
-			for(int x=0;x<map.getWidth();++x){
-				//if the pixel is not black, add a base
-				float pixel = mapData.getSampleFloat(x, y, 0);
-				if(pixel > 50.f){
-					Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixel/255.)));
-					r.renderABase(newBase);
-					bases.add(newBase);
-				}
-			}
-		}
+	public void addBase(Base newBase){
+		bases.add(newBase);
 	}
 	
 	/**
@@ -75,7 +44,10 @@ public class Engine extends Thread {
 			    b.prodAgents();
 			    System.out.println("Base" + i + " : " + b.getNbAgents() + " agents.");
 			}
-			
+
+			Engine.nbFrame = Engine.nbFrame + 1;
+			//System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
+
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
 			if ((end - begin) < Engine.MILLISECOND_PER_FRAME) {
