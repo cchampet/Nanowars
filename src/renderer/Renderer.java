@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import engine.Base;
 
 /**
- * Renderer is the main class for all displaying stuff. It create all specific renderers like MapRenderer.
+ * Renderer is the main class for all displaying stuff. It creates all specific renderers like MapRenderer.
  * It also manage the main frame.
  * 
  * @author Jijidici
@@ -18,8 +18,8 @@ public class Renderer {
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	
-	private JFrame f;
-	private MapRenderer mapRend;
+	private JFrame frame;
+	private MapRenderer mapRenderer;
 		
 	/**
 	 * Constructor asking for the window title.
@@ -27,8 +27,8 @@ public class Renderer {
 	 */
 	public Renderer(String frameTitle){
 		super();
-		this.f = new JFrame(frameTitle);
-		this.mapRend = new MapRenderer(this.f.getLayeredPane(), WIDTH, HEIGHT);
+		this.frame = new JFrame(frameTitle);
+		this.mapRenderer = new MapRenderer(this.frame.getLayeredPane(), WIDTH, HEIGHT);
 	}
 	
 	/**
@@ -37,20 +37,20 @@ public class Renderer {
 	 */
 	public void init() throws IOException{
 		//Set up the frame
-		this.f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.f.setSize(WIDTH, HEIGHT);
-		this.f.setResizable(false);
-		this.f.setLayout(null);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setSize(WIDTH, HEIGHT);
+		this.frame.setResizable(false);
+		this.frame.setLayout(null);
 		
 		//Set up the background image
-		this.mapRend.init();
+		this.mapRenderer.init();
 	}
 	
 	/**
 	 * Display the main frame.
 	 */
 	public void render(){
-		this.f.setVisible(true);
+		this.frame.setVisible(true);
 	}
 	
 	/**
@@ -58,6 +58,6 @@ public class Renderer {
 	 * @param b base to render
 	 */
 	public void renderABase(Base b){
-		this.mapRend.renderABase(b);
+		this.mapRenderer.renderABase(b);
 	}
 }

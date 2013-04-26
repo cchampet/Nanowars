@@ -23,7 +23,7 @@ public class MapRenderer {
 	
 	private JLabel background;
 	private BufferedImage baseImage;
-	private Container c;
+	private Container container;
 	private int width;
 	private int height;
 	
@@ -37,7 +37,7 @@ public class MapRenderer {
 		super();
 		this.background = new JLabel();
 		this.baseImage = null;
-		this.c = c;
+		this.container = c;
 		this.width = width;
 		this.height = height;
 	}
@@ -48,7 +48,7 @@ public class MapRenderer {
 	 */
 	public void renderABase(Base b){
 		b.initSprite(this.baseImage);
-		c.add(b.getSprite(), new Integer(GAME_LAYER));
+		container.add(b.getSprite(), new Integer(GAME_LAYER));
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class MapRenderer {
 		}		
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
-		c.add(this.background, new Integer(BACKGROUND_LAYER));
+		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
 		
 		//Load the base image
 		this.baseImage = ImageIO.read(new File("./tex/base.png"));

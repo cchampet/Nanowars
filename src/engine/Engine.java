@@ -25,8 +25,11 @@ public class Engine extends Thread {
 	private static long nbFrame = 0;
 	
 	private static final int MAP_SCALE =  5;
-	private static final ArrayList<Base> bases = new ArrayList<Base>();
 	
+	/**
+	 * Data of out game
+	 */
+	private static final ArrayList<Base> bases = new ArrayList<Base>();
 	
 	/**
 	 * This method load the map from a datamap image.
@@ -35,7 +38,7 @@ public class Engine extends Thread {
 	 * @param r render, used to render the base after they are created
 	 * @throws IOException
 	 */
-	public static void loadMap(String filepath, Renderer r) throws IOException{
+	public void loadMap(String filepath, Renderer r) throws IOException{
 		BufferedImage map = ImageIO.read(new File(filepath));
 		Raster mapData = map.getData();
 		
@@ -54,29 +57,10 @@ public class Engine extends Thread {
 	}
 	
 	/**
-	 * @param args input arguments
-	 * @throws IOException 
+	 * This method is the loop which enable us to compute our stuff (bases, units...) regulary.
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args){		
-		//Create the Renderer
-		Renderer r = new Renderer("Nano WAAAARS!!!");
-		try {
-			r.init();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
-		//load the map
-		try {
-			loadMap("./tex/datamap.png", r);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-
-		r.render();
-		
+	public void startGame(){
 		// loop of our application
 		while(true) {
 			long begin = System.currentTimeMillis();

@@ -5,6 +5,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+/**
+ * This class is a generic class, which enable us to display an element based on an image.
+ * @author Yuki
+ *
+ */
 @SuppressWarnings("serial")
 public class Sprite extends JPanel{
 	private int size;
