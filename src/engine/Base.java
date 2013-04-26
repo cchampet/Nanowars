@@ -1,11 +1,6 @@
 package engine;
 
-import java.awt.image.BufferedImage;
-
 import javax.vecmath.Vector2f;
-
-import renderer.BaseSprite;
-import renderer.Sprite;
 
 /**
  * This class represent an in-game base, physically and graphically. 
@@ -22,7 +17,6 @@ public class Base{
 	private final Vector2f position;
 	private double capacity;
 	private double nbAgents;
-	private BaseSprite baseSprite;
 	
 	/**
 	 * Constructor asking a 2D position and a capacity for the base.
@@ -36,13 +30,6 @@ public class Base{
 		this.position = new Vector2f(posX, posY);
 		this.nbAgents = capacity/2;
 		this.capacity=capacity;
-		this.baseSprite = new BaseSprite();
-	}
-	
-	public void initSprite(BufferedImage img){
-		this.baseSprite.setSize((int)this.capacity);
-		this.baseSprite.setImage(img);
-		this.baseSprite.setBounds((int) position.x, (int) position.y, (int)this.capacity,(int)this.capacity);
 	}
 	
 	public void setId(int id){
@@ -53,10 +40,6 @@ public class Base{
 		return this.id;
 	}
 	
-	public Sprite getSprite(){
-		return baseSprite;
-	}
-	
 	public int getXCoord(){
 		return (int) this.position.x;
 	}
@@ -65,8 +48,8 @@ public class Base{
 		return (int) this.position.y;
 	}
 	
-	public double getCapacity(){
-		return this.capacity;
+	public int getCapacity(){
+		return (int) this.capacity;
 	}
 	
 	public int getNbAgents() {

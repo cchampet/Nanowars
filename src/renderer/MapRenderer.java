@@ -5,12 +5,12 @@ import java.awt.MediaTracker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import engine.Base;
 
 /**
  * MapRenderer is the specific renderer which manage the displaying of the pure game elements, like background, bases and agents.
@@ -20,12 +20,13 @@ import engine.Base;
 public class MapRenderer {
 	private final int BACKGROUND_LAYER = 0;
 	private final int GAME_LAYER = 100;
-	
+
 	private JLabel background;
 	private BufferedImage baseImage;
 	private Container container;
 	private int width;
 	private int height;
+	private final ArrayList<Sprite> sprites;
 	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
@@ -40,15 +41,23 @@ public class MapRenderer {
 		this.container = c;
 		this.width = width;
 		this.height = height;
+		this.sprites = new ArrayList<Sprite>();
 	}
 	
 	/**
-	 * Add a Base to the rendering process.
-	 * @param b base to render
+	 * Add a Base to the Sprite collection in the renderer.
+	 * @param size Size of the base sprite
+	 * @param posX Horizontal position of the base
+	 * @param posY Vertical position of the base
 	 */
-	public void renderABase(Base b){
-		b.initSprite(this.baseImage);
-		container.add(b.getSprite(), new Integer(GAME_LAYER));
+	public int addBaseSprite(int size, int posX, int posY){
+		BaseSprite newSprite = new BaseSprite();
+		newSprite.setSize(size);
+		newSprite.setImage(baseImage);
+		newSprite.setBounds(posX, posY, size, size);
+		container.add(newSprite, new Integer(GAME_LAYER));
+		sprites.add(newSprite);
+		return newSprite.getId();
 	}
 	
 	/**
@@ -67,5 +76,9 @@ public class MapRenderer {
 		
 		//Load the base image
 		this.baseImage = ImageIO.read(new File("./tex/base.png"));
+	}
+	
+	public int getSpriteID(int index){
+		return this.sprites.get(index).getId();
 	}
 }

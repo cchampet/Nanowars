@@ -37,16 +37,10 @@ public class Engine extends Thread {
 			long begin = System.currentTimeMillis();
 
 			// what we have to do in each frame
-			Engine.nbFrame++;
-			int i=0;
-			for(Base b:bases){
-				i++;
-			    b.prodAgents();
-			    System.out.println("Base" + i + " : " + b.getNbAgents() + " agents.");
-			}
-
 			Engine.nbFrame = Engine.nbFrame + 1;
-			//System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
+			for(Base b:bases){
+			    b.prodAgents();
+			}
 
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
@@ -58,5 +52,9 @@ public class Engine extends Thread {
 				}
 			}
 		}
+	}
+	
+	public int getBaseID(int index){
+		return bases.get(index).getId();
 	}
 }

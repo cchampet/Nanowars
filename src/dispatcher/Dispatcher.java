@@ -4,12 +4,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 
 import renderer.Renderer;
-import renderer.Sprite;
 import engine.Base;
 import engine.Engine;
 
@@ -23,8 +21,6 @@ public class Dispatcher {
 	
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
-	
-	private static final LinkedList<Sprite> sprites = new LinkedList<Sprite>();
 	
 	/**
 	 * This method load the map from a datamap image.
@@ -44,7 +40,7 @@ public class Dispatcher {
 				float pixel = mapData.getSampleFloat(x, y, 0);
 				if(pixel > 50.f){
 					Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixel/255.)));
-					Renderer.renderABase(newBase);
+					newBase.setId(Renderer.addBaseSprite(newBase.getCapacity(), newBase.getXCoord(), newBase.getYCoord()));
 					Engine.addBase(newBase);
 				}
 			}

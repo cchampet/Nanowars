@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import engine.Base;
 
 /**
  * Renderer is the main class for all displaying stuff. It creates all specific renderers like MapRenderer.
@@ -54,10 +53,16 @@ public class Renderer {
 	}
 	
 	/**
-	 * Add a Base to the rendering process. That give the chosen base to the MapRenderer.
-	 * @param b base to render
+	 * Add the Base Sprite to the MapRenderer Sprite Collection
+	 * @param size Size of the base sprite
+	 * @param posX Horizontal position of the base
+	 * @param posY Vertical position of the base
 	 */
-	public void renderABase(Base b){
-		this.mapRenderer.renderABase(b);
+	public int addBaseSprite(int size, int posX, int posY){
+		return this.mapRenderer.addBaseSprite(size, posX, posY);
+	}
+	
+	public int getSpriteID(int index){
+		return this.mapRenderer.getSpriteID(index);
 	}
 }
