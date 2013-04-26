@@ -67,7 +67,7 @@ public class Engine extends Thread {
 
 			// what we have to do in each frame
 			Engine.nbFrame++;
-			System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
+			//System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
 			
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 

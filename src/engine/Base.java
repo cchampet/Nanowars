@@ -1,8 +1,10 @@
 package engine;
 
 import java.awt.image.BufferedImage;
+
 import javax.vecmath.Vector2f;
 
+import renderer.BaseSprite;
 import renderer.Sprite;
 
 /**
@@ -20,7 +22,7 @@ public class Base {
 	private int capacity;
 	@SuppressWarnings("unused")
 	private int nbAgents;
-	private Sprite baseSprite;
+	private BaseSprite baseSprite;
 	
 	/**
 	 * Constructor asking a 2D position and a capacity for the base.
@@ -33,7 +35,7 @@ public class Base {
 		this.position = new Vector2f(posX, posY);
 		this.capacity = capacity;
 		this.nbAgents = capacity/2;
-		this.baseSprite = new Sprite();
+		this.baseSprite = new BaseSprite();
 	}
 	
 	public void initSprite(BufferedImage img){
