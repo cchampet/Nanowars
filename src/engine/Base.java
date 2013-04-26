@@ -36,26 +36,6 @@ public class Base {
 		this.baseSprite = new JLabel();
 	}
 	
-	/**
-	 * Allow to initialize or modify the base appearance.
-	 * @param img new sprite of the base in a <code>ImageIcon</code> variable
-	 */
-	public void setSprite(ImageIcon img){
-		//Resize the base sprite
-		int baseSize = capacity;
-		Image originalImage = img.getImage();
-		Image resizedImage = originalImage.getScaledInstance(baseSize, baseSize, Image.SCALE_FAST);
-		ImageIcon newIcon = new ImageIcon(resizedImage);
-		
-		//Attach the base sprite
-		this.baseSprite.setIcon(newIcon);
-		this.baseSprite.setBounds((int)this.position.x - baseSize/2, (int)this.position.y - baseSize/2, baseSize, baseSize);
-	}
-	
-	/**
-	 * Get the base sprite
-	 * @return a <code>ImageIcon</code> which represents the Base sprite
-	 */
 	public JLabel getSprite(){
 		return this.baseSprite;
 	}

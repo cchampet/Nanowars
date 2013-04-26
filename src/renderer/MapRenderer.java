@@ -19,7 +19,6 @@ public class MapRenderer {
 	private final int GAME_LAYER = 100;
 	
 	private JLabel background;
-	private ImageIcon baseImage;
 	private Container c;
 	private int width;
 	private int height;
@@ -33,7 +32,6 @@ public class MapRenderer {
 	public MapRenderer(Container c, int width, int height){
 		super();
 		this.background = new JLabel();
-		this.baseImage = new ImageIcon();
 		this.c = c;
 		this.width = width;
 		this.height = height;
@@ -44,7 +42,6 @@ public class MapRenderer {
 	 * @param b base to render
 	 */
 	public void renderABase(Base b){
-		b.setSprite(this.baseImage);
 		c.add(b.getSprite(), new Integer(GAME_LAYER));
 	}
 	
@@ -61,11 +58,5 @@ public class MapRenderer {
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
 		c.add(this.background, new Integer(BACKGROUND_LAYER));
-		
-		//Load the base image
-		this.baseImage = new ImageIcon("./tex/base.png");
-		if(this.baseImage.getImageLoadStatus() != MediaTracker.COMPLETE){
-			throw new IOException();
-		}
 	}
 }
