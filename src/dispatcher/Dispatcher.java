@@ -51,11 +51,11 @@ public class Dispatcher {
 		}
 	}
 	
-	public final Engine getEngine() {
+	public Engine getEngine() {
 		return Dispatcher.Engine;
 	}
 	
-	public final Renderer getRenderer() {
+	public Renderer getRenderer() {
 		return Dispatcher.Renderer;
 	}
 	
