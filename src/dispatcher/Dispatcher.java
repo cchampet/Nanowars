@@ -14,11 +14,11 @@ public class Dispatcher {
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
 	
-	public final Engine getEngine() {
+	public Engine getEngine() {
 		return Dispatcher.Engine;
 	}
 	
-	public final Renderer getRenderer() {
+	public Renderer getRenderer() {
 		return Dispatcher.Renderer;
 	}
 	
