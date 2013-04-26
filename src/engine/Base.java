@@ -1,8 +1,10 @@
 package engine;
 
 import java.awt.image.BufferedImage;
+
 import javax.vecmath.Vector2f;
 
+import renderer.BaseSprite;
 import renderer.Sprite;
 
 /**
@@ -10,16 +12,17 @@ import renderer.Sprite;
  * @author jijidici
  *
  */
-public class Base {
+public class Base{
 	/**
 	 * Best capacity a base can have.
 	 */
 	public static final int MAX_CAPACITY = 100;
 	
+	private int id;
 	private final Vector2f position;
 	private double capacity;
 	private double nbAgents;
-	private Sprite baseSprite;
+	private BaseSprite baseSprite;
 	
 	/**
 	 * Constructor asking a 2D position and a capacity for the base.
@@ -33,13 +36,21 @@ public class Base {
 		this.position = new Vector2f(posX, posY);
 		this.nbAgents = capacity/2;
 		this.capacity=capacity;
-		this.baseSprite = new Sprite();
+		this.baseSprite = new BaseSprite();
 	}
 	
 	public void initSprite(BufferedImage img){
 		this.baseSprite.setSize((int)this.capacity);
 		this.baseSprite.setImage(img);
 		this.baseSprite.setBounds((int) position.x, (int) position.y, (int)this.capacity,(int)this.capacity);
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 	
 	public Sprite getSprite(){

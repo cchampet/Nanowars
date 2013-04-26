@@ -76,9 +76,6 @@ public class Engine extends Thread {
 			    System.out.println("Base" + i + " : " + b.getNbAgents() + " agents.");
 			}
 			
-			
-			System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
-			
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
 			if ((end - begin) < Engine.MILLISECOND_PER_FRAME) {
