@@ -62,11 +62,21 @@ public class Engine extends Thread {
 	 */
 	public void startGame(){
 		// loop of our application
+	
+		
 		while(true) {
 			long begin = System.currentTimeMillis();
 
 			// what we have to do in each frame
 			Engine.nbFrame++;
+			int i=0;
+			for(Base b:bases){
+				i++;
+			    b.prodAgents();
+			    System.out.println("Base" + i + " : " + b.getNbAgents() + " agents.");
+			}
+			
+			
 			System.out.println("Number of frames from the beginning : "+Engine.nbFrame);
 			
 			long end = System.currentTimeMillis();
