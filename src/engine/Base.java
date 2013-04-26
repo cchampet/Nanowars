@@ -12,15 +12,15 @@ import renderer.Sprite;
  * @author jijidici
  *
  */
-public class Base {
+public class Base{
 	/**
 	 * Best capacity a base can have.
 	 */
 	public static final int MAX_CAPACITY = 100;
 	
+	private int id;
 	private final Vector2f position;
 	private int capacity;
-	@SuppressWarnings("unused")
 	private int nbAgents;
 	private BaseSprite baseSprite;
 	
@@ -42,6 +42,14 @@ public class Base {
 		this.baseSprite.setSize(this.capacity);
 		this.baseSprite.setImage(img);
 		this.baseSprite.setBounds((int) position.x, (int) position.y, this.capacity, this.capacity);
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public int getId(){
+		return this.id;
 	}
 	
 	public Sprite getSprite(){
