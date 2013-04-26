@@ -2,8 +2,11 @@ package renderer;
 
 import java.awt.Container;
 import java.awt.MediaTracker;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -19,6 +22,7 @@ public class MapRenderer {
 	private final int GAME_LAYER = 100;
 	
 	private JLabel background;
+	private BufferedImage baseImage;
 	private Container c;
 	private int width;
 	private int height;
@@ -27,11 +31,12 @@ public class MapRenderer {
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
 	 * @param c main parent container
 	 * @param width window width
-	 * @param height windo height
+	 * @param height window height
 	 */
 	public MapRenderer(Container c, int width, int height){
 		super();
 		this.background = new JLabel();
+		this.baseImage = null;
 		this.c = c;
 		this.width = width;
 		this.height = height;
@@ -42,6 +47,7 @@ public class MapRenderer {
 	 * @param b base to render
 	 */
 	public void renderABase(Base b){
+		b.initSprite(this.baseImage);
 		c.add(b.getSprite(), new Integer(GAME_LAYER));
 	}
 	
@@ -58,5 +64,8 @@ public class MapRenderer {
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
 		c.add(this.background, new Integer(BACKGROUND_LAYER));
+		
+		//Load the base image
+		this.baseImage = ImageIO.read(new File("./tex/base.png"));
 	}
 }

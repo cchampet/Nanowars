@@ -2,33 +2,34 @@ package renderer;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Sprite extends JComponent{
+public class Sprite extends JPanel{
 	private int size;
+	private BufferedImage image;
 	
 	public Sprite(){
 		super();
-		this.size = 0;
-	}
-	
-	public void loadImage(String filePath) throws IOException{
-		BufferedImage img = null;
-		img = ImageIO.read(new File(filePath));
-		this.update(img.getGraphics());
+		this.size = 100;
+		this.image = null;
+		this.setOpaque(false);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g){
-		this.repaint(0, 0, this.size, this.size);
+		super.paintComponent(g);
+		if(image != null){
+			g.drawImage(image, 0, 0, size, size, this);
+		}
 	}
 	
 	public void setSize(int size){
 		this.size = size;
+	}
+	
+	public void setImage(BufferedImage img){
+		this.image = img;
 	}
 }
