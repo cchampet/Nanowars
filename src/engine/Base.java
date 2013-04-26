@@ -20,8 +20,8 @@ public class Base{
 	
 	private int id;
 	private final Vector2f position;
-	private int capacity;
-	private int nbAgents;
+	private double capacity;
+	private double nbAgents;
 	private BaseSprite baseSprite;
 	
 	/**
@@ -32,16 +32,17 @@ public class Base{
 	 */
 	public Base(int posX, int posY, int capacity){
 		super();
+	
 		this.position = new Vector2f(posX, posY);
-		this.capacity = capacity;
 		this.nbAgents = capacity/2;
+		this.capacity=capacity;
 		this.baseSprite = new BaseSprite();
 	}
 	
 	public void initSprite(BufferedImage img){
-		this.baseSprite.setSize(this.capacity);
+		this.baseSprite.setSize((int)this.capacity);
 		this.baseSprite.setImage(img);
-		this.baseSprite.setBounds((int) position.x, (int) position.y, this.capacity, this.capacity);
+		this.baseSprite.setBounds((int) position.x, (int) position.y, (int)this.capacity,(int)this.capacity);
 	}
 	
 	public void setId(int id){
@@ -64,7 +65,17 @@ public class Base{
 		return (int) this.position.y;
 	}
 	
-	public int getCapacity(){
+	public double getCapacity(){
 		return this.capacity;
+	}
+	
+	public int getNbAgents() {
+		return (int) nbAgents;
+	}
+	
+	public void prodAgents(){
+		if(this.nbAgents<=this.capacity){
+			this.nbAgents+=0.001*this.capacity;
+		}
 	}
 }
