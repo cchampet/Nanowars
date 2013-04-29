@@ -40,7 +40,7 @@ public class Dispatcher {
 				float pixel = mapData.getSampleFloat(x, y, 0);
 				if(pixel > 50.f){
 					Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixel/255.)));
-					newBase.setId(Renderer.addBaseSprite(newBase.getCapacity(), newBase.getXCoord(), newBase.getYCoord()));
+					newBase.setId(Renderer.addBaseSprite(newBase));
 					Engine.addBase(newBase);
 				}
 			}
@@ -80,7 +80,7 @@ public class Dispatcher {
 		Dispatcher.Renderer.render();
 		
 		//start the game
-		Dispatcher.Engine.startGame();
+		Dispatcher.Engine.startGame(Dispatcher.Renderer);
 	}
 
 }

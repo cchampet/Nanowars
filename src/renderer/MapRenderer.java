@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import engine.Base;
+
 
 /**
  * MapRenderer is the specific renderer which manage the displaying of the pure game elements, like background, bases and agents.
@@ -46,15 +48,13 @@ public class MapRenderer {
 	
 	/**
 	 * Add a Base to the Sprite collection in the renderer.
-	 * @param size Size of the base sprite
-	 * @param posX Horizontal position of the base
-	 * @param posY Vertical position of the base
+	 * @param newBase : the engine base, corresponding to the next created sprite.
 	 */
-	public int addBaseSprite(int size, int posX, int posY){
-		BaseSprite newSprite = new BaseSprite();
-		newSprite.setSize(size);
+	public int addBaseSprite(Base newBase){
+		BaseSprite newSprite = new BaseSprite(newBase);
+		newSprite.setSize(newBase.getCapacity());
 		newSprite.setImage(baseImage);
-		newSprite.setBounds(posX, posY, size, size);
+		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
@@ -78,7 +78,23 @@ public class MapRenderer {
 		this.baseImage = ImageIO.read(new File("./tex/base.png"));
 	}
 	
-	public int getSpriteID(int index){
+	/**
+	 * Get the id of a sprite at a specific index in the list of sprites.
+	 * @param index : the index of the sprite in the list of sprites.
+	 */
+	public int getSpriteIDAt(int index){
 		return this.sprites.get(index).getId();
+	}
+
+	/**
+	 * Get the sprite by knowledge of his id.
+	 * @param id : the id of the sprite.
+	 */
+	public Sprite getSprite(int id) {
+		for(Sprite sprite : this.sprites) {
+			if(sprite.getId() == id)
+				return sprite;
+		}
+		return null;
 	}
 }

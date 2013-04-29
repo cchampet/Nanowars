@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import engine.Base;
+
 
 /**
  * Renderer is the main class for all displaying stuff. It creates all specific renderers like MapRenderer.
@@ -39,7 +41,7 @@ public class Renderer {
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setSize(WIDTH, HEIGHT);
 		this.frame.setResizable(false);
-		this.frame.setLayout(null);
+		//this.frame.setLayout(null);
 		
 		//Set up the background image
 		this.mapRenderer.init();
@@ -54,15 +56,27 @@ public class Renderer {
 	
 	/**
 	 * Add the Base Sprite to the MapRenderer Sprite Collection
-	 * @param size Size of the base sprite
-	 * @param posX Horizontal position of the base
-	 * @param posY Vertical position of the base
+	 * @param newBase : the base engine, corresponding to the next created sprite.
 	 */
-	public int addBaseSprite(int size, int posX, int posY){
-		return this.mapRenderer.addBaseSprite(size, posX, posY);
+	public int addBaseSprite(Base newBase){
+		return this.mapRenderer.addBaseSprite(newBase);
 	}
 	
-	public int getSpriteID(int index){
-		return this.mapRenderer.getSpriteID(index);
+	/**
+	 * Get the id of a sprite at a specific index in the list of sprites.
+	 * @param index : the index of the sprite in the list of sprites.
+	 * @return an id
+	 */
+	public int getSpriteIDAt(int index){
+		return this.mapRenderer.getSpriteIDAt(index);
+	}
+	
+	/**
+	 * Get the sprite by knowledge of his id.
+	 * @param id : the id of the sprite.
+	 * @return a sprite
+	 */
+	public Sprite getSprite(int id) {
+		return this.mapRenderer.getSprite(id);
 	}
 }

@@ -17,7 +17,7 @@ public class Base{
 	private final Vector2f position;
 	private double capacity;
 	private double nbAgents;
-	
+		
 	/**
 	 * Constructor asking a 2D position and a capacity for the base.
 	 * @param posX - x coordinate of base position
@@ -29,7 +29,7 @@ public class Base{
 	
 		this.position = new Vector2f(posX, posY);
 		this.nbAgents = capacity/2;
-		this.capacity=capacity;
+		this.capacity = capacity;
 	}
 	
 	public void setId(int id){

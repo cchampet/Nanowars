@@ -2,6 +2,9 @@ package engine;
 
 import java.util.ArrayList;
 
+import renderer.BaseSprite;
+import renderer.Renderer;
+
 /**
  * 
  * Engine Class is the physic engine class which run the program.
@@ -17,19 +20,24 @@ public class Engine extends Thread {
 	private static long nbFrame = 0;
 	
 	/**
-	 * Data of out game
+	 * Data of our game
 	 */
 	private static final ArrayList<Base> bases = new ArrayList<Base>();
 	
+	/**
+	 * Add a created base to the list of bases, contained by the Engine.
+	 * @param newBase 
+	 */
 	public void addBase(Base newBase){
 		bases.add(newBase);
 	}
 	
 	/**
 	 * This method is the loop which enable us to compute our stuff (bases, units...) regulary.
+	 * @param renderer 
 	 * @throws InterruptedException 
 	 */
-	public void startGame(){
+	public void startGame(Renderer renderer){
 		// loop of our application
 	
 		
@@ -40,6 +48,9 @@ public class Engine extends Thread {
 			Engine.nbFrame = Engine.nbFrame + 1;
 			for(Base b:bases){
 			    b.prodAgents();
+			    // update the display of nbAgents
+			    BaseSprite correspondingBaseSprite = ((BaseSprite)renderer.getSprite(b.getId()));
+			    correspondingBaseSprite.getNbAgents().setText(String.valueOf(b.getNbAgents()));
 			}
 
 			long end = System.currentTimeMillis();
@@ -54,7 +65,12 @@ public class Engine extends Thread {
 		}
 	}
 	
-	public int getBaseID(int index){
+	/**
+	 * Get the id of a base at a specific index in the list of bases.
+	 * @param index
+	 * @return an id
+	 */
+	public int getBaseIDAt(int index){
 		return bases.get(index).getId();
 	}
 }
