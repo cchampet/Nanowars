@@ -26,7 +26,7 @@ public class BaseSprite extends Sprite {
 		super();
 		
 		this.nbAgents = new JTextField(String.valueOf(newBase.getNbAgents()));
-		this.nbAgents.setPreferredSize(new Dimension(40, 20));
+		this.nbAgents.setPreferredSize(new Dimension(23, 20));
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
 		this.nbAgents.setBorder(null);
