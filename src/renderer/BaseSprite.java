@@ -3,8 +3,10 @@ package renderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
@@ -17,14 +19,25 @@ import engine.Base;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends Sprite implements MouseListener {
+public class BaseSprite extends Sprite implements MouseListener, MouseMotionListener{
+	/**
+	 * startingPoint and endingPoint are static variable, useful to decide in which direction the player sends units.
+	 */
+	private static Base startingPoint;
+	private static Base endingPoint;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
 	 */
 	private JTextField nbAgents;
+	/**
+	 * engineBase is a reference to the corresponding base of this sprite.
+	 */
+	private Base engineBase;
 
 	public BaseSprite(Base newBase) {
 		super();
+		
+		this.engineBase = newBase;
 		
 		this.nbAgents = new JTextField(String.valueOf(newBase.getNbAgents()));
 		this.nbAgents.setPreferredSize(new Dimension(23, 20));
@@ -34,11 +47,9 @@ public class BaseSprite extends Sprite implements MouseListener {
 		this.nbAgents.setOpaque(false);
 		this.nbAgents.setIgnoreRepaint(false); // for better performence
 		this.add(this.nbAgents, BorderLayout.CENTER);
+		
 		this.addMouseListener(this);
-	}
-	
-	public JTextField getNbAgents() {
-		return this.nbAgents;
+		this.addMouseMotionListener(this);
 	}
 
 	@Override
@@ -55,15 +66,60 @@ public class BaseSprite extends Sprite implements MouseListener {
 	public void mousePressed(MouseEvent arg0) {
 		this.setOpaque(true);
 		this.setBackground(new Color(255, 100, 100));
+		BaseSprite.startingPoint = this.engineBase;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		this.setOpaque(false);
 		this.setBackground(null); // i don't know why i need to indicate a new background color...
+		if (BaseSprite.startingPoint != null && BaseSprite.startingPoint != this.engineBase) {
+			BaseSprite.endingPoint = this.engineBase;
+		}
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
+	}
+	
+	public static void resetStartingPoint() {
+		BaseSprite.startingPoint = null;
+	}
+	
+	public static void resetEndingPoint() {
+		BaseSprite.endingPoint = null;
+	}
+	
+	public Base getEngineBase() {
+		return this.engineBase;
+	}
+	
+	public JTextField getNbAgents() {
+		return this.nbAgents;
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		//System.out.println("mouseDragged");
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+	}
+
+	public static boolean isAStartingPoint() {
+		return BaseSprite.startingPoint == null ? false : true;
+	}
+	
+	public static boolean isAnEndingPoint() {
+		return BaseSprite.endingPoint == null ? false : true;
+	}
+
+	public static Point getStartingPoint() {
+		return BaseSprite.startingPoint.getCenter();
+	}
+	
+	public static Point getEndingPoint() {
+		return BaseSprite.endingPoint.getCenter();
 	}
 }

@@ -1,5 +1,7 @@
 package engine;
 
+import java.awt.Point;
+
 import javax.vecmath.Vector2f;
 
 /**
@@ -46,6 +48,10 @@ public class Base{
 	
 	public int getYCoord(){
 		return (int) this.position.y;
+	}
+	
+	public Point getCenter() {
+		return new Point((int) ((int) this.position.x + this.capacity / 2), (int) ((int) this.position.y + this.capacity / 2));
 	}
 	
 	public int getCapacity(){

@@ -1,7 +1,12 @@
 package renderer;
 
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.MediaTracker;
+import java.awt.MouseInfo;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,20 +35,76 @@ public class MapRenderer {
 	private int height;
 	private final ArrayList<Sprite> sprites;
 	
+	
+	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
 	 * @param c main parent container
 	 * @param width window width
 	 * @param height window height
 	 */
+	@SuppressWarnings("serial")
 	public MapRenderer(Container c, int width, int height){
 		super();
-		this.background = new JLabel();
-		this.baseImage = null;
+
+		this.background = new JLabel() {
+			@Override
+			public void paintComponent(Graphics g){
+				super.paintComponent(g);
+				
+				// draw the line between bases
+				if(BaseSprite.isAStartingPoint()){
+					g.setColor(Color.GREEN);
+					
+					System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
+					System.out.println("MouseInfo.getPointerInfo().getLocation().y : " + MouseInfo.getPointerInfo().getLocation().y);
+					System.out.println("BaseSprite.getStartingPoint().x : " + BaseSprite.getStartingPoint().x);
+					System.out.println("BaseSprite.getStartingPoint().y : " + BaseSprite.getStartingPoint().y);
+					
+					g.drawLine(BaseSprite.getStartingPoint().x, BaseSprite.getStartingPoint().y, 
+							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+				}
+			}
+		};
 		this.container = c;
 		this.width = width;
 		this.height = height;
 		this.sprites = new ArrayList<Sprite>();
+		
+		//Manage events
+		this.background.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Reset startingPoint and endingPoint");
+				BaseSprite.resetStartingPoint();
+				BaseSprite.resetEndingPoint();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 	
 	/**
