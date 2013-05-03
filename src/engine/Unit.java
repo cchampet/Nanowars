@@ -12,14 +12,18 @@ import javax.vecmath.Vector2f;
 public class Unit{
 	private int id;
 	private double nbAgents;
+	private Base goal;
+	private int moveSpeed = 2;
+	
 	public Point2D.Float position;
 	private Point2D.Float start;
 	private Point2D.Float end;
 	private Vector2f direction;
-	public int moveSpeed = 2;
 	
-	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination){
+	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal){
 		this.nbAgents = nbAgents;
+		this.goal = goal;
+		
 		this.start = new Point2D.Float(firstPosition.x, firstPosition.y);
 		this.position = new Point2D.Float(firstPosition.x, firstPosition.y);
 		this.end = new Point2D.Float(destination.x, destination.y);
@@ -52,6 +56,10 @@ public class Unit{
 	
 	public double getNbAgents() {
 		return nbAgents;
+	}
+	
+	public Base getGoal() {
+		return goal;
 	}
 
 	public Point2D.Float getPosition() {

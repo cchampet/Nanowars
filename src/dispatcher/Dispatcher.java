@@ -98,7 +98,7 @@ public class Dispatcher extends Thread{
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
 				Point2D.Float startingPoint = new Point2D.Float(BaseSprite.getStartingPoint().x + ((float)nbAgentsOfUnitSent / 2), BaseSprite.getStartingPoint().y + ((float)nbAgentsOfUnitSent / 2));
 						
-				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint());
+				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase());
 				newUnit.setId(Renderer.addUnitSprite(newUnit));
 				Engine.addUnit(newUnit);
 				

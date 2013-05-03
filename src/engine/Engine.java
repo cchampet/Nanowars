@@ -56,6 +56,8 @@ public class Engine{
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
 			if(unit.atDestination()){
+				unit.getGoal().reduceNbAgents(unit.getNbAgents());
+				
 				idDeleted.add(unit.getId());
 				iterUnits.remove();
 			}
