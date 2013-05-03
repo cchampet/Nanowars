@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import engine.Base;
+import engine.Unit;
 
 
 /**
@@ -30,12 +31,11 @@ public class MapRenderer {
 
 	private JLabel background;
 	private BufferedImage baseImage;
+	private BufferedImage unitImage;
 	private Container container;
 	private int width;
 	private int height;
 	private final ArrayList<Sprite> sprites;
-	
-	
 	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
@@ -56,12 +56,12 @@ public class MapRenderer {
 				if(BaseSprite.isAStartingPoint()){
 					g.setColor(Color.GREEN);
 					
-					System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
+					/*System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
 					System.out.println("MouseInfo.getPointerInfo().getLocation().y : " + MouseInfo.getPointerInfo().getLocation().y);
 					System.out.println("BaseSprite.getStartingPoint().x : " + BaseSprite.getStartingPoint().x);
 					System.out.println("BaseSprite.getStartingPoint().y : " + BaseSprite.getStartingPoint().y);
-					
-					g.drawLine(BaseSprite.getStartingPoint().x, BaseSprite.getStartingPoint().y, 
+					*/
+					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
 							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
 				}
 			}
@@ -122,6 +122,20 @@ public class MapRenderer {
 	}
 	
 	/**
+	 * Add a unit to the Sprite collection in the renderer.
+	 * @param newUnit : the engine unit, corresponding to the next created sprite.
+	 */
+	public int addUnitSprite(Unit newUnit){
+		UnitSprite newSprite = new UnitSprite(newUnit);
+		newSprite.setSize(newUnit.getNbAgents());
+		newSprite.setImage(unitImage);
+		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, newUnit.getNbAgents(), newUnit.getNbAgents());
+		container.add(newSprite, new Integer(GAME_LAYER));
+		sprites.add(newSprite);
+		return newSprite.getId();
+	}
+	
+	/**
 	 * Initialize the MapRenderer by building every Swing resource and loading every image.
 	 * @throws IOException
 	 */
@@ -137,6 +151,7 @@ public class MapRenderer {
 		
 		//Load the base image
 		this.baseImage = ImageIO.read(new File("./tex/base.png"));
+		this.unitImage = ImageIO.read(new File("./tex/unit.png"));
 	}
 	
 	/**
@@ -157,5 +172,9 @@ public class MapRenderer {
 				return sprite;
 		}
 		return null;
+	}
+
+	public ArrayList<Sprite> getSprites() {
+		return this.sprites;
 	}
 }

@@ -3,13 +3,13 @@ package renderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.vecmath.Vector2f;
 
 import engine.Base;
 
@@ -66,16 +66,21 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 	public void mousePressed(MouseEvent arg0) {
 		this.setOpaque(true);
 		this.setBackground(new Color(255, 100, 100));
-		BaseSprite.startingPoint = this.engineBase;
+		
+		if(BaseSprite.startingPoint == null) {
+			BaseSprite.startingPoint = this.engineBase;
+			System.out.println("Start : "+BaseSprite.startingPoint.getXCoord()+", "+BaseSprite.startingPoint.getYCoord());
+		}
+		if (BaseSprite.startingPoint != null && BaseSprite.startingPoint != this.engineBase) {
+			BaseSprite.endingPoint = this.engineBase;
+			System.out.println("End : "+BaseSprite.endingPoint.getXCoord()+", "+BaseSprite.endingPoint.getYCoord());
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		this.setOpaque(false);
 		this.setBackground(null); // i don't know why i need to indicate a new background color...
-		if (BaseSprite.startingPoint != null && BaseSprite.startingPoint != this.engineBase) {
-			BaseSprite.endingPoint = this.engineBase;
-		}
 	}
 	
 	@Override
@@ -115,11 +120,19 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 		return BaseSprite.endingPoint == null ? false : true;
 	}
 
-	public static Point getStartingPoint() {
+	public static Vector2f getStartingPoint() {
 		return BaseSprite.startingPoint.getCenter();
 	}
 	
-	public static Point getEndingPoint() {
+	public static Vector2f getEndingPoint() {
 		return BaseSprite.endingPoint.getCenter();
+	}
+	
+	public static Base getStartingBase() {
+		return BaseSprite.startingPoint;
+	}
+	
+	public static Base getEndingBase() {
+		return BaseSprite.endingPoint;
 	}
 }

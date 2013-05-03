@@ -1,7 +1,6 @@
 package renderer;
 
 import java.awt.Graphics;
-import java.awt.MouseInfo;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -15,8 +14,8 @@ import javax.swing.JPanel;
 public class Sprite extends JPanel{
 	public static int spriteID = 0;
 	private int id;
-	private int size;
-	private BufferedImage image;
+	protected int size;
+	protected BufferedImage image;
 	
 	public Sprite(){
 		super();
@@ -30,7 +29,7 @@ public class Sprite extends JPanel{
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		if(image != null){
-			//g.drawImage(image, 0, 0, size, size, this);
+			g.drawImage(image, 0, 0, size, size, this);
 		}
 	}
 	

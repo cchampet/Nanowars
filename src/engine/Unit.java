@@ -8,6 +8,7 @@ import javax.vecmath.Vector2f;
  *
  */
 public class Unit {
+	private int id;
 	private int nbAgents;
 	public Vector2f position;
 	private Vector2f start;
@@ -27,6 +28,7 @@ public class Unit {
 	
 	public void move(){
 		this.position.add(this.direction);
+		//System.out.println("New Position of the Unit : "+this.position.x+", "+this.position.y);
 	}
 	
 	public boolean atDestination(){
@@ -34,5 +36,33 @@ public class Unit {
 			return true;
 		else
 			return false;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+
+	public int getNbAgents() {
+		return nbAgents;
+	}
+
+	public Vector2f getPosition() {
+		return position;
+	}
+
+	public Vector2f getStart() {
+		return start;
+	}
+
+	public Vector2f getEnd() {
+		return end;
+	}
+
+	public Vector2f getDirection() {
+		return direction;
 	}
 }

@@ -2,6 +2,8 @@ package engine;
 
 import java.util.ArrayList;
 
+import javax.vecmath.Vector2f;
+
 import renderer.BaseSprite;
 import renderer.Renderer;
 
@@ -23,6 +25,7 @@ public class Engine extends Thread {
 	 * Data of our game
 	 */
 	private static final ArrayList<Base> bases = new ArrayList<Base>();
+	private static final ArrayList<Unit> units = new ArrayList<Unit>();
 	
 	/**
 	 * Add a created base to the list of bases, contained by the Engine.
@@ -30,6 +33,14 @@ public class Engine extends Thread {
 	 */
 	public void addBase(Base newBase){
 		bases.add(newBase);
+	}
+	
+	/**
+	 * Add a unit to the list of units, contained by the Engine.
+	 * @param newBase 
+	 */
+	public void addUnit(Unit newUnit){
+		units.add(newUnit);
 	}
 	
 	/**
@@ -46,13 +57,32 @@ public class Engine extends Thread {
 
 			// what we have to do in each frame
 			Engine.nbFrame = Engine.nbFrame + 1;
+			
+			// production of bases
 			for(Base b:bases){
 			    b.prodAgents();
 			    // update the display of nbAgents
 			    BaseSprite correspondingBaseSprite = ((BaseSprite)renderer.getSprite(b.getId()));
 			    correspondingBaseSprite.getNbAgents().setText(String.valueOf(b.getNbAgents()));
 			}
-
+			
+			// move units
+			for(Unit unit:units){
+				unit.move();
+			}
+			
+			// create units if it's necessary
+			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
+				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base 
+				Unit newUnit = new Unit(BaseSprite.getStartingBase().getNbAgents()/2, new Vector2f(BaseSprite.getStartingPoint().x + 50, BaseSprite.getStartingPoint().y), BaseSprite.getEndingPoint());
+				newUnit.setId(renderer.addUnitSprite(newUnit));
+				this.addUnit(newUnit);
+				
+				BaseSprite.getStartingBase().reduceNbAgents(nbAgentsOfUnitSent);
+				
+				BaseSprite.resetEndingPoint();
+			}
+			
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
 			if ((end - begin) < Engine.MILLISECOND_PER_FRAME) {

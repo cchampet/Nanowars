@@ -1,10 +1,12 @@
 package renderer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import engine.Base;
+import engine.Unit;
 
 
 /**
@@ -63,6 +65,14 @@ public class Renderer {
 	}
 	
 	/**
+	 * Add the Unit Sprite to the MapRenderer Sprite Collection
+	 * @param Unewnit : the unit engine, corresponding to the next created sprite.
+	 */
+	public int addUnitSprite(Unit newUnit){
+		return this.mapRenderer.addUnitSprite(newUnit);
+	}
+	
+	/**
 	 * Get the id of a sprite at a specific index in the list of sprites.
 	 * @param index : the index of the sprite in the list of sprites.
 	 * @return an id
@@ -78,5 +88,9 @@ public class Renderer {
 	 */
 	public Sprite getSprite(int id) {
 		return this.mapRenderer.getSprite(id);
+	}
+
+	public ArrayList<Sprite> getSprites() {
+		return this.mapRenderer.getSprites();
 	}
 }

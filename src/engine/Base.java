@@ -1,7 +1,5 @@
 package engine;
 
-import java.awt.Point;
-
 import javax.vecmath.Vector2f;
 
 /**
@@ -50,8 +48,8 @@ public class Base{
 		return (int) this.position.y;
 	}
 	
-	public Point getCenter() {
-		return new Point((int) ((int) this.position.x + this.capacity / 2), (int) ((int) this.position.y + this.capacity / 2));
+	public Vector2f getCenter() {
+		return new Vector2f((float) (this.position.x + this.capacity / 2), (float) (this.position.y + this.capacity / 2));
 	}
 	
 	public int getCapacity(){
@@ -66,5 +64,9 @@ public class Base{
 		if(this.nbAgents<=this.capacity){
 			this.nbAgents+=0.001*this.capacity;
 		}
+	}
+
+	public void reduceNbAgents(double nbAgentsOfUnitSent) {
+		this.nbAgents -= nbAgentsOfUnitSent;
 	}
 }
