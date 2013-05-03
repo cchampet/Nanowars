@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
@@ -19,7 +18,7 @@ import engine.Base;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends Sprite implements MouseListener, MouseMotionListener{
+public class BaseSprite extends Sprite implements MouseListener{
 	/**
 	 * startingPoint and endingPoint are static variable, useful to decide in which direction the player sends units.
 	 */
@@ -49,7 +48,6 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 		this.add(this.nbAgents, BorderLayout.CENTER);
 		
 		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
 	}
 
 	@Override
@@ -84,8 +82,7 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-	}
+	public void mouseClicked(MouseEvent arg0) {}
 	
 	public static void resetStartingPoint() {
 		BaseSprite.startingPoint = null;
@@ -95,6 +92,8 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 		BaseSprite.endingPoint = null;
 	}
 	
+	// GETTERS & SETTERS
+	
 	public Base getEngineBase() {
 		return this.engineBase;
 	}
@@ -102,24 +101,7 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 	public JTextField getNbAgents() {
 		return this.nbAgents;
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		//System.out.println("mouseDragged");
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-	}
-
-	public static boolean isAStartingPoint() {
-		return BaseSprite.startingPoint == null ? false : true;
-	}
 	
-	public static boolean isAnEndingPoint() {
-		return BaseSprite.endingPoint == null ? false : true;
-	}
-
 	public static Vector2f getStartingPoint() {
 		return BaseSprite.startingPoint.getCenter();
 	}
@@ -134,5 +116,13 @@ public class BaseSprite extends Sprite implements MouseListener, MouseMotionList
 	
 	public static Base getEndingBase() {
 		return BaseSprite.endingPoint;
+	}
+
+	public static boolean isAStartingPoint() {
+		return BaseSprite.startingPoint == null ? false : true;
+	}
+	
+	public static boolean isAnEndingPoint() {
+		return BaseSprite.endingPoint == null ? false : true;
 	}
 }

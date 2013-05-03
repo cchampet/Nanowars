@@ -32,12 +32,24 @@ public class Base{
 		this.capacity = capacity;
 	}
 	
-	public void setId(int id){
-		this.id = id;
+	public void prodAgents(){
+		if(this.nbAgents<=this.capacity){
+			this.nbAgents+=0.001*this.capacity;
+		}
 	}
+
+	public void reduceNbAgents(double nbAgentsOfUnitSent) {
+		this.nbAgents -= nbAgentsOfUnitSent;
+	}
+	
+	// GETTERS & SETTERS
 	
 	public int getId(){
 		return this.id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 	
 	public int getXCoord(){
@@ -58,15 +70,5 @@ public class Base{
 	
 	public int getNbAgents() {
 		return (int) nbAgents;
-	}
-	
-	public void prodAgents(){
-		if(this.nbAgents<=this.capacity){
-			this.nbAgents+=0.001*this.capacity;
-		}
-	}
-
-	public void reduceNbAgents(double nbAgentsOfUnitSent) {
-		this.nbAgents -= nbAgentsOfUnitSent;
 	}
 }

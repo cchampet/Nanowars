@@ -2,12 +2,16 @@ package renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.Timer;
 
 import javax.swing.JTextField;
 
 import engine.Unit;
 
+/**
+ * This class display a unit.
+ * @author Yuki
+ *
+ */
 @SuppressWarnings("serial")
 public class UnitSprite extends Sprite{
 	/**

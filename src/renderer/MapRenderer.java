@@ -25,7 +25,7 @@ import engine.Unit;
  * @author Jijidici
  *
  */
-public class MapRenderer {
+public class MapRenderer{
 	private final int BACKGROUND_LAYER = 0;
 	private final int GAME_LAYER = 100;
 
@@ -56,7 +56,8 @@ public class MapRenderer {
 				if(BaseSprite.isAStartingPoint()){
 					g.setColor(Color.GREEN);
 					
-					/*System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
+					/* PRINT TESTS
+					System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
 					System.out.println("MouseInfo.getPointerInfo().getLocation().y : " + MouseInfo.getPointerInfo().getLocation().y);
 					System.out.println("BaseSprite.getStartingPoint().x : " + BaseSprite.getStartingPoint().x);
 					System.out.println("BaseSprite.getStartingPoint().y : " + BaseSprite.getStartingPoint().y);
@@ -73,7 +74,6 @@ public class MapRenderer {
 		
 		//Manage events
 		this.background.addMouseListener(new MouseListener(){
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("Reset startingPoint and endingPoint");
@@ -82,29 +82,36 @@ public class MapRenderer {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseEntered(MouseEvent arg0) {}
 
 			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseExited(MouseEvent arg0) {}
 
 			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mousePressed(MouseEvent arg0) {}
 
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseReleased(MouseEvent arg0) {}
 		});
+	}
+	
+	/**
+	 * Initialize the MapRenderer by building every Swing resource and loading every image.
+	 * @throws IOException
+	 */
+	public void init() throws IOException{
+		//Load the background image
+		ImageIcon bgImage = new ImageIcon("./tex/background.jpg");
+		if(bgImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}		
+		this.background.setBounds(0, 0, this.width, this.height);
+		this.background.setIcon(bgImage);
+		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
+		
+		//Load the base image
+		this.baseImage = ImageIO.read(new File("./tex/base.png"));
+		this.unitImage = ImageIO.read(new File("./tex/unit.png"));
 	}
 	
 	/**
@@ -135,32 +142,7 @@ public class MapRenderer {
 		return newSprite.getId();
 	}
 	
-	/**
-	 * Initialize the MapRenderer by building every Swing resource and loading every image.
-	 * @throws IOException
-	 */
-	public void init() throws IOException{
-		//Load the background image
-		ImageIcon bgImage = new ImageIcon("./tex/background.jpg");
-		if(bgImage.getImageLoadStatus() != MediaTracker.COMPLETE){
-			throw new IOException();
-		}		
-		this.background.setBounds(0, 0, this.width, this.height);
-		this.background.setIcon(bgImage);
-		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
-		
-		//Load the base image
-		this.baseImage = ImageIO.read(new File("./tex/base.png"));
-		this.unitImage = ImageIO.read(new File("./tex/unit.png"));
-	}
-	
-	/**
-	 * Get the id of a sprite at a specific index in the list of sprites.
-	 * @param index : the index of the sprite in the list of sprites.
-	 */
-	public int getSpriteIDAt(int index){
-		return this.sprites.get(index).getId();
-	}
+	// GETTERS & SETTERS
 
 	/**
 	 * Get the sprite by knowledge of his id.
@@ -174,10 +156,18 @@ public class MapRenderer {
 		return null;
 	}
 
+	/**
+	 * Get all the sprites.
+	 * @return ArrayList<Sprite>
+	 */
 	public ArrayList<Sprite> getSprites() {
 		return this.sprites;
 	}
 
+	/**
+	 * Get only the unitSprites
+	 * @return ArrayList<UnitSprite>
+	 */
 	public ArrayList<UnitSprite> getUnitSprites() {
 		ArrayList<UnitSprite> res = new ArrayList<UnitSprite>();
 		for(Sprite sprite:this.sprites){

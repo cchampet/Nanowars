@@ -17,8 +17,7 @@ import renderer.UnitSprite;
  * @author Jijidici
  *
  */
-
-public class Engine extends Thread {
+public class Engine extends Thread{
 	private static final int FRAME_RATE =  60;
 	private static final int MILLISECOND_PER_FRAME =  1000 / FRAME_RATE;
 	private static long nbFrame = 0;
@@ -101,14 +100,7 @@ public class Engine extends Thread {
 		}
 	}
 	
-	/**
-	 * Get the id of a base at a specific index in the list of bases.
-	 * @param index
-	 * @return an id
-	 */
-	public int getBaseIDAt(int index){
-		return bases.get(index).getId();
-	}
+	// GETTERS & SETTERS
 	
 	/**
 	 * Get the unit by an id.

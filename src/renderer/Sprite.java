@@ -33,15 +33,17 @@ public class Sprite extends JPanel{
 		}
 	}
 	
+	// GETTERS & SETTERS
+	
+	public int getId(){
+		return this.id;
+	}
+	
 	public void setSize(int size){
 		this.size = size;
 	}
 	
 	public void setImage(BufferedImage img){
 		this.image = img;
-	}
-	
-	public int getId(){
-		return this.id;
 	}
 }

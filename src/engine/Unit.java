@@ -7,7 +7,7 @@ import javax.vecmath.Vector2f;
  * @author Yuki
  *
  */
-public class Unit {
+public class Unit{
 	private int id;
 	private int nbAgents;
 	public Vector2f position;
@@ -39,14 +39,16 @@ public class Unit {
 			return false;
 	}
 
-	public void setId(int id){
-		this.id = id;
-	}
+	// GETTERS & SETTERS
 	
 	public int getId(){
 		return this.id;
 	}
-
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
 	public int getNbAgents() {
 		return nbAgents;
 	}

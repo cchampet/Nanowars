@@ -16,8 +16,7 @@ import engine.Unit;
  * @author Jijidici
  *
  */
-
-public class Renderer {
+public class Renderer{
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	
@@ -72,14 +71,7 @@ public class Renderer {
 		return this.mapRenderer.addUnitSprite(newUnit);
 	}
 	
-	/**
-	 * Get the id of a sprite at a specific index in the list of sprites.
-	 * @param index : the index of the sprite in the list of sprites.
-	 * @return an id
-	 */
-	public int getSpriteIDAt(int index){
-		return this.mapRenderer.getSpriteIDAt(index);
-	}
+	//GETTERS & SETTERS
 	
 	/**
 	 * Get the sprite by knowledge of his id.
@@ -90,10 +82,18 @@ public class Renderer {
 		return this.mapRenderer.getSprite(id);
 	}
 
+	/**
+	 * Get all the sprites.
+	 * @return ArrayList<Sprite>
+	 */
 	public ArrayList<Sprite> getSprites() {
 		return this.mapRenderer.getSprites();
 	}
 
+	/**
+	 * Get only the unitSprites
+	 * @return ArrayList<UnitSprite>
+	 */
 	public ArrayList<UnitSprite> getUnitSprites() {
 		return this.mapRenderer.getUnitSprites();
 	}

@@ -16,7 +16,7 @@ import engine.Engine;
  * @author Yuki
  *
  */
-public class Dispatcher {
+public class Dispatcher{
 	private static final int MAP_SCALE =  5;
 	
 	private static final Engine Engine = new Engine();
@@ -47,14 +47,6 @@ public class Dispatcher {
 		}
 	}
 	
-	public Engine getEngine() {
-		return Dispatcher.Engine;
-	}
-	
-	public Renderer getRenderer() {
-		return Dispatcher.Renderer;
-	}
-	
 	/**
 	 * @param args input arguments
 	 * @throws IOException 
@@ -82,5 +74,14 @@ public class Dispatcher {
 		//start the game
 		Dispatcher.Engine.startGame(Dispatcher.Renderer);
 	}
-
+	
+	// GETTERS & SETTERS
+	
+	public Engine getEngine() {
+		return Dispatcher.Engine;
+	}
+	
+	public Renderer getRenderer() {
+		return Dispatcher.Renderer;
+	}
 }
