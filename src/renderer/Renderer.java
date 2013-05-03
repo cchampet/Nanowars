@@ -3,6 +3,7 @@ package renderer;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 
@@ -58,8 +59,20 @@ public class Renderer{
 	
 	/**
 	 * This method is called every frame, in order to refresh all important element in our frame.
+	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
-	public void refreshView() {
+	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
+		//update sprites
+		Iterator<Sprite> iterSprites = this.getSprites().iterator();
+		while(iterSprites.hasNext()){
+			Sprite sprite = iterSprites.next();
+			if(idDeletedInEngine.contains(sprite.getId())){
+				sprite.setVisible(false);
+				this.mapRenderer.getContainer().remove(sprite);
+				iterSprites.remove();
+			}
+		}
+		
 		//update the display of nbAgents for each base
 		for(BaseSprite baseSprite:this.getBaseSprites()){
 			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));

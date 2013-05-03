@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 
@@ -35,10 +36,11 @@ public class Engine{
 	
 	/**
 	 * This method is called every frame, in order to compute our stuff (bases, units...) regulary.
-	 * @param renderer 
-	 * @throws InterruptedException 
+	 * @return an ArrayList<Integer> which contains all id of engine elements just deleted.
 	 */
-	public void doATurnGame(){
+	public ArrayList<Integer> doATurnGame(){
+		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
+		
 		//production of bases
 		for(Base b:bases){
 		    b.prodAgents();
@@ -48,6 +50,18 @@ public class Engine{
 		for(Unit unit:units){
 			unit.move();
 		}
+		
+		//stop movment of concerned units
+		Iterator<Unit> iterUnits = units.iterator();
+		while(iterUnits.hasNext()){
+			Unit unit = iterUnits.next();
+			if(unit.atDestination()){
+				idDeleted.add(unit.getId());
+				iterUnits.remove();
+			}
+		}
+		
+		return idDeleted;
 	}
 	
 	// GETTERS & SETTERS

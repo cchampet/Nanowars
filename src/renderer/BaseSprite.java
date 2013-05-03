@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
-import javax.vecmath.Vector2f;
 
 import engine.Base;
 
@@ -67,11 +67,9 @@ public class BaseSprite extends Sprite implements MouseListener{
 		
 		if(BaseSprite.startingPoint == null) {
 			BaseSprite.startingPoint = this.engineBase;
-			System.out.println("Start : "+BaseSprite.startingPoint.getXCoord()+", "+BaseSprite.startingPoint.getYCoord());
 		}
 		if (BaseSprite.startingPoint != null && BaseSprite.startingPoint != this.engineBase) {
 			BaseSprite.endingPoint = this.engineBase;
-			System.out.println("End : "+BaseSprite.endingPoint.getXCoord()+", "+BaseSprite.endingPoint.getYCoord());
 		}
 	}
 
@@ -102,11 +100,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 		return this.nbAgents;
 	}
 	
-	public static Vector2f getStartingPoint() {
+	public static Point2D.Float getStartingPoint() {
 		return BaseSprite.startingPoint.getCenter();
 	}
 	
-	public static Vector2f getEndingPoint() {
+	public static Point2D.Float getEndingPoint() {
 		return BaseSprite.endingPoint.getCenter();
 	}
 	

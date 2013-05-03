@@ -1,12 +1,13 @@
 package dispatcher;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.vecmath.Vector2f;
 
 import renderer.BaseSprite;
 import renderer.Renderer;
@@ -80,21 +81,24 @@ public class Dispatcher extends Thread{
 		
 		//start the game
 		//=>what we have to do in each frame
+		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		while(true) {
 			long begin = System.currentTimeMillis();
 			
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
 			
 			//work of the engine
-			Dispatcher.Engine.doATurnGame();
+			idDeleted = Dispatcher.Engine.doATurnGame();
 			//work of the renderer
-			Dispatcher.Renderer.refreshView();
+			Dispatcher.Renderer.refreshView(idDeleted);
 			
 			//work of the dispatcher : manage interaction between players and the engine
 			// create units if it's necessary
 			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
-				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base 
-				Unit newUnit = new Unit(BaseSprite.getStartingBase().getNbAgents()/2, new Vector2f(BaseSprite.getStartingPoint().x + 50, BaseSprite.getStartingPoint().y), BaseSprite.getEndingPoint());
+				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
+				Point2D.Float startingPoint = new Point2D.Float(BaseSprite.getStartingPoint().x + ((float)nbAgentsOfUnitSent / 2), BaseSprite.getStartingPoint().y + ((float)nbAgentsOfUnitSent / 2));
+						
+				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint());
 				newUnit.setId(Renderer.addUnitSprite(newUnit));
 				Engine.addUnit(newUnit);
 				

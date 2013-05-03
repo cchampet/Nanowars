@@ -1,5 +1,7 @@
 package engine;
 
+import java.awt.geom.Point2D;
+
 import javax.vecmath.Vector2f;
 
 /**
@@ -9,34 +11,33 @@ import javax.vecmath.Vector2f;
  */
 public class Unit{
 	private int id;
-	private int nbAgents;
-	public Vector2f position;
-	private Vector2f start;
-	private Vector2f end;
+	private double nbAgents;
+	public Point2D.Float position;
+	private Point2D.Float start;
+	private Point2D.Float end;
 	private Vector2f direction;
 	public int moveSpeed = 2;
 	
-	public Unit(int nbAgents, Vector2f firstPosition, Vector2f destination){
+	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination){
 		this.nbAgents = nbAgents;
-		this.start = new Vector2f(firstPosition);
-		this.position = new Vector2f(firstPosition);
-		this.end = new Vector2f(destination);
+		this.start = new Point2D.Float(firstPosition.x, firstPosition.y);
+		this.position = new Point2D.Float(firstPosition.x, firstPosition.y);
+		this.end = new Point2D.Float(destination.x, destination.y);
 		
-		this.direction = new Vector2f(destination);
-		this.direction.add(new Vector2f(-firstPosition.x, -firstPosition.y));
+		this.direction = new Vector2f(destination.x - firstPosition.x, destination.y - firstPosition.y);
 		this.direction.normalize();
 	}
 	
 	public void move(){
-		this.position.add(this.direction);
-		//System.out.println("New Position of the Unit : "+this.position.x+", "+this.position.y);
+		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed), 
+				this.position.y + (this.direction.y * this.moveSpeed));
 	}
 	
 	public boolean atDestination(){
-		if(this.position.epsilonEquals(this.end, 0.5f))
+		if(this.position.distance(this.end) < 10) {
 			return true;
-		else
-			return false;
+		}
+		return false;
 	}
 
 	// GETTERS & SETTERS
@@ -49,19 +50,19 @@ public class Unit{
 		this.id = id;
 	}
 	
-	public int getNbAgents() {
+	public double getNbAgents() {
 		return nbAgents;
 	}
 
-	public Vector2f getPosition() {
+	public Point2D.Float getPosition() {
 		return position;
 	}
 
-	public Vector2f getStart() {
+	public Point2D.Float getStart() {
 		return start;
 	}
 
-	public Vector2f getEnd() {
+	public Point2D.Float getEnd() {
 		return end;
 	}
 

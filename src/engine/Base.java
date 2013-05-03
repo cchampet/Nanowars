@@ -1,6 +1,6 @@
 package engine;
 
-import javax.vecmath.Vector2f;
+import java.awt.geom.Point2D;
 
 /**
  * This class represent an in-game base, physically and graphically. 
@@ -14,7 +14,7 @@ public class Base{
 	public static final int MAX_CAPACITY = 100;
 	
 	private int id;
-	private final Vector2f position;
+	private final Point2D.Float position;
 	private double capacity;
 	private double nbAgents;
 		
@@ -27,7 +27,7 @@ public class Base{
 	public Base(int posX, int posY, int capacity){
 		super();
 	
-		this.position = new Vector2f(posX, posY);
+		this.position = new Point2D.Float(posX, posY);
 		this.nbAgents = capacity/2;
 		this.capacity = capacity;
 	}
@@ -60,8 +60,8 @@ public class Base{
 		return (int) this.position.y;
 	}
 	
-	public Vector2f getCenter() {
-		return new Vector2f((float) (this.position.x + this.capacity / 2), (float) (this.position.y + this.capacity / 2));
+	public Point2D.Float getCenter() {
+		return new Point2D.Float(this.position.x + (int)this.capacity / 2, this.position.y + (int)this.capacity / 2);
 	}
 	
 	public int getCapacity(){

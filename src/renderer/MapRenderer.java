@@ -69,7 +69,6 @@ public class MapRenderer{
 		this.background.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Reset startingPoint and endingPoint");
 				BaseSprite.resetStartingPoint();
 				BaseSprite.resetEndingPoint();
 			}
@@ -102,7 +101,7 @@ public class MapRenderer{
 		this.background.setIcon(bgImage);
 		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
 		
-		//Load the base image
+		//Load the base and the unit images
 		this.baseImage = ImageIO.read(new File("./tex/base.png"));
 		this.unitImage = ImageIO.read(new File("./tex/unit.png"));
 	}
@@ -127,9 +126,9 @@ public class MapRenderer{
 	 */
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
-		newSprite.setSize(newUnit.getNbAgents());
+		newSprite.setSize((int) newUnit.getNbAgents());
 		newSprite.setImage(unitImage);
-		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, newUnit.getNbAgents(), newUnit.getNbAgents());
+		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
@@ -183,5 +182,12 @@ public class MapRenderer{
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * @return the container
+	 */
+	public Container getContainer() {
+		return container;
 	}
 }

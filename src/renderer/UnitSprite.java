@@ -28,7 +28,7 @@ public class UnitSprite extends Sprite{
 		
 		this.engineUnit = correspondingEngineUnit;
 				
-		this.nbAgents = new JTextField(String.valueOf(correspondingEngineUnit.getNbAgents()));
+		this.nbAgents = new JTextField(String.valueOf((int)correspondingEngineUnit.getNbAgents()));
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
 		this.nbAgents.setBorder(null);

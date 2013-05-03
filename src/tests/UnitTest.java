@@ -1,9 +1,9 @@
 package tests;
 
-import javax.vecmath.Vector2f;
+import java.awt.geom.Point2D;
 
-import engine.Unit;
 import junit.framework.TestCase;
+import engine.Unit;
 
 /**
  * This class is useful to test some stuff about Unit (engine unit).
@@ -12,7 +12,7 @@ import junit.framework.TestCase;
  */
 public class UnitTest extends TestCase{
 	public void testDirection(){
-		Unit unit1 = new Unit(20, new Vector2f(1, 1), new Vector2f(15.5f, 25.5f));
+		Unit unit1 = new Unit(20, new Point2D.Float(1, 1), new Point2D.Float(15, 25));
 		for(int i = 0; i<50; i++){
 			System.out.println("position : "+unit1.position.x + ", " + unit1.position.y);
 			unit1.move();
