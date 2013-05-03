@@ -93,4 +93,8 @@ public class Renderer {
 	public ArrayList<Sprite> getSprites() {
 		return this.mapRenderer.getSprites();
 	}
+
+	public ArrayList<UnitSprite> getUnitSprites() {
+		return this.mapRenderer.getUnitSprites();
+	}
 }

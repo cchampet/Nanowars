@@ -1,11 +1,13 @@
 package engine;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.vecmath.Vector2f;
 
 import renderer.BaseSprite;
 import renderer.Renderer;
+import renderer.UnitSprite;
 
 /**
  * 
@@ -70,6 +72,10 @@ public class Engine extends Thread {
 			for(Unit unit:units){
 				unit.move();
 			}
+			for(UnitSprite unitSprite:renderer.getUnitSprites()){
+				Point newPoint = new Point((int)this.getUnit(unitSprite.getId()).getPosition().x, (int)this.getUnit(unitSprite.getId()).getPosition().y);
+				unitSprite.setLocation(newPoint);
+			}
 			
 			// create units if it's necessary
 			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
@@ -102,5 +108,19 @@ public class Engine extends Thread {
 	 */
 	public int getBaseIDAt(int index){
 		return bases.get(index).getId();
+	}
+	
+	/**
+	 * Get the unit by an id.
+	 * @param id
+	 * @return unit
+	 */
+	public Unit getUnit(int id){
+		for(Unit unit:units){
+			if(unit.getId() == id){
+				return unit;
+			}
+		}
+		return null;
 	}
 }

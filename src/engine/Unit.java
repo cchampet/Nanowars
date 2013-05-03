@@ -14,6 +14,7 @@ public class Unit {
 	private Vector2f start;
 	private Vector2f end;
 	private Vector2f direction;
+	public int moveSpeed = 2;
 	
 	public Unit(int nbAgents, Vector2f firstPosition, Vector2f destination){
 		this.nbAgents = nbAgents;

@@ -177,4 +177,15 @@ public class MapRenderer {
 	public ArrayList<Sprite> getSprites() {
 		return this.sprites;
 	}
+
+	public ArrayList<UnitSprite> getUnitSprites() {
+		ArrayList<UnitSprite> res = new ArrayList<UnitSprite>();
+		for(Sprite sprite:this.sprites){
+			if(sprite.getClass() == UnitSprite.class){
+				res.add((UnitSprite) sprite);
+				System.out.println("unit !");
+			}
+		}
+		return res;
+	}
 }

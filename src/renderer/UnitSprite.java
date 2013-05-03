@@ -2,10 +2,9 @@ package renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.util.Timer;
 
 import javax.swing.JTextField;
-import javax.vecmath.Vector2f;
 
 import engine.Unit;
 
