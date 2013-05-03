@@ -1,5 +1,6 @@
 package renderer;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -56,6 +57,22 @@ public class Renderer{
 	}
 	
 	/**
+	 * This method is called every frame, in order to refresh all important element in our frame.
+	 */
+	public void refreshView() {
+		//update the display of nbAgents for each base
+		for(BaseSprite baseSprite:this.getBaseSprites()){
+			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
+		}
+		
+		//update the position of each unit
+		for(UnitSprite unitSprite:this.getUnitSprites()){
+			Point newPoint = new Point((int)unitSprite.getEngineUnit().getPosition().x, (int)unitSprite.getEngineUnit().getPosition().y);
+			unitSprite.setLocation(newPoint);
+		}
+	}
+	
+	/**
 	 * Add the Base Sprite to the MapRenderer Sprite Collection
 	 * @param newBase : the base engine, corresponding to the next created sprite.
 	 */
@@ -96,5 +113,13 @@ public class Renderer{
 	 */
 	public ArrayList<UnitSprite> getUnitSprites() {
 		return this.mapRenderer.getUnitSprites();
+	}
+	
+	/**
+	 * Get only the baseSprites
+	 * @return ArrayList<UnitSprite>
+	 */
+	public ArrayList<BaseSprite> getBaseSprites() {
+		return this.mapRenderer.getBaseSprites();
 	}
 }

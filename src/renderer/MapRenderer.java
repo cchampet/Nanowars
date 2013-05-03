@@ -54,14 +54,7 @@ public class MapRenderer{
 				
 				// draw the line between bases
 				if(BaseSprite.isAStartingPoint()){
-					g.setColor(Color.GREEN);
-					
-					/* PRINT TESTS
-					System.out.println("MouseInfo.getPointerInfo().getLocation().x : " + MouseInfo.getPointerInfo().getLocation().x);
-					System.out.println("MouseInfo.getPointerInfo().getLocation().y : " + MouseInfo.getPointerInfo().getLocation().y);
-					System.out.println("BaseSprite.getStartingPoint().x : " + BaseSprite.getStartingPoint().x);
-					System.out.println("BaseSprite.getStartingPoint().y : " + BaseSprite.getStartingPoint().y);
-					*/
+					g.setColor(Color.WHITE);
 					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
 							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
 				}
@@ -165,7 +158,7 @@ public class MapRenderer{
 	}
 
 	/**
-	 * Get only the unitSprites
+	 * Get only the unitSprites.
 	 * @return ArrayList<UnitSprite>
 	 */
 	public ArrayList<UnitSprite> getUnitSprites() {
@@ -173,7 +166,20 @@ public class MapRenderer{
 		for(Sprite sprite:this.sprites){
 			if(sprite.getClass() == UnitSprite.class){
 				res.add((UnitSprite) sprite);
-				System.out.println("unit !");
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Get only the baseSprites.
+	 * @return ArrayList<UnitSprite>
+	 */
+	public ArrayList<BaseSprite> getBaseSprites() {
+		ArrayList<BaseSprite> res = new ArrayList<BaseSprite>();
+		for(Sprite sprite:this.sprites){
+			if(sprite.getClass() == BaseSprite.class){
+				res.add((BaseSprite) sprite);
 			}
 		}
 		return res;

@@ -36,4 +36,10 @@ public class UnitSprite extends Sprite{
 		this.nbAgents.setIgnoreRepaint(false); // for better performence
 		this.add(this.nbAgents, BorderLayout.CENTER);
 	}
+	
+	// GETTERS & SETTERS
+
+	public Unit getEngineUnit() {
+		return this.engineUnit;
+	}
 }

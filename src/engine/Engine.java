@@ -1,13 +1,6 @@
 package engine;
 
-import java.awt.Point;
 import java.util.ArrayList;
-
-import javax.vecmath.Vector2f;
-
-import renderer.BaseSprite;
-import renderer.Renderer;
-import renderer.UnitSprite;
 
 /**
  * 
@@ -17,11 +10,7 @@ import renderer.UnitSprite;
  * @author Jijidici
  *
  */
-public class Engine extends Thread{
-	private static final int FRAME_RATE =  60;
-	private static final int MILLISECOND_PER_FRAME =  1000 / FRAME_RATE;
-	private static long nbFrame = 0;
-	
+public class Engine{
 	/**
 	 * Data of our game
 	 */
@@ -45,58 +34,19 @@ public class Engine extends Thread{
 	}
 	
 	/**
-	 * This method is the loop which enable us to compute our stuff (bases, units...) regulary.
+	 * This method is called every frame, in order to compute our stuff (bases, units...) regulary.
 	 * @param renderer 
 	 * @throws InterruptedException 
 	 */
-	public void startGame(Renderer renderer){
-		// loop of our application
-	
+	public void doATurnGame(){
+		//production of bases
+		for(Base b:bases){
+		    b.prodAgents();
+		}
 		
-		while(true) {
-			long begin = System.currentTimeMillis();
-
-			// what we have to do in each frame
-			Engine.nbFrame = Engine.nbFrame + 1;
-			
-			// production of bases
-			for(Base b:bases){
-			    b.prodAgents();
-			    // update the display of nbAgents
-			    BaseSprite correspondingBaseSprite = ((BaseSprite)renderer.getSprite(b.getId()));
-			    correspondingBaseSprite.getNbAgents().setText(String.valueOf(b.getNbAgents()));
-			}
-			
-			// move units
-			for(Unit unit:units){
-				unit.move();
-			}
-			for(UnitSprite unitSprite:renderer.getUnitSprites()){
-				Point newPoint = new Point((int)this.getUnit(unitSprite.getId()).getPosition().x, (int)this.getUnit(unitSprite.getId()).getPosition().y);
-				unitSprite.setLocation(newPoint);
-			}
-			
-			// create units if it's necessary
-			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
-				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base 
-				Unit newUnit = new Unit(BaseSprite.getStartingBase().getNbAgents()/2, new Vector2f(BaseSprite.getStartingPoint().x + 50, BaseSprite.getStartingPoint().y), BaseSprite.getEndingPoint());
-				newUnit.setId(renderer.addUnitSprite(newUnit));
-				this.addUnit(newUnit);
-				
-				BaseSprite.getStartingBase().reduceNbAgents(nbAgentsOfUnitSent);
-				
-				BaseSprite.resetEndingPoint();
-			}
-			
-			long end = System.currentTimeMillis();
-			// wait if it's too fast, we need to wait 
-			if ((end - begin) < Engine.MILLISECOND_PER_FRAME) {
-				try {
-					Engine.sleep(Engine.MILLISECOND_PER_FRAME - (end - begin));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+		//move units
+		for(Unit unit:units){
+			unit.move();
 		}
 	}
 	
