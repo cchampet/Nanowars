@@ -62,9 +62,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		this.setOpaque(true);
-		this.setBackground(new Color(255, 100, 100));
-		
+		if(this.engineBase.isAPlayersBase()){
+			this.setOpaque(true);
+			this.setBackground(new Color(255, 100, 100));
+		}
+
 		if(BaseSprite.startingPoint == null && this.engineBase.isAPlayersBase()) {
 			BaseSprite.startingPoint = this.engineBase;
 		}

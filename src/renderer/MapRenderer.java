@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,11 +31,7 @@ public class MapRenderer{
 	private final int GAME_LAYER = 100;
 
 	private JLabel background;
-	private BufferedImage basePlayerImage;
-	private BufferedImage baseIAImage;
-	private BufferedImage baseNeutralImage;
-	private BufferedImage unitPlayerImage;
-	private BufferedImage unitIAImage;
+	private HashMap<String, BufferedImage> images;
 	private Container container;
 	private int width;
 	private int height;
@@ -66,7 +63,8 @@ public class MapRenderer{
 		this.container = c;
 		this.width = width;
 		this.height = height;
-		this.sprites = new ArrayList<Sprite>();
+		this.images = new HashMap<String, BufferedImage>();
+		this.sprites = new ArrayList<Sprite>(5);
 		
 		//Manage events
 		this.background.addMouseListener(new MouseListener(){
@@ -105,11 +103,11 @@ public class MapRenderer{
 		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
 		
 		//Load the bases and the units images
-		this.basePlayerImage = ImageIO.read(new File("./tex/basePlayer.png"));
-		this.baseIAImage = ImageIO.read(new File("./tex/baseIA.png"));
-		this.baseNeutralImage = ImageIO.read(new File("./tex/baseNeutral.png"));
-		this.unitPlayerImage = ImageIO.read(new File("./tex/unitPlayer.png"));
-		this.unitIAImage = ImageIO.read(new File("./tex/unitIA.png"));
+		this.images.put("basePlayer", ImageIO.read(new File("./tex/basePlayer.png")));
+		this.images.put("baseIA", ImageIO.read(new File("./tex/baseIA.png")));
+		this.images.put("baseNeutral", ImageIO.read(new File("./tex/baseNeutral.png")));
+		this.images.put("unitPlayer", ImageIO.read(new File("./tex/unitPlayer.png")));
+		this.images.put("unitIA", ImageIO.read(new File("./tex/unitIA.png")));
 	}
 	
 	/**
@@ -121,13 +119,13 @@ public class MapRenderer{
 		newSprite.setSize(newBase.getCapacity());
 		//set the image of the base
 		if(newBase.isNeutral())
-			newSprite.setImage(baseNeutralImage);
+			newSprite.setImage(this.images.get("baseNeutral"));
 		else if(newBase.getOwner() == 1)
-			newSprite.setImage(baseIAImage);
+			newSprite.setImage(this.images.get("baseIA"));
 		else if(newBase.getOwner() == 3)
-			newSprite.setImage(basePlayerImage);
+			newSprite.setImage(this.images.get("basePlayer"));
 		else
-			newSprite.setImage(baseNeutralImage);
+			newSprite.setImage(this.images.get("baseNeutral"));
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
@@ -141,7 +139,7 @@ public class MapRenderer{
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
 		newSprite.setSize((int) newUnit.getNbAgents());
-		newSprite.setImage(unitPlayerImage);
+		newSprite.setImage(this.images.get("unitPlayer"));
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);

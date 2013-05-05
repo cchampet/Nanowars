@@ -46,7 +46,7 @@ public class Renderer{
 		this.frame.setResizable(false);
 		//this.frame.setLayout(null);
 		
-		//Set up the background image
+		//Set up some images for the map
 		this.mapRenderer.init();
 	}
 	
