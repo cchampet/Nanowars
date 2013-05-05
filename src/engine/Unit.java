@@ -14,15 +14,17 @@ public class Unit{
 	private double nbAgents;
 	private Base goal;
 	private int moveSpeed = 2;
+	private int owner;
 	
 	public Point2D.Float position;
 	private Point2D.Float start;
 	private Point2D.Float end;
 	private Vector2f direction;
 	
-	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal){
+	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, int owner){
 		this.nbAgents = nbAgents;
 		this.goal = goal;
+		this.owner = owner;
 		
 		this.start = new Point2D.Float(firstPosition.x, firstPosition.y);
 		this.position = new Point2D.Float(firstPosition.x, firstPosition.y);
@@ -39,6 +41,11 @@ public class Unit{
 	
 	public boolean atDestination(){
 		if(this.position.distance(this.end) < 10) {
+			//resolve the attack
+			if(this.goal.getOwner() != this.owner)
+				this.goal.reduceNbAgents(this.nbAgents);
+			else
+				this.goal.increaseNbAgents(this.nbAgents);
 			return true;
 		}
 		return false;

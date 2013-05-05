@@ -14,7 +14,7 @@ import engine.Unit;
 public class UnitTest extends TestCase{
 	public void testDirection(){
 		Base newBase = new Base(0, 0, 50, 0);
-		Unit unit1 = new Unit(20, new Point2D.Float(1, 1), new Point2D.Float(15, 25), newBase);
+		Unit unit1 = new Unit(20, new Point2D.Float(1, 1), new Point2D.Float(15, 25), newBase, 3);
 		for(int i = 0; i<50; i++){
 			System.out.println("position : "+unit1.position.x + ", " + unit1.position.y);
 			unit1.move();

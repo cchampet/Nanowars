@@ -47,6 +47,10 @@ public class Base{
 		this.nbAgents -= nbAgentsOfUnitSent;
 	}
 	
+	public void increaseNbAgents(double nbAgentsOfUnitSent) {
+		this.nbAgents += nbAgentsOfUnitSent;
+	}
+	
 	// GETTERS & SETTERS
 	
 	public int getId(){
