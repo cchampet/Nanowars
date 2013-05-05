@@ -5,8 +5,7 @@ import java.util.Iterator;
 
 /**
  * 
- * Engine Class is the physic engine class which run the program.
- * Contain the main function and create the renderer and every useful elements.
+ * Engine Class is the physic engine class.
  * 
  * @author Jijidici
  *

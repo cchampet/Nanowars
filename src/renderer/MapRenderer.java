@@ -30,8 +30,11 @@ public class MapRenderer{
 	private final int GAME_LAYER = 100;
 
 	private JLabel background;
-	private BufferedImage baseImage;
-	private BufferedImage unitImage;
+	private BufferedImage basePlayerImage;
+	private BufferedImage baseIAImage;
+	private BufferedImage baseNeutralImage;
+	private BufferedImage unitPlayerImage;
+	private BufferedImage unitIAImage;
 	private Container container;
 	private int width;
 	private int height;
@@ -101,9 +104,12 @@ public class MapRenderer{
 		this.background.setIcon(bgImage);
 		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
 		
-		//Load the base and the unit images
-		this.baseImage = ImageIO.read(new File("./tex/base.png"));
-		this.unitImage = ImageIO.read(new File("./tex/unit.png"));
+		//Load the bases and the units images
+		this.basePlayerImage = ImageIO.read(new File("./tex/basePlayer.png"));
+		this.baseIAImage = ImageIO.read(new File("./tex/baseIA.png"));
+		this.baseNeutralImage = ImageIO.read(new File("./tex/baseNeutral.png"));
+		this.unitPlayerImage = ImageIO.read(new File("./tex/unitPlayer.png"));
+		this.unitIAImage = ImageIO.read(new File("./tex/unitIA.png"));
 	}
 	
 	/**
@@ -113,7 +119,15 @@ public class MapRenderer{
 	public int addBaseSprite(Base newBase){
 		BaseSprite newSprite = new BaseSprite(newBase);
 		newSprite.setSize(newBase.getCapacity());
-		newSprite.setImage(baseImage);
+		//set the image of the base
+		if(newBase.isNeutral())
+			newSprite.setImage(baseNeutralImage);
+		else if(newBase.getOwner() == 1)
+			newSprite.setImage(baseIAImage);
+		else if(newBase.getOwner() == 3)
+			newSprite.setImage(basePlayerImage);
+		else
+			newSprite.setImage(baseNeutralImage);
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
@@ -127,7 +141,7 @@ public class MapRenderer{
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
 		newSprite.setSize((int) newUnit.getNbAgents());
-		newSprite.setImage(unitImage);
+		newSprite.setImage(unitPlayerImage);
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);

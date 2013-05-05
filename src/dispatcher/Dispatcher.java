@@ -1,5 +1,6 @@
 package dispatcher;
 
+import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
@@ -44,12 +45,31 @@ public class Dispatcher extends Thread{
 		//For each pixels
 		for(int y=0;y<map.getHeight();++y){
 			for(int x=0;x<map.getWidth();++x){
-				//if the pixel is not black, add a base
-				float pixel = mapData.getSampleFloat(x, y, 0);
-				if(pixel > 50.f){
-					Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixel/255.)));
-					newBase.setId(Renderer.addBaseSprite(newBase));
-					Engine.addBase(newBase);
+				//if the pixel is not black : add a base
+				Color color = new Color(map.getRGB(x, y));
+				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
+					//choose the base
+					//blue => a base for the player
+					if(color.getBlue() > 127 && color.getRed() == 0 && color.getGreen() == 0){
+						float pixelBlue = mapData.getSampleFloat(x, y, 2);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), 3);
+						newBase.setId(Renderer.addBaseSprite(newBase));
+						Engine.addBase(newBase);
+					}
+					//red => a base for the IA
+					else if(color.getRed() > 127  && color.getBlue() == 0 && color.getGreen() == 0){
+						float pixelRed = mapData.getSampleFloat(x, y, 0);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), 1);
+						newBase.setId(Renderer.addBaseSprite(newBase));
+						Engine.addBase(newBase);
+					}
+					//white => a neutral base
+					else{
+						float pixelRed = mapData.getSampleFloat(x, y, 0);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), 0);
+						newBase.setId(Renderer.addBaseSprite(newBase));
+						Engine.addBase(newBase);
+					}
 				}
 			}
 		}
@@ -70,7 +90,7 @@ public class Dispatcher extends Thread{
 		
 		//load the map
 		try {
-			Dispatcher.loadMap("./tex/datamap.png");
+			Dispatcher.loadMap("./tex/datamap_v2.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
