@@ -4,8 +4,6 @@ import java.awt.geom.Point2D;
 
 import javax.vecmath.Vector2f;
 
-import dispatcher.Dispatcher;
-
 import playable.Player;
 
 /**
@@ -25,10 +23,10 @@ public class Unit{
 	private Point2D.Float end;
 	private Vector2f direction;
 	
-	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, Player owner){
+	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, Player player){
 		this.nbAgents = nbAgents;
 		this.goal = goal;
-		this.owner = owner;
+		this.owner = player;
 		
 		this.start = new Point2D.Float(firstPosition.x, firstPosition.y);
 		this.position = new Point2D.Float(firstPosition.x, firstPosition.y);
@@ -51,7 +49,7 @@ public class Unit{
 					this.goal.reduceNbAgents(this.nbAgents);
 				else if(this.nbAgents == this.goal.getNbAgents()){
 					this.goal.reduceNbAgents(this.nbAgents);
-					this.goal.setOwner(Dispatcher.getPlayers().get("Neutral")); //neutral base
+					this.goal.setOwner(Player.NEUTRAL); //neutral base
 				}
 				else{
 					this.goal.reduceNbAgents(this.nbAgents);

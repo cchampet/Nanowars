@@ -7,26 +7,22 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-/**
- * This class represents the players in our game (including the neutral).
- * @author Yuki
- *
- */
-public class Player {
-	private String name;
-	private TypeOfPlayer type;
-	private int nbAgents;
-
+public enum Player {
+	PLAYER("You", TypeOfPlayer.PLAYER),
+	IA_1("IA_1", TypeOfPlayer.IA),
+	IA_2("IA_2", TypeOfPlayer.IA),
+	NEUTRAL("Neutral", TypeOfPlayer.NEUTRAL);
+	
+	private final String name;
+	private final TypeOfPlayer type;
 	private HashMap<String, BufferedImage> images;
 	
-	public Player(String name, TypeOfPlayer type){
-		super();
-		
+	Player(String name, TypeOfPlayer type){
 		this.name = name;
 		this.type = type;
 		this.images = new HashMap<String, BufferedImage>(2);
 	}
-
+	
 	public void init(String... pathOfImages) throws IOException{
 		this.images.put("base", ImageIO.read(new File(pathOfImages[0])));
 		if(pathOfImages.length > 1)
@@ -34,31 +30,11 @@ public class Player {
 	}
 	
 	// GETTERS & SETTERS
-	
-	/**
-	 * @return the nbAgents
-	 */
-	public int getNbAgents() {
-		return nbAgents;
-	}
 
-	/**
-	 * @param nbAgents the nbAgents to set
-	 */
-	public void setNbAgents(int nbAgents) {
-		this.nbAgents = nbAgents;
-	}
-
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @return the images
-	 */
 	public HashMap<String, BufferedImage> getImages() {
 		return images;
 	}
@@ -73,5 +49,17 @@ public class Player {
 
 	public TypeOfPlayer getType() {
 		return type;
+	}
+	
+	public boolean isNeutral(){
+		return this.type == TypeOfPlayer.NEUTRAL ? true : false;
+	}
+
+	public boolean isIA(){
+		return this.type == TypeOfPlayer.IA ? true : false;
+	}
+
+	public boolean isPlayer(){
+		return this.type == TypeOfPlayer.PLAYER ? true : false;
 	}
 }

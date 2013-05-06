@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import playable.Player;
 import playable.TypeOfPlayer;
-import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Unit;
 
@@ -29,7 +29,6 @@ public class MapRenderer{
 	private final int GAME_LAYER = 100;
 
 	private JLabel background;
-	//private HashMap<String, BufferedImage> images;
 	private Container container;
 	private int width;
 	private int height;
@@ -61,7 +60,6 @@ public class MapRenderer{
 		this.container = c;
 		this.width = width;
 		this.height = height;
-		//this.images = new HashMap<String, BufferedImage>();
 		this.sprites = new ArrayList<Sprite>(5);
 		
 		//Manage events
@@ -99,13 +97,6 @@ public class MapRenderer{
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
 		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
-		
-		//Load the bases and the units images
-		/*this.images.put("basePlayer", ImageIO.read(new File("./tex/basePlayer.png")));
-		this.images.put("baseIA", ImageIO.read(new File("./tex/baseIA.png")));
-		this.images.put("baseNeutral", ImageIO.read(new File("./tex/baseNeutral.png")));
-		this.images.put("unitPlayer", ImageIO.read(new File("./tex/unitPlayer.png")));
-		this.images.put("unitIA", ImageIO.read(new File("./tex/unitIA.png")));*/
 	}
 	
 	/**
@@ -117,13 +108,13 @@ public class MapRenderer{
 		newSprite.setSize(newBase.getCapacity());
 		//set the image of the base
 		if(newBase.isNeutral())
-			newSprite.setImage(Dispatcher.getPlayers().get("Neutral").getImageOfBase());
+			newSprite.setImage(Player.NEUTRAL.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.IA)
-			newSprite.setImage(Dispatcher.getPlayers().get("IA").getImageOfBase());
+			newSprite.setImage(Player.IA_1.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.PLAYER)
-			newSprite.setImage(Dispatcher.getPlayers().get("Player").getImageOfBase());
+			newSprite.setImage(Player.PLAYER.getImageOfBase());
 		else
-			newSprite.setImage(Dispatcher.getPlayers().get("Neutral").getImageOfBase());
+			newSprite.setImage(Player.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
@@ -137,7 +128,7 @@ public class MapRenderer{
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
 		newSprite.setSize((int) newUnit.getNbAgents());
-		newSprite.setImage(Dispatcher.getPlayers().get("Player").getImageOfUnit());
+		newSprite.setImage(Player.PLAYER.getImageOfUnit());
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
