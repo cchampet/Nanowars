@@ -1,7 +1,6 @@
 package dispatcher;
 
 import java.awt.Color;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
@@ -17,7 +16,6 @@ import renderer.BaseSprite;
 import renderer.Renderer;
 import engine.Base;
 import engine.Engine;
-import engine.Unit;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -130,26 +128,9 @@ public class Dispatcher extends Thread{
 			
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
-			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
-				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
-				Point2D.Float startingPoint = new Point2D.Float(BaseSprite.getStartingPoint().x + ((float)nbAgentsOfUnitSent / 2), BaseSprite.getStartingPoint().y + ((float)nbAgentsOfUnitSent / 2));
-				
-				Unit newUnit = BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase());
-				newUnit.setId(Renderer.addUnitSprite(newUnit));
-				Engine.addUnit(newUnit);
-			}
-			//change the owner of bases if it's necessary
-			for(Base b:Engine.getBases()){
-				if(b.getNbAgents() == 0){
-					b.setOwner(Players.get("Neutral")); //neutral base
-					Renderer.getSprite(b.getId()).setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
-					Renderer.getSprite(b.getId()).repaint();
-				}
-				else if(b.getNbAgents() < 0){
-					b.makeTheChangeOfCamp();
-					Renderer.getSprite(b.getId()).setImage(b.getOwner().getType().getImageOfBase());
-					Renderer.getSprite(b.getId()).repaint();
-				}
+			if(BaseSprite.isAStartingBase() && BaseSprite.isAnEndingBase()) {
+				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
+				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 			}
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA").isAlive()){
@@ -185,5 +166,9 @@ public class Dispatcher extends Thread{
 	
 	public static Renderer getRenderer() {
 		return Dispatcher.Renderer;
+	}
+	
+	public static HashMap<String, Player> getPlayers() {
+		return Dispatcher.Players;
 	}
 }

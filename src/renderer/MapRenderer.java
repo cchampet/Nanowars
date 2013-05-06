@@ -49,7 +49,7 @@ public class MapRenderer{
 				super.paintComponent(g);
 				
 				// draw the line between bases
-				if(BaseSprite.isAStartingPoint()){
+				if(BaseSprite.isAStartingBase()){
 					g.setColor(Color.WHITE);
 					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
 							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
@@ -65,8 +65,8 @@ public class MapRenderer{
 		this.background.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				BaseSprite.resetStartingPoint();
-				BaseSprite.resetEndingPoint();
+				BaseSprite.resetStartingBase();
+				BaseSprite.resetEndingBase();
 			}
 
 			@Override
@@ -124,7 +124,13 @@ public class MapRenderer{
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
 		newSprite.setSize((int) newUnit.getNbAgents());
-		newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
+		//set the image of the unit
+		if(newUnit.getOwner().getType() == TypeOfPlayer.PLAYER)
+			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
+		else if(newUnit.getOwner().getType() == TypeOfPlayer.IA)
+			newSprite.setImage(TypeOfPlayer.IA.getImageOfUnit());
+		else
+			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);

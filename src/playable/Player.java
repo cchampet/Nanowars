@@ -25,6 +25,7 @@ public class Player extends Thread implements Playable {
 	public void run() {
 		while(!this.lost() && flagThread){
 			//System.out.println(this.name+" : already in the course !");
+			chooseAction();
 		}
 	}
 

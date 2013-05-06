@@ -5,6 +5,8 @@ import java.awt.geom.Point2D;
 import javax.vecmath.Vector2f;
 
 import playable.Player;
+import playable.TypeOfPlayer;
+import dispatcher.Dispatcher;
 
 /**
  * This class represents a unit (a cluster of agents) for the engine (no display for this class).
@@ -23,19 +25,19 @@ public class Unit{
 	private Point2D.Float end;
 	private Vector2f direction;
 	
-	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, Player player){
+	public Unit(double nbAgents, Base start, Base goal){
 		this.nbAgents = nbAgents;
 		this.goal = goal;
-		this.owner = player;
+		this.owner = start.getOwner();
 		
-		this.start = new Point2D.Float(firstPosition.x, firstPosition.y);
-		this.position = new Point2D.Float(firstPosition.x, firstPosition.y);
-		this.end = new Point2D.Float(destination.x, destination.y);
+		this.start = new Point2D.Float(start.getCenter().x, start.getCenter().y);
+		this.position = new Point2D.Float(start.getCenter().x, start.getCenter().y);
+		this.end = new Point2D.Float(goal.getCenter().x, goal.getCenter().y);
 		
-		this.direction = new Vector2f(destination.x - firstPosition.x, destination.y - firstPosition.y);
+		this.direction = new Vector2f(goal.getCenter().x - start.getCenter().x, goal.getCenter().y - start.getCenter().y);
 		this.direction.normalize();
 	}
-	
+
 	public void move(){
 		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed), 
 				this.position.y + (this.direction.y * this.moveSpeed));
@@ -49,10 +51,18 @@ public class Unit{
 					this.goal.reduceNbAgents(this.nbAgents);
 				else if(this.nbAgents == this.goal.getNbAgents()){
 					this.goal.reduceNbAgents(this.nbAgents);
+					this.goal.setOwner(Dispatcher.getPlayers().get("Neutral"));
+					//update display
+					Dispatcher.getRenderer().getSprite(this.goal.getId()).setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+					Dispatcher.getRenderer().getSprite(this.goal.getId()).repaint();
 				}
 				else{
 					this.goal.reduceNbAgents(this.nbAgents);
 					this.goal.setOwner(this.owner);
+					this.goal.makeTheChangeOfCamp();
+					//update display
+					Dispatcher.getRenderer().getSprite(this.goal.getId()).setImage(this.goal.getOwner().getType().getImageOfBase());
+					Dispatcher.getRenderer().getSprite(this.goal.getId()).repaint();
 				}
 			}
 			else

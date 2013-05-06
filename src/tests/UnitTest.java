@@ -1,7 +1,5 @@
 package tests;
 
-import java.awt.geom.Point2D;
-
 import junit.framework.TestCase;
 import playable.Player;
 import playable.TypeOfPlayer;
@@ -16,8 +14,9 @@ import engine.Unit;
 public class UnitTest extends TestCase{
 	public void testDirection(){
 		Player newPlayer = new Player("UTest", TypeOfPlayer.PLAYER);
-		Base newBase = new Base(0, 0, 50, newPlayer);
-		Unit unit1 = new Unit(20, new Point2D.Float(1, 1), new Point2D.Float(15, 25), newBase, newPlayer);
+		Base newBase1 = new Base(0, 0, 50, newPlayer);
+		Base newBase2 = new Base(10, 20, 100, newPlayer);
+		Unit unit1 = new Unit(20,newBase1, newBase2);
 		for(int i = 0; i<50; i++){
 			System.out.println("position : "+unit1.position.x + ", " + unit1.position.y);
 			unit1.move();

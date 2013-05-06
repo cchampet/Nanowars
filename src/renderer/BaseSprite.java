@@ -22,8 +22,8 @@ public class BaseSprite extends Sprite implements MouseListener{
 	/**
 	 * startingPoint and endingPoint are static variable, useful to decide in which direction the player sends units.
 	 */
-	private static Base startingPoint;
-	private static Base endingPoint;
+	private static Base startingBase;
+	private static Base endingBase;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
 	 */
@@ -67,11 +67,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(BaseSprite.startingPoint == null && this.engineBase.isAPlayersBase()) {
-			BaseSprite.startingPoint = this.engineBase;
+		if(BaseSprite.startingBase == null && this.engineBase.isAPlayersBase()) {
+			BaseSprite.startingBase = this.engineBase;
 		}
-		if (BaseSprite.startingPoint != null && BaseSprite.startingPoint != this.engineBase) {
-			BaseSprite.endingPoint = this.engineBase;
+		if (BaseSprite.startingBase != null && BaseSprite.startingBase != this.engineBase) {
+			BaseSprite.endingBase = this.engineBase;
 		}
 	}
 
@@ -84,12 +84,12 @@ public class BaseSprite extends Sprite implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
 	
-	public static void resetStartingPoint() {
-		BaseSprite.startingPoint = null;
+	public static void resetStartingBase() {
+		BaseSprite.startingBase = null;
 	}
 	
-	public static void resetEndingPoint() {
-		BaseSprite.endingPoint = null;
+	public static void resetEndingBase() {
+		BaseSprite.endingBase = null;
 	}
 	
 	// GETTERS & SETTERS
@@ -103,26 +103,26 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 	
 	public static Point2D.Float getStartingPoint() {
-		return BaseSprite.startingPoint.getCenter();
+		return BaseSprite.startingBase.getCenter();
 	}
 	
 	public static Point2D.Float getEndingPoint() {
-		return BaseSprite.endingPoint.getCenter();
+		return BaseSprite.endingBase.getCenter();
 	}
 	
 	public static Base getStartingBase() {
-		return BaseSprite.startingPoint;
+		return BaseSprite.startingBase;
 	}
 	
 	public static Base getEndingBase() {
-		return BaseSprite.endingPoint;
+		return BaseSprite.endingBase;
 	}
 
-	public static boolean isAStartingPoint() {
-		return BaseSprite.startingPoint == null ? false : true;
+	public static boolean isAStartingBase() {
+		return BaseSprite.startingBase == null ? false : true;
 	}
 	
-	public static boolean isAnEndingPoint() {
-		return BaseSprite.endingPoint == null ? false : true;
+	public static boolean isAnEndingBase() {
+		return BaseSprite.endingBase == null ? false : true;
 	}
 }
