@@ -1,6 +1,7 @@
 package playable;
 
 import dispatcher.Dispatcher;
+import engine.Base;
 
 /**
  * This class represents a player in the game. It's a thread, which is running while the player has at least one base or one unit.
@@ -25,13 +26,22 @@ public class Player extends Thread implements Playable {
 	public void run() {
 		while(!this.lost() && flagThread){
 			//System.out.println(this.name+" : already in the course !");
-			chooseAction();
+			if(this.isIA())
+				chooseAction();
 		}
 	}
 
 	@Override
 	public void chooseAction() {
-		
+		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
+			if(baseOfHim.getNbAgents() > 50){
+				for(Base goal:Dispatcher.getEngine().getBases()){
+					if(goal.getOwner().isNeutral()){
+						baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
