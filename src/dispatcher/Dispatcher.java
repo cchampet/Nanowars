@@ -7,9 +7,12 @@ import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import playable.Player;
+import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
 import engine.Base;
@@ -31,11 +34,13 @@ public class Dispatcher extends Thread{
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
 	
+	private static final HashMap<String, Player> Players = new HashMap<String, Player>(3);
+	
 	/**
 	 * This method load the map from a datamap image.
 	 * 
 	 * @param filepath path of the datamap grey-scale image
-	 * @param r render, used to render the base after they are created
+	 * @param players 
 	 * @throws IOException
 	 */
 	public static void loadMap(String filepath) throws IOException{
@@ -52,21 +57,21 @@ public class Dispatcher extends Thread{
 					//blue => a base for the player
 					if(color.getBlue() > 127 && color.getRed() == 0 && color.getGreen() == 0){
 						float pixelBlue = mapData.getSampleFloat(x, y, 2);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), 3);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), Players.get("Player"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
 					//red => a base for the IA
 					else if(color.getRed() > 127  && color.getBlue() == 0 && color.getGreen() == 0){
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), 1);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("IA"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
 					//white => a neutral base
 					else{
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), 0);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("Neutral"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
@@ -79,7 +84,20 @@ public class Dispatcher extends Thread{
 	 * @param args input arguments
 	 * @throws IOException 
 	 */
-	public static void main(String[] args){	
+	public static void main(String[] args){
+		//init players
+		Players.put("Player", new Player("Clement", TypeOfPlayer.PLAYER));
+		Players.put("IA", new Player("IA_1", TypeOfPlayer.IA));
+		Players.put("Neutral", new Player("Neutral", TypeOfPlayer.NEUTRAL));
+		try {
+			Players.get("Player").init("./tex/basePlayer.png", "./tex/unitPlayer.png");
+			Players.get("IA").init("./tex/baseIA.png", "./tex/unitIA.png");
+			Players.get("Neutral").init("./tex/baseNeutral.png");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			System.exit(0);
+		}
+		
 		//init the renderer
 		try {
 			Dispatcher.Renderer.init();
@@ -113,12 +131,13 @@ public class Dispatcher extends Thread{
 			Dispatcher.Renderer.refreshView(idDeleted);
 			
 			//work of the dispatcher : manage interaction between players and the engine
-			// create units if it's necessary
+			
+			//create units
 			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
 				Point2D.Float startingPoint = new Point2D.Float(BaseSprite.getStartingPoint().x + ((float)nbAgentsOfUnitSent / 2), BaseSprite.getStartingPoint().y + ((float)nbAgentsOfUnitSent / 2));
 						
-				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase(), 3); //for this moment, 3 = player
+				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase(), Players.get("Player")); //for this moment, 3 = player
 				newUnit.setId(Renderer.addUnitSprite(newUnit));
 				Engine.addUnit(newUnit);
 				
@@ -127,6 +146,18 @@ public class Dispatcher extends Thread{
 				BaseSprite.resetEndingPoint();
 			}
 			
+			//change the owner of bases
+			for(Base b:Engine.getBases()){
+				if(b.getNbAgents() == 0){
+					Renderer.getSprite(b.getId()).setImage(Players.get("Neutral").getImageOfBase());
+					Renderer.getSprite(b.getId()).repaint();
+				}
+				else if(b.getNbAgents() < 0){
+					b.makeTheChangeOfCamp();
+					Renderer.getSprite(b.getId()).setImage(b.getOwner().getImageOfBase());
+					Renderer.getSprite(b.getId()).repaint();
+				}
+			}
 			
 			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
@@ -142,11 +173,15 @@ public class Dispatcher extends Thread{
 	
 	// GETTERS & SETTERS
 	
-	public Engine getEngine() {
+	public static Engine getEngine() {
 		return Dispatcher.Engine;
 	}
 	
-	public Renderer getRenderer() {
+	public static Renderer getRenderer() {
 		return Dispatcher.Renderer;
+	}
+
+	public static HashMap<String, Player> getPlayers() {
+		return Dispatcher.Players;
 	}
 }

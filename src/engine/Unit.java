@@ -4,6 +4,10 @@ import java.awt.geom.Point2D;
 
 import javax.vecmath.Vector2f;
 
+import dispatcher.Dispatcher;
+
+import playable.Player;
+
 /**
  * This class represents a unit (a cluster of agents) for the engine (no display for this class).
  * @author Yuki
@@ -14,14 +18,14 @@ public class Unit{
 	private double nbAgents;
 	private Base goal;
 	private int moveSpeed = 2;
-	private int owner;
+	private Player owner;
 	
 	public Point2D.Float position;
 	private Point2D.Float start;
 	private Point2D.Float end;
 	private Vector2f direction;
 	
-	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, int owner){
+	public Unit(double nbAgents, Point2D.Float firstPosition, Point2D.Float destination, Base goal, Player owner){
 		this.nbAgents = nbAgents;
 		this.goal = goal;
 		this.owner = owner;
@@ -42,8 +46,18 @@ public class Unit{
 	public boolean atDestination(){
 		if(this.position.distance(this.end) < 10) {
 			//resolve the attack
-			if(this.goal.getOwner() != this.owner)
-				this.goal.reduceNbAgents(this.nbAgents);
+			if(this.goal.getOwner() != this.owner){
+				if(this.nbAgents <= this.goal.getNbAgents())
+					this.goal.reduceNbAgents(this.nbAgents);
+				else if(this.nbAgents == this.goal.getNbAgents()){
+					this.goal.reduceNbAgents(this.nbAgents);
+					this.goal.setOwner(Dispatcher.getPlayers().get("Neutral")); //neutral base
+				}
+				else{
+					this.goal.reduceNbAgents(this.nbAgents);
+					this.goal.setOwner(this.owner);
+				}
+			}
 			else
 				this.goal.increaseNbAgents(this.nbAgents);
 			return true;
@@ -67,6 +81,10 @@ public class Unit{
 	
 	public Base getGoal() {
 		return goal;
+	}
+	
+	public Player getOwner() {
+		return owner;
 	}
 
 	public Point2D.Float getPosition() {

@@ -78,4 +78,12 @@ public class Engine{
 		}
 		return null;
 	}
+	
+	public ArrayList<Base> getBases(){
+		return bases;
+	}
+
+	public ArrayList<Unit> getUnits(){
+		return units;
+	}
 }
