@@ -1,9 +1,11 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Float;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import renderer.BaseSprite;
 
 /**
  * This class represent an in-game base, physically and graphically. 
@@ -103,5 +105,13 @@ public class Base{
 	
 	public boolean isAPlayersBase() {
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
+	}
+
+	public Unit sendUnit(double nbAgentsOfUnitSent, Float startingPoint, Float endingPoint, Base endingBase) {
+		Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, endingPoint, endingBase, this.owner);
+		this.reduceNbAgents(nbAgentsOfUnitSent);
+		BaseSprite.resetEndingPoint();
+		
+		return newUnit;
 	}
 }

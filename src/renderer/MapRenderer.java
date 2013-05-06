@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import playable.Player;
 import playable.TypeOfPlayer;
 import engine.Base;
 import engine.Unit;
@@ -105,13 +104,13 @@ public class MapRenderer{
 		newSprite.setSize(newBase.getCapacity());
 		//set the image of the base
 		if(newBase.isNeutral())
-			newSprite.setImage(Player.NEUTRAL.getImageOfBase());
+			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.IA)
-			newSprite.setImage(Player.IA_1.getImageOfBase());
+			newSprite.setImage(TypeOfPlayer.IA.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.PLAYER)
-			newSprite.setImage(Player.PLAYER.getImageOfBase());
+			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfBase());
 		else
-			newSprite.setImage(Player.NEUTRAL.getImageOfBase());
+			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);
@@ -125,7 +124,7 @@ public class MapRenderer{
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
 		newSprite.setSize((int) newUnit.getNbAgents());
-		newSprite.setImage(Player.PLAYER.getImageOfUnit());
+		newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(GAME_LAYER));
 		sprites.add(newSprite);

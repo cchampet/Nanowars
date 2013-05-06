@@ -3,6 +3,8 @@ package engine;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import playable.Player;
+
 /**
  * 
  * Engine Class is the physic engine class.
@@ -99,5 +101,25 @@ public class Engine{
 
 	public ArrayList<Unit> getUnits(){
 		return units;
+	}
+
+	public ArrayList<Base> getBasesOfAPlayer(Player owner) {
+		ArrayList<Base> basesOfTheOwner = new ArrayList<Base>();
+		for(Base b:bases){
+			if(b.getOwner() == owner){
+				basesOfTheOwner.add(b);
+			}
+		}
+		return basesOfTheOwner;
+	}
+	
+	public ArrayList<Unit> getUnitsOfAPlayer(Player owner) {
+		ArrayList<Unit> unitsOfTheOwner = new ArrayList<Unit>();
+		for(Unit u:units){
+			if(u.getOwner() == owner){
+				unitsOfTheOwner.add(u);
+			}
+		}
+		return unitsOfTheOwner;
 	}
 }

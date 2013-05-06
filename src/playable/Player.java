@@ -1,50 +1,47 @@
 package playable;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
+import dispatcher.Dispatcher;
 
-import javax.imageio.ImageIO;
-
-public enum Player {
-	PLAYER("You", TypeOfPlayer.PLAYER),
-	IA_1("IA_1", TypeOfPlayer.IA),
-	IA_2("IA_2", TypeOfPlayer.IA),
-	NEUTRAL("Neutral", TypeOfPlayer.NEUTRAL);
-	
+/**
+ * This class represents a player in the game. It's a thread, which is running while the player has at least one base or one unit.
+ * @author Yuki
+ *
+ */
+public class Player extends Thread implements Playable {
 	private final String name;
 	private final TypeOfPlayer type;
-	private HashMap<String, BufferedImage> images;
+	/**
+	 * flagThread is useful for stop the last player's thread (at the end of the game).
+	 */
+	public static boolean flagThread = true; 
 	
-	Player(String name, TypeOfPlayer type){
+	public Player(String name, TypeOfPlayer type){
+		super();
+		
 		this.name = name;
 		this.type = type;
-		this.images = new HashMap<String, BufferedImage>(2);
 	}
 	
-	public void init(String... pathOfImages) throws IOException{
-		this.images.put("base", ImageIO.read(new File(pathOfImages[0])));
-		if(pathOfImages.length > 1)
-			this.images.put("unit", ImageIO.read(new File(pathOfImages[1])));
+	public void run() {
+		while(!this.lost() && flagThread){
+			//System.out.println(this.name+" : already in the course !");
+		}
+	}
+
+	@Override
+	public void chooseAction() {
+		
+	}
+	
+	@Override
+	public boolean lost(){
+		return (Dispatcher.getEngine().getBasesOfAPlayer(this).isEmpty() && Dispatcher.getEngine().getUnitsOfAPlayer(this).isEmpty()) ? true : false;
 	}
 	
 	// GETTERS & SETTERS
 
-	public String getName() {
+	public String getNameOfPlayer() {
 		return name;
-	}
-
-	public HashMap<String, BufferedImage> getImages() {
-		return images;
-	}
-	
-	public BufferedImage getImageOfBase() {
-		return images.get("base");
-	}
-	
-	public BufferedImage getImageOfUnit() {
-		return images.get("unit");
 	}
 
 	public TypeOfPlayer getType() {

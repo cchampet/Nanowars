@@ -49,7 +49,6 @@ public class Unit{
 					this.goal.reduceNbAgents(this.nbAgents);
 				else if(this.nbAgents == this.goal.getNbAgents()){
 					this.goal.reduceNbAgents(this.nbAgents);
-					this.goal.setOwner(Player.NEUTRAL); //neutral base
 				}
 				else{
 					this.goal.reduceNbAgents(this.nbAgents);

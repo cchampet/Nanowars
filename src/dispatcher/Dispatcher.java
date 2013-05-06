@@ -7,10 +7,12 @@ import java.awt.image.Raster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
 import playable.Player;
+import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
 import engine.Base;
@@ -31,6 +33,7 @@ public class Dispatcher extends Thread{
 	
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
+	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
 		
 	/**
 	 * This method load the map from a datamap image.
@@ -53,21 +56,21 @@ public class Dispatcher extends Thread{
 					//blue => a base for the player
 					if(color.getBlue() > 127 && color.getRed() == 0 && color.getGreen() == 0){
 						float pixelBlue = mapData.getSampleFloat(x, y, 2);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), Player.PLAYER);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), Players.get("Player"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
 					//red => a base for the IA
 					else if(color.getRed() > 127  && color.getBlue() == 0 && color.getGreen() == 0){
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Player.IA_1);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("IA"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
 					//white => a neutral base
 					else{
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Player.NEUTRAL);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("Neutral"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
@@ -82,15 +85,9 @@ public class Dispatcher extends Thread{
 	 */
 	public static void main(String[] args){
 		//init players
-		try {
-			Player.PLAYER.init("./tex/basePlayer.png", "./tex/unitPlayer.png");
-			Player.IA_1.init("./tex/baseIA.png", "./tex/unitIA.png");
-			Player.IA_2.init("./tex/baseIA.png", "./tex/unitIA.png");
-			Player.NEUTRAL.init("./tex/baseNeutral.png");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			System.exit(0);
-		}
+		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
+		Players.put("IA", new Player("Jean Vilain", TypeOfPlayer.IA));
+		Players.put("Neutral", new Player("Neutral", TypeOfPlayer.NEUTRAL));
 		
 		//init the renderer
 		try {
@@ -111,10 +108,17 @@ public class Dispatcher extends Thread{
 		//display the renderer
 		Dispatcher.Renderer.render();
 		
+		//lauch thread for each player
+		Players.get("Player").start();
+		Players.get("IA").start();
+		Players.get("Neutral").setDaemon(true);
+		Players.get("Neutral").start();
+		
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
+		boolean endOfGame = false;
 		//=>what we have to do in each frame
-		while(true) {
+		while(!endOfGame) {
 			long begin = System.currentTimeMillis();
 			
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
@@ -124,46 +128,44 @@ public class Dispatcher extends Thread{
 			//work of the renderer
 			Dispatcher.Renderer.refreshView(idDeleted);
 			
-			//work of the dispatcher : manage interaction between players and the engine
+			//work of the dispatcher : manage interactions between players and the engine
 			//create units
 			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
 				Point2D.Float startingPoint = new Point2D.Float(BaseSprite.getStartingPoint().x + ((float)nbAgentsOfUnitSent / 2), BaseSprite.getStartingPoint().y + ((float)nbAgentsOfUnitSent / 2));
-						
-				Unit newUnit = new Unit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase(), Player.PLAYER); //for this moment, 3 = player
+				
+				Unit newUnit = BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, startingPoint, BaseSprite.getEndingPoint(), BaseSprite.getEndingBase());
 				newUnit.setId(Renderer.addUnitSprite(newUnit));
 				Engine.addUnit(newUnit);
-				
-				BaseSprite.getStartingBase().reduceNbAgents(nbAgentsOfUnitSent);
-				
-				BaseSprite.resetEndingPoint();
 			}
-			//change the owner of bases
+			//change the owner of bases if it's necessary
 			for(Base b:Engine.getBases()){
 				if(b.getNbAgents() == 0){
-					Renderer.getSprite(b.getId()).setImage(Player.NEUTRAL.getImageOfBase());
+					b.setOwner(Players.get("Neutral")); //neutral base
+					Renderer.getSprite(b.getId()).setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 					Renderer.getSprite(b.getId()).repaint();
 				}
 				else if(b.getNbAgents() < 0){
 					b.makeTheChangeOfCamp();
-					Renderer.getSprite(b.getId()).setImage(b.getOwner().getImageOfBase());
+					Renderer.getSprite(b.getId()).setImage(b.getOwner().getType().getImageOfBase());
 					Renderer.getSprite(b.getId()).repaint();
 				}
 			}
 			//check if there is a winner
-			Player potentialWinner = Engine.getBase(0).getOwner();
-			int nbBases = 0;
-			for(Base b:Engine.getBases()){
-				if(potentialWinner == b.getOwner())
-					nbBases++;
-			}
-			if(nbBases == Engine.getBases().size()){
-				System.out.println("The winner is "+potentialWinner.getName());
+			if(Players.get("Player").isAlive() && !Players.get("IA").isAlive()){
+				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
 				Renderer.getFrame().dispose();
-				return;
+				Player.flagThread = false;
+				endOfGame = true;
+			}
+			else if(Players.get("IA").isAlive() && !Players.get("Player").isAlive()){
+				System.out.println("The winner is "+Players.get("IA").getNameOfPlayer());
+				Renderer.getFrame().dispose();
+				Player.flagThread = false;
+				endOfGame = true;
 			}
 			
-			// wait if it's too fast, we need to wait 
+			//if the loop is too fast, we need to wait 
 			long end = System.currentTimeMillis();
 			if ((end - begin) < Dispatcher.MILLISECOND_PER_FRAME) {
 				try {
