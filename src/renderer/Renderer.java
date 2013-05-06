@@ -1,6 +1,8 @@
 package renderer;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,10 +43,24 @@ public class Renderer{
 	 */
 	public void init() throws IOException{
 		//Set up the frame
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //DISPOSE ON CLOSE
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setSize(WIDTH, HEIGHT);
 		this.frame.setResizable(false);
 		//this.frame.setLayout(null);
+		this.frame.addKeyListener(new KeyListener(){
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == 32){ //key "space"
+					BaseSprite.resetStartingPoint();
+					BaseSprite.resetEndingPoint();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+			@Override
+			public void keyTyped(KeyEvent e) {}
+		});
 		
 		//Set up some images for the map
 		this.mapRenderer.init();
