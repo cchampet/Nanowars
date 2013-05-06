@@ -112,8 +112,8 @@ public class Dispatcher extends Thread{
 		Dispatcher.Renderer.render();
 		
 		//start the game
-		//=>what we have to do in each frame
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
+		//=>what we have to do in each frame
 		while(true) {
 			long begin = System.currentTimeMillis();
 			
@@ -125,7 +125,6 @@ public class Dispatcher extends Thread{
 			Dispatcher.Renderer.refreshView(idDeleted);
 			
 			//work of the dispatcher : manage interaction between players and the engine
-			
 			//create units
 			if(BaseSprite.isAStartingPoint() && BaseSprite.isAnEndingPoint()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit = 50% of agents in the base
@@ -139,7 +138,6 @@ public class Dispatcher extends Thread{
 				
 				BaseSprite.resetEndingPoint();
 			}
-			
 			//change the owner of bases
 			for(Base b:Engine.getBases()){
 				if(b.getNbAgents() == 0){
@@ -152,9 +150,21 @@ public class Dispatcher extends Thread{
 					Renderer.getSprite(b.getId()).repaint();
 				}
 			}
+			//check if there is a winner
+			Player potentialWinner = Engine.getBase(0).getOwner();
+			int nbBases = 0;
+			for(Base b:Engine.getBases()){
+				if(potentialWinner == b.getOwner())
+					nbBases++;
+			}
+			if(nbBases == Engine.getBases().size()){
+				System.out.println("The winner is "+potentialWinner.getName());
+				Renderer.getFrame().dispose();
+				return;
+			}
 			
-			long end = System.currentTimeMillis();
 			// wait if it's too fast, we need to wait 
+			long end = System.currentTimeMillis();
 			if ((end - begin) < Dispatcher.MILLISECOND_PER_FRAME) {
 				try {
 					Dispatcher.sleep(Dispatcher.MILLISECOND_PER_FRAME - (end - begin));

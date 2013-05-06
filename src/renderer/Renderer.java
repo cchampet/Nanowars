@@ -41,7 +41,7 @@ public class Renderer{
 	 */
 	public void init() throws IOException{
 		//Set up the frame
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //DISPOSE ON CLOSE
 		this.frame.setSize(WIDTH, HEIGHT);
 		this.frame.setResizable(false);
 		//this.frame.setLayout(null);
@@ -134,5 +134,9 @@ public class Renderer{
 	 */
 	public ArrayList<BaseSprite> getBaseSprites() {
 		return this.mapRenderer.getBaseSprites();
+	}
+	
+	public JFrame getFrame(){
+		return frame;
 	}
 }

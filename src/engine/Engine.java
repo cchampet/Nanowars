@@ -79,6 +79,20 @@ public class Engine{
 		return null;
 	}
 	
+	/**
+	 * Get the base by an id.
+	 * @param id
+	 * @return base
+	 */
+	public Base getBase(int id) {
+		for(Base base:bases){
+			if(base.getId() == id){
+				return base;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Base> getBases(){
 		return bases;
 	}
