@@ -31,10 +31,23 @@ public class Player extends Thread implements Playable {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void chooseAction() {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
 			if(baseOfHim.getNbAgents() > 50){
+				for(Base goal:Dispatcher.getEngine().getBases()){
+					if(goal.getOwner().isNeutral()){
+						baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
+					}
+				}
+			}
+		}
+	}*/
+	
+	@Override
+	public void chooseAction() {
+		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
+			if(baseOfHim.getNbAgents() > 60){
 				for(Base goal:Dispatcher.getEngine().getBases()){
 					if(goal.getOwner().isNeutral()){
 						baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
