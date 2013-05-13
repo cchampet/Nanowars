@@ -2,6 +2,7 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import playable.Player;
 
@@ -16,8 +17,8 @@ public class Engine{
 	/**
 	 * Data of our game
 	 */
-	private static final ArrayList<Base> bases = new ArrayList<Base>();
-	private static final ArrayList<Unit> units = new ArrayList<Unit>();
+	private static CopyOnWriteArrayList<Base> bases = new CopyOnWriteArrayList<Base>();
+	private static CopyOnWriteArrayList<Unit> units = new CopyOnWriteArrayList<Unit>();
 	
 	/**
 	 * Add a created base to the list of bases, contained by the Engine.
@@ -58,7 +59,14 @@ public class Engine{
 			Unit unit = iterUnits.next();
 			if(unit.atDestination()){
 				idDeleted.add(unit.getId());
-				iterUnits.remove();
+				//iterUnits.remove();
+				//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
+				CopyOnWriteArrayList<Unit> tmpListOfUnits = new CopyOnWriteArrayList<Unit>();
+				for(Unit u:units){
+					if(!u.equals(unit))
+						tmpListOfUnits.add(u);
+				}
+				units = tmpListOfUnits;
 			}
 		}
 		
@@ -95,11 +103,11 @@ public class Engine{
 		return null;
 	}
 	
-	public ArrayList<Base> getBases(){
+	public CopyOnWriteArrayList<Base> getBases(){
 		return bases;
 	}
 
-	public ArrayList<Unit> getUnits(){
+	public CopyOnWriteArrayList<Unit> getUnits(){
 		return units;
 	}
 

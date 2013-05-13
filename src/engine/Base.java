@@ -56,6 +56,22 @@ public class Base{
 		this.nbAgents += nbAgentsOfUnitSent;
 	}
 	
+	public Unit sendUnit(double nbAgentsOfUnitSent, Base endingBase) {
+		Unit newUnit = new Unit(nbAgentsOfUnitSent, this, endingBase);
+		this.reduceNbAgents(nbAgentsOfUnitSent);
+		BaseSprite.resetEndingBase();
+		
+		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
+		Dispatcher.getEngine().addUnit(newUnit);
+		
+		return newUnit;
+	}
+	
+	public void makeTheChangeOfCamp() {
+		if(this.nbAgents < 0)
+			this.nbAgents *= -1;
+	}
+	
 	// GETTERS & SETTERS
 	
 	public int getId(){
@@ -93,11 +109,6 @@ public class Base{
 	public void setOwner(Player newOwner) {
 		this.owner = newOwner;
 	}
-	
-	public void makeTheChangeOfCamp() {
-		if(this.nbAgents < 0)
-			this.nbAgents *= -1;
-	}
 
 	public boolean isNeutral() {
 		return owner.getType() == TypeOfPlayer.NEUTRAL ? true : false;
@@ -105,16 +116,5 @@ public class Base{
 	
 	public boolean isAPlayersBase() {
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
-	}
-
-	public Unit sendUnit(double nbAgentsOfUnitSent, Base endingBase) {
-		Unit newUnit = new Unit(nbAgentsOfUnitSent, this, endingBase);
-		this.reduceNbAgents(nbAgentsOfUnitSent);
-		BaseSprite.resetEndingBase();
-		
-		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
-		Dispatcher.getEngine().addUnit(newUnit);
-		
-		return newUnit;
 	}
 }
