@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.lang.Math;
 
 import playable.Player;
 import playable.TypeOfPlayer;
@@ -94,6 +95,10 @@ public class Base{
 		this.owner = newOwner;
 	}
 	
+	public static int getMaxCapacity() {
+		return MAX_CAPACITY;
+	}
+	
 	public void makeTheChangeOfCamp() {
 		if(this.nbAgents < 0)
 			this.nbAgents *= -1;
@@ -117,4 +122,19 @@ public class Base{
 		
 		return newUnit;
 	}
+	
+	public double distanceToBase(Base other){
+		return Math.sqrt(
+						   (other.getPosition().getX()-this.getPosition().getX())
+						   *(other.getPosition().getX()-this.getPosition().getX())
+													+
+						   (other.getPosition().getY()-this.getPosition().getY())
+						   *(other.getPosition().getY()-this.getPosition().getY())
+						);
+	}
+
+	public Point2D.Float getPosition() {
+		return position;
+	}
+	
 }

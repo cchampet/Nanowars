@@ -47,12 +47,23 @@ public class Player extends Thread implements Playable {
 	@Override
 	public void chooseAction() {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
-			if(baseOfHim.getNbAgents() > 60){
-				for(Base goal:Dispatcher.getEngine().getBases()){
-					if(goal.getOwner().isNeutral()){
-						baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
+			if(baseOfHim.getNbAgents() > 0.9*Base.getMaxCapacity()){
+				Base goal=null;
+				double param=1000000000;
+				int i=0;
+				for(Base potentialGoal:Dispatcher.getEngine().getBases()){
+					if(!potentialGoal.equals(baseOfHim)){
+						i++;
+						if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim)<param){
+							goal=potentialGoal;
+							param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim);
+						}
+						System.out.println("Le nbAgents "+i+" est :" +potentialGoal.getNbAgents());
+						System.out.println("La distance "+i+" est :" +potentialGoal.distanceToBase(baseOfHim));
+						System.out.println("Le paramtre"+i+" est :" +param);
 					}
 				}
+				baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
 			}
 		}
 	}
