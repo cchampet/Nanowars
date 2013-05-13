@@ -135,9 +135,23 @@ public class Dispatcher extends Thread{
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA").isAlive()){
 				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
+				try {
+					Dispatcher.Renderer.displayWinner();
+					Dispatcher.Renderer.render();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					Thread.sleep(5000);
+					endOfGame = true;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
-				endOfGame = true;
+				
 			}
 			else if(Players.get("IA").isAlive() && !Players.get("Player").isAlive()){
 				System.out.println("The winner is "+Players.get("IA").getNameOfPlayer());

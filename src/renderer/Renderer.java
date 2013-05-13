@@ -26,6 +26,7 @@ public class Renderer{
 	
 	private JFrame frame;
 	private MapRenderer mapRenderer;
+	private UIRenderer uiRenderer;
 		
 	/**
 	 * Constructor asking for the window title.
@@ -35,6 +36,7 @@ public class Renderer{
 		super();
 		this.frame = new JFrame(frameTitle);
 		this.mapRenderer = new MapRenderer(this.frame.getLayeredPane(), WIDTH, HEIGHT);
+		this.uiRenderer = new UIRenderer(this.frame.getLayeredPane(), WIDTH, HEIGHT);
 	}
 	
 	/**
@@ -46,7 +48,6 @@ public class Renderer{
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setSize(WIDTH, HEIGHT);
 		this.frame.setResizable(false);
-		//this.frame.setLayout(null);
 		this.frame.addKeyListener(new KeyListener(){
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -65,6 +66,15 @@ public class Renderer{
 		//Set up some images for the map
 		this.mapRenderer.init();
 	}
+	
+	/**
+	 * Display winner message
+	 */
+	public void displayWinner() throws IOException {
+		//Set up the frame
+		this.uiRenderer.displayWinner();
+	}
+	
 	
 	/**
 	 * Display the main frame.

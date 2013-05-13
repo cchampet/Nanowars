@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.lang.Math;
 
 import playable.Player;
 import playable.TypeOfPlayer;
@@ -109,6 +110,10 @@ public class Base{
 	public void setOwner(Player newOwner) {
 		this.owner = newOwner;
 	}
+	
+	public static int getMaxCapacity() {
+		return MAX_CAPACITY;
+	}
 
 	public boolean isNeutral() {
 		return owner.getType() == TypeOfPlayer.NEUTRAL ? true : false;
@@ -117,4 +122,19 @@ public class Base{
 	public boolean isAPlayersBase() {
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
 	}
+	
+	public double distanceToBase(Base other){
+		return Math.sqrt(
+						   (other.getPosition().getX()-this.getPosition().getX())
+						   *(other.getPosition().getX()-this.getPosition().getX())
+													+
+						   (other.getPosition().getY()-this.getPosition().getY())
+						   *(other.getPosition().getY()-this.getPosition().getY())
+						);
+	}
+
+	public Point2D.Float getPosition() {
+		return position;
+	}
+	
 }
