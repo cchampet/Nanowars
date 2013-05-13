@@ -21,20 +21,19 @@ public class Unit{
 	private Player owner;
 	
 	public Point2D.Float position;
-	private Point2D.Float start;
-	private Point2D.Float end;
 	private Vector2f direction;
 	
 	public Unit(double nbAgents, Base start, Base goal){
 		this.nbAgents = nbAgents;
 		this.goal = goal;
 		this.owner = start.getOwner();
+
+		Point2D.Float startingPosition = start.getCenter();
+		Point2D.Float endingPosition = goal.getCenter();
 		
-		this.start = new Point2D.Float(start.getCenter().x, start.getCenter().y);
-		this.position = new Point2D.Float(start.getCenter().x, start.getCenter().y);
-		this.end = new Point2D.Float(goal.getCenter().x, goal.getCenter().y);
+		this.position = new Point2D.Float(startingPosition.x, startingPosition.y);
 		
-		this.direction = new Vector2f(goal.getCenter().x - start.getCenter().x, goal.getCenter().y - start.getCenter().y);
+		this.direction = new Vector2f(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
 		this.direction.normalize();
 	}
 
@@ -44,7 +43,7 @@ public class Unit{
 	}
 	
 	public boolean atDestination(){
-		if(this.position.distance(this.end) < 10) {
+		if(this.position.distance(this.goal.getCenter()) < 10) {
 			//resolve the attack
 			if(this.goal.getOwner() != this.owner){
 				if(this.nbAgents <= this.goal.getNbAgents())
@@ -96,14 +95,6 @@ public class Unit{
 
 	public Point2D.Float getPosition() {
 		return position;
-	}
-
-	public Point2D.Float getStart() {
-		return start;
-	}
-
-	public Point2D.Float getEnd() {
-		return end;
 	}
 
 	public Vector2f getDirection() {
