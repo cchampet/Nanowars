@@ -25,7 +25,8 @@ import engine.Unit;
  */
 public class MapRenderer{
 	private final int BACKGROUND_LAYER = 0;
-	private final int GAME_LAYER = 100;
+	private final int BASE_LAYER = 10;
+	private final int UNIT_LAYER = 100;
 
 	private JLabel background;
 	private Container container;
@@ -112,7 +113,7 @@ public class MapRenderer{
 		else
 			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
-		container.add(newSprite, new Integer(GAME_LAYER));
+		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}
@@ -132,7 +133,7 @@ public class MapRenderer{
 		else
 			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
 		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
-		container.add(newSprite, new Integer(GAME_LAYER));
+		container.add(newSprite, new Integer(UNIT_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}
