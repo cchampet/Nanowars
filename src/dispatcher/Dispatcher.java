@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
-import renderer.MessagesPanel;
 import renderer.Renderer;
 import engine.Base;
 import engine.Engine;
@@ -136,17 +135,14 @@ public class Dispatcher extends Thread{
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA").isAlive()){
 				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
-				BufferedImage img=null;
 				try {
-					 img = ImageIO.read(new File("./tex/youWin.png"));
+					Dispatcher.Renderer.displayWinner();
+					Dispatcher.Renderer.render();
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				MessagesPanel contentPane = new MessagesPanel(img);
-				contentPane.setOpaque(true);
-				Dispatcher.Renderer.getFrame().getContentPane().add(contentPane);
-				Dispatcher.Renderer.getFrame().setVisible(true);
-				Dispatcher.Renderer.refreshView(idDeleted);
+				
 				try {
 					Thread.sleep(5000);
 					endOfGame = true;
@@ -155,7 +151,7 @@ public class Dispatcher extends Thread{
 				}
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
-				endOfGame = true;
+				
 			}
 			else if(Players.get("IA").isAlive() && !Players.get("Player").isAlive()){
 				System.out.println("The winner is "+Players.get("IA").getNameOfPlayer());
