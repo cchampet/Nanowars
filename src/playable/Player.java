@@ -47,11 +47,11 @@ public class Player extends Thread implements Playable {
 	@Override
 	public void chooseAction() {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
-			if(baseOfHim.getNbAgents() > 0.9*Base.getMaxCapacity()){
+			if(baseOfHim.getNbAgents() > 0.9*baseOfHim.getCapacity()){
 				Base goal=null;
 				double param=1000000000;
 				int i=0;
-				for(Base potentialGoal:Dispatcher.getEngine().getBases()){
+				for(Base potentialGoal:Dispatcher.getEngine().getAdversaryBasesOfAPlayer(this)){
 					if(!potentialGoal.equals(baseOfHim)){
 						i++;
 						if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim)<param){

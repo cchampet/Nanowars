@@ -121,6 +121,16 @@ public class Engine{
 		return basesOfTheOwner;
 	}
 	
+	public ArrayList<Base> getAdversaryBasesOfAPlayer(Player owner) {
+		ArrayList<Base> adversaryBases = new ArrayList<Base>();
+		for(Base b:bases){
+			if(b.getOwner() != owner){
+				adversaryBases.add(b);
+			}
+		}
+		return adversaryBases;
+	}
+	
 	public ArrayList<Unit> getUnitsOfAPlayer(Player owner) {
 		ArrayList<Unit> unitsOfTheOwner = new ArrayList<Unit>();
 		for(Unit u:units){
