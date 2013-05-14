@@ -19,6 +19,7 @@ public class Engine{
 	 */
 	private static CopyOnWriteArrayList<Base> bases = new CopyOnWriteArrayList<Base>();
 	private static CopyOnWriteArrayList<Unit> units = new CopyOnWriteArrayList<Unit>();
+	private static CopyOnWriteArrayList<Tower> towers = new CopyOnWriteArrayList<Tower>();
 	
 	/**
 	 * Add a created base to the list of bases, contained by the Engine.
@@ -34,6 +35,14 @@ public class Engine{
 	 */
 	public void addUnit(Unit newUnit){
 		units.add(newUnit);
+	}
+	
+	/**
+	 * Add a created tower to the list of towers, contained by the Engine.
+	 * @param newBase 
+	 */
+	public void addTower(Tower newTower){
+		towers.add(newTower);
 	}
 	
 	/**
@@ -98,6 +107,20 @@ public class Engine{
 		for(Base base:bases){
 			if(base.getId() == id){
 				return base;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Get the tower by an id.
+	 * @param id
+	 * @return tower
+	 */
+	public Tower getTower(int id) {
+		for(Tower tower:towers){
+			if(tower.getId() == id){
+				return tower;
 			}
 		}
 		return null;

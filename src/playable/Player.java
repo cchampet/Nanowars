@@ -88,7 +88,7 @@ public class Player extends Thread implements Playable {
 	}
 
 	public boolean isIA(){
-		return this.type == TypeOfPlayer.IA ? true : false;
+		return (this.type == TypeOfPlayer.IA_1 || this.type == TypeOfPlayer.IA_2) ? true : false;
 	}
 
 	public boolean isPlayer(){

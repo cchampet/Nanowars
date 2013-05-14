@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 
 import playable.TypeOfPlayer;
 import engine.Base;
+import engine.Tower;
 import engine.Unit;
 
 
@@ -106,7 +107,7 @@ public class MapRenderer{
 	
 	/**
 	 * Add a Base to the Sprite collection in the renderer.
-	 * @param newBase : the engine base, corresponding to the next created sprite.
+	 * @param newBase : the base engine, corresponding to the next created sprite.
 	 */
 	public int addBaseSprite(Base newBase){
 		BaseSprite newSprite = new BaseSprite(newBase);
@@ -114,8 +115,10 @@ public class MapRenderer{
 		//set the image of the base
 		if(newBase.isNeutral())
 			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
-		else if(newBase.getOwner().getType() == TypeOfPlayer.IA)
-			newSprite.setImage(TypeOfPlayer.IA.getImageOfBase());
+		else if(newBase.getOwner().getType() == TypeOfPlayer.IA_1)
+			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfBase());
+		else if(newBase.getOwner().getType() == TypeOfPlayer.IA_2)
+			newSprite.setImage(TypeOfPlayer.IA_2.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.PLAYER)
 			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfBase());
 		else
@@ -128,7 +131,7 @@ public class MapRenderer{
 	
 	/**
 	 * Add a unit to the Sprite collection in the renderer.
-	 * @param newUnit : the engine unit, corresponding to the next created sprite.
+	 * @param newUnit : the unit engine, corresponding to the next created sprite.
 	 */
 	public int addUnitSprite(Unit newUnit){
 		UnitSprite newSprite = new UnitSprite(newUnit);
@@ -136,12 +139,35 @@ public class MapRenderer{
 		//set the image of the unit
 		if(newUnit.getOwner().getType() == TypeOfPlayer.PLAYER)
 			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
-		else if(newUnit.getOwner().getType() == TypeOfPlayer.IA)
-			newSprite.setImage(TypeOfPlayer.IA.getImageOfUnit());
-		else
-			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
+		else if(newUnit.getOwner().getType() == TypeOfPlayer.IA_1)
+			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfUnit());
+		else if(newUnit.getOwner().getType() == TypeOfPlayer.IA_2)
+			newSprite.setImage(TypeOfPlayer.IA_2.getImageOfUnit());
+		
 		newSprite.setBounds((int)(newUnit.getPosition().x - newSprite.getSpriteSize()/2), (int)(newUnit.getPosition().y - newSprite.getSpriteSize()/2), newSprite.getSpriteSize(), newSprite.getSpriteSize());
+
 		container.add(newSprite, new Integer(UNIT_LAYER));
+		sprites.add(newSprite);
+		return newSprite.getId();
+	}
+	
+	/**
+	 * Add a tower to the Sprite collection in the renderer.
+	 * @param newTower : the tower engine, corresponding to the next created sprite.
+	 */
+	public int addTowerSprite(Tower newTower){
+		TowerSprite newSprite = new TowerSprite(newTower);
+		//set the image of the tower
+		if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.NEUTRAL)
+			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
+		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.PLAYER)
+			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfTower());
+		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.IA_1)
+			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfTower());
+		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.IA_2)
+			newSprite.setImage(TypeOfPlayer.IA_2.getImageOfTower());
+		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
+		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}

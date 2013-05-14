@@ -16,6 +16,7 @@ import renderer.BaseSprite;
 import renderer.Renderer;
 import engine.Base;
 import engine.Engine;
+import engine.TowerAttack;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -44,33 +45,56 @@ public class Dispatcher {
 		BufferedImage map = ImageIO.read(new File(filepath));
 		Raster mapData = map.getData();
 		
-		//For each pixels
+		//For each pixels, create the bases
 		for(int y=0;y<map.getHeight();++y){
 			for(int x=0;x<map.getWidth();++x){
-				//if the pixel is not black : add a base
 				Color color = new Color(map.getRGB(x, y));
+				//if the pixel is not black
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
-					//choose the base
-					//blue => a base for the player
-					if(color.getBlue() > 127 && color.getRed() == 0 && color.getGreen() == 0){
+					//blue [50, 150] => a base for the player
+					if(color.getBlue() >= 50 && color.getBlue() <= 150 && color.getRed() == 0 && color.getGreen() == 0){
 						float pixelBlue = mapData.getSampleFloat(x, y, 2);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/255.)), Players.get("Player"));
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/150.)), Players.get("Player"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
-					//red => a base for the IA
-					else if(color.getRed() > 127  && color.getBlue() == 0 && color.getGreen() == 0){
+					//red [50, 150] => a base for the IA_1
+					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() == 0 && color.getGreen() == 0){
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("IA"));
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_1"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
-					//white => a neutral base
-					else{
+					//green [50, 150] => a base for the IA_2
+					else if(color.getGreen() >= 50  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/255.)), Players.get("Neutral"));
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_2"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
+					}
+					//white [50, 150] => a neutral base
+					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() >= 50  && color.getBlue() <= 150 && color.getGreen() >= 50  && color.getGreen() <= 150){
+						float pixelRed = mapData.getSampleFloat(x, y, 0);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("Neutral"));
+						newBase.setId(Renderer.addBaseSprite(newBase));
+						Engine.addBase(newBase);
+					}
+				}
+			}
+		}
+		//For each pixels, create the towers
+		for(int y=0;y<map.getHeight();++y){
+			for(int x=0;x<map.getWidth();++x){
+				Color color = new Color(map.getRGB(x, y));
+				//if the pixel is not black
+				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
+					//blue [200, 207] => a tower for the player
+					if(color.getBlue() >= 200 && color.getBlue() <= 207 && color.getRed() == 0 && color.getGreen() == 0){
+						//float pixelBlue = mapData.getSampleFloat(x, y, 2);
+						// if for the type of Tower
+						TowerAttack newTower = new TowerAttack(MAP_SCALE*x, MAP_SCALE*y);
+						newTower.setId(Renderer.addTowerSprite(newTower));
+						Engine.addTower(newTower);
 					}
 				}
 			}
@@ -84,7 +108,8 @@ public class Dispatcher {
 	public static void main(String[] args){
 		//init players
 		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
-		Players.put("IA", new Player("Jean Vilain", TypeOfPlayer.IA));
+		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
+		Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
 		Players.put("Neutral", new Player("Neutral", TypeOfPlayer.NEUTRAL));
 		
 		//init the renderer
@@ -97,7 +122,7 @@ public class Dispatcher {
 		
 		//load the map
 		try {
-			Dispatcher.loadMap("./tex/datamap_v2.png");
+			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -108,7 +133,8 @@ public class Dispatcher {
 		
 		//lauch thread for each player
 		Players.get("Player").start();
-		Players.get("IA").start();
+		Players.get("IA_1").start();
+		Players.get("IA_2").start();
 		Players.get("Neutral").setDaemon(true);
 		Players.get("Neutral").start();
 		
@@ -134,7 +160,7 @@ public class Dispatcher {
 				BaseSprite.resetEndingBase();
 			}
 			//check if there is a winner
-			if(Players.get("Player").isAlive() && !Players.get("IA").isAlive()){
+			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
 				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
 				try {
 					Dispatcher.Renderer.displayWinner();
@@ -154,8 +180,9 @@ public class Dispatcher {
 				Player.flagThread = false;
 				
 			}
-			else if(Players.get("IA").isAlive() && !Players.get("Player").isAlive()){
-				System.out.println("The winner is "+Players.get("IA").getNameOfPlayer());
+			else if((Players.get("IA_1").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_2").isAlive())
+					|| (Players.get("IA_2").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())){
+				System.out.println("You loose !");
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
 				endOfGame = true;

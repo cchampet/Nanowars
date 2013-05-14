@@ -13,9 +13,10 @@ import javax.imageio.ImageIO;
  *
  */
 public enum TypeOfPlayer {
-	PLAYER("./tex/basePlayer.png", "./tex/unitPlayer.png"), 
-	IA("./tex/baseIA.png", "./tex/unitIA.png"),
-	NEUTRAL("./tex/baseNeutral.png");
+	PLAYER("./tex/basePlayer.png", "./tex/towerPlayer.png", "./tex/unitPlayer.png"), 
+	IA_1("./tex/baseIA_1.png", "./tex/towerIA_1.png", "./tex/unitIA_1.png"),
+	IA_2("./tex/baseIA_2.png", "./tex/towerIA_2.png", "./tex/unitIA_2.png"),
+	NEUTRAL("./tex/baseNeutral.png", "./tex/towerNeutral.png");
 	
 	private HashMap<String, BufferedImage> images;
 		
@@ -25,7 +26,9 @@ public enum TypeOfPlayer {
 		try {
 			this.images.put("base", ImageIO.read(new File(pathOfImages[0])));
 			if(pathOfImages.length > 1)
-				this.images.put("unit", ImageIO.read(new File(pathOfImages[1])));
+				this.images.put("tower", ImageIO.read(new File(pathOfImages[1])));
+			if(pathOfImages.length > 2)
+				this.images.put("unit", ImageIO.read(new File(pathOfImages[2])));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -44,5 +47,9 @@ public enum TypeOfPlayer {
 	
 	public BufferedImage getImageOfUnit() {
 		return images.get("unit");
+	}
+	
+	public BufferedImage getImageOfTower() {
+		return images.get("tower");
 	}
 }
