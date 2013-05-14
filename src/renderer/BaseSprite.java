@@ -9,7 +9,6 @@ import java.awt.geom.Point2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import engine.Base;
 
@@ -45,12 +44,10 @@ public class BaseSprite extends Sprite implements MouseListener{
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
 		this.nbAgents.setHorizontalAlignment(JTextField.CENTER);
-		this.nbAgents.setBorder(new LineBorder(Color.GRAY));
 		this.nbAgents.setOpaque(false);
 		this.nbAgents.setIgnoreRepaint(false); // for better performance
+		this.nbAgents.addMouseListener(this);
 		this.add(this.nbAgents, BorderLayout.CENTER);
-		
-		this.addMouseListener(this);
 	}
 
 	@Override
