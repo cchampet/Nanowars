@@ -23,6 +23,7 @@ public class Sprite extends JPanel{
 		this.size = 100;
 		this.image = null;
 		this.setOpaque(false);
+		this.setLayout(null);
 	}
 	
 	@Override

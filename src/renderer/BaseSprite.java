@@ -35,6 +35,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 
 	public BaseSprite(Base newBase) {
 		super();
+		this.setLayout(new BorderLayout());
 		
 		this.engineBase = newBase;
 		
@@ -43,11 +44,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
 		this.nbAgents.setBorder(null);
+		this.nbAgents.setHorizontalAlignment(JTextField.CENTER);
 		this.nbAgents.setOpaque(false);
-		this.nbAgents.setIgnoreRepaint(false); // for better performence
+		this.nbAgents.setIgnoreRepaint(false); // for better performance
+		this.nbAgents.addMouseListener(this);
 		this.add(this.nbAgents, BorderLayout.CENTER);
-		
-		this.addMouseListener(this);
 	}
 
 	@Override

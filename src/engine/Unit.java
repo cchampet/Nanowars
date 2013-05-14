@@ -2,8 +2,6 @@ package engine;
 
 import java.awt.geom.Point2D;
 
-import javax.vecmath.Vector2f;
-
 import playable.Player;
 import playable.TypeOfPlayer;
 import dispatcher.Dispatcher;
@@ -21,7 +19,7 @@ public class Unit{
 	private Player owner;
 	
 	public Point2D.Float position;
-	private Vector2f direction;
+	private Point2D.Float direction;
 	
 	public Unit(double nbAgents, Base start, Base goal){
 		this.nbAgents = nbAgents;
@@ -33,8 +31,10 @@ public class Unit{
 		
 		this.position = new Point2D.Float(startingPosition.x, startingPosition.y);
 		
-		this.direction = new Vector2f(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
-		this.direction.normalize();
+		this.direction = new Point2D.Float(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
+		float normDirection = (float) this.direction.distance(0, 0);
+		this.direction.x /= normDirection;
+		this.direction.y /= normDirection;
 	}
 
 	public void move(){
@@ -97,7 +97,7 @@ public class Unit{
 		return position;
 	}
 
-	public Vector2f getDirection() {
+	public Point2D.Float getDirection() {
 		return direction;
 	}
 }

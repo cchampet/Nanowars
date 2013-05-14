@@ -157,6 +157,7 @@ public class Dispatcher extends Thread{
 			if(BaseSprite.isAStartingBase() && BaseSprite.isAnEndingBase()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
 				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
+				BaseSprite.resetEndingBase();
 			}
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){

@@ -25,12 +25,14 @@ public class UnitSprite extends Sprite{
 	
 	public UnitSprite(Unit correspondingEngineUnit) {
 		super();
+		this.setLayout(new BorderLayout());
 		
 		this.engineUnit = correspondingEngineUnit;
 				
 		this.nbAgents = new JTextField(String.valueOf((int)correspondingEngineUnit.getNbAgents()));
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
+		this.nbAgents.setHorizontalAlignment(JTextField.CENTER);
 		this.nbAgents.setBorder(null);
 		this.nbAgents.setOpaque(false);
 		this.nbAgents.setIgnoreRepaint(false); // for better performence

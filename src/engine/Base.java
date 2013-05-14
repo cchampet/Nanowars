@@ -5,7 +5,6 @@ import java.lang.Math;
 
 import playable.Player;
 import playable.TypeOfPlayer;
-import renderer.BaseSprite;
 import dispatcher.Dispatcher;
 
 /**
@@ -60,7 +59,6 @@ public class Base{
 	public Unit sendUnit(double nbAgentsOfUnitSent, Base endingBase) {
 		Unit newUnit = new Unit(nbAgentsOfUnitSent, this, endingBase);
 		this.reduceNbAgents(nbAgentsOfUnitSent);
-		BaseSprite.resetEndingBase();
 		
 		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
 		Dispatcher.getEngine().addUnit(newUnit);
