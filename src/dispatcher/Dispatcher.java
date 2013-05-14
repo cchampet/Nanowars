@@ -22,7 +22,7 @@ import engine.Engine;
  * @author Yuki
  *
  */
-public class Dispatcher extends Thread{
+public class Dispatcher {
 	private static final int FRAME_RATE =  60;
 	private static final int MILLISECOND_PER_FRAME =  1000 / FRAME_RATE;
 	private static long nbFrame = 0;
@@ -165,7 +165,7 @@ public class Dispatcher extends Thread{
 			long end = System.currentTimeMillis();
 			if ((end - begin) < Dispatcher.MILLISECOND_PER_FRAME) {
 				try {
-					Dispatcher.sleep(Dispatcher.MILLISECOND_PER_FRAME - (end - begin));
+					Thread.sleep(Dispatcher.MILLISECOND_PER_FRAME - (end - begin));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

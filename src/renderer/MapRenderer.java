@@ -27,8 +27,10 @@ public class MapRenderer{
 	private final int BACKGROUND_LAYER = 0;
 	private final int BASE_LAYER = 10;
 	private final int UNIT_LAYER = 100;
+	private final int EFFECT_LAYER = 150;
 
 	private JLabel background;
+	private JLabel effectsLayer;
 	private Container container;
 	private int width;
 	private int height;
@@ -44,23 +46,26 @@ public class MapRenderer{
 	public MapRenderer(Container c, int width, int height){
 		super();
 
-		this.background = new JLabel() {
-			@Override
-			public void paintComponent(Graphics g){
-				super.paintComponent(g);
-				
-				// draw the line between bases
-				if(BaseSprite.isAStartingBase()){
-					g.setColor(Color.WHITE);
-					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
-							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
-				}
-			}
-		};
+		this.background = new JLabel();
 		this.container = c;
 		this.width = width;
 		this.height = height;
 		this.sprites = new ArrayList<Sprite>(5);
+		this.effectsLayer = new JLabel() {
+			@Override
+			public void paintComponent(Graphics g){
+				super.paintComponent(g);
+				
+				this.setVisible(false);
+				// draw the line between bases
+				if(BaseSprite.isAStartingBase()){
+					g.setColor(Color.WHITE);
+					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
+							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y-20);
+				}
+				this.setVisible(true);
+			}
+		};
 		
 		//Manage events
 		this.background.addMouseListener(new MouseListener(){
@@ -94,6 +99,9 @@ public class MapRenderer{
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
 		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
+		
+		this.effectsLayer.setBounds(0, 0, this.width, this.height);
+		this.container.add(this.effectsLayer, new Integer(EFFECT_LAYER));
 	}
 	
 	/**
