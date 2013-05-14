@@ -115,6 +115,11 @@ public class Renderer{
 			Point newPoint = new Point((int)(unitSprite.getEngineUnit().getPosition().x - unitSprite.getSpriteSize()/2), (int)(unitSprite.getEngineUnit().getPosition().y - unitSprite.getSpriteSize()/2));
 			unitSprite.setLocation(newPoint);
 		}
+		
+		//update the sprite depends on the owner of the associated base, for each tower
+		for(TowerSprite towerSprite:this.getTowerSprites()){
+			towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTower());
+		}
 	}
 	
 	/**
@@ -174,6 +179,14 @@ public class Renderer{
 	 */
 	public ArrayList<BaseSprite> getBaseSprites() {
 		return this.mapRenderer.getBaseSprites();
+	}
+	
+	/**
+	 * Get only the towersSprites
+	 * @return ArrayList<UnitSprite>
+	 */
+	public ArrayList<TowerSprite> getTowerSprites() {
+		return this.mapRenderer.getTowerSprites();
 	}
 	
 	public JFrame getFrame(){

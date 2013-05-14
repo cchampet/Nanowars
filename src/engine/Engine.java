@@ -163,4 +163,13 @@ public class Engine{
 		}
 		return unitsOfTheOwner;
 	}
+
+	public ArrayList<Tower> getTowerAround(Base base) {
+		ArrayList<Tower> towersAround = new ArrayList<Tower>();
+		for(Tower t:towers){
+			if(t.getAssociatedBase().equals(base))
+				towersAround.add(t);
+		}
+		return towersAround;
+	}
 }

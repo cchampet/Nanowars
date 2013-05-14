@@ -158,14 +158,7 @@ public class MapRenderer{
 	public int addTowerSprite(Tower newTower){
 		TowerSprite newSprite = new TowerSprite(newTower);
 		//set the image of the tower
-		if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.NEUTRAL)
-			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
-		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.PLAYER)
-			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfTower());
-		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.IA_1)
-			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfTower());
-		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.IA_2)
-			newSprite.setImage(TypeOfPlayer.IA_2.getImageOfTower());
+		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
@@ -222,6 +215,20 @@ public class MapRenderer{
 		return res;
 	}
 
+	/**
+	 * Get only the towerSprites.
+	 * @return ArrayList<UnitSprite>
+	 */
+	public ArrayList<TowerSprite> getTowerSprites() {
+		ArrayList<TowerSprite> res = new ArrayList<TowerSprite>();
+		for(Sprite sprite:this.sprites){
+			if(sprite.getClass() == TowerSprite.class){
+				res.add((TowerSprite) sprite);
+			}
+		}
+		return res;
+	}
+	
 	/**
 	 * @return the container
 	 */
