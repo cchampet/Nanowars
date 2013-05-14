@@ -89,7 +89,7 @@ public class Renderer{
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
-		//update sprites
+		//update sprites list
 		Iterator<Sprite> iterSprites = this.getSprites().iterator();
 		while(iterSprites.hasNext()){
 			Sprite sprite = iterSprites.next();
@@ -103,6 +103,11 @@ public class Renderer{
 		//update the display of nbAgents for each base
 		for(BaseSprite baseSprite:this.getBaseSprites()){
 			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
+		}
+		
+		//update the sprite depends on the owner, for each base
+		for(BaseSprite baseSprite:this.getBaseSprites()){
+			baseSprite.setImage(baseSprite.getEngineBase().getOwner().getType().getImageOfBase());
 		}
 		
 		//update the position of each unit

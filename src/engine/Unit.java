@@ -3,7 +3,6 @@ package engine;
 import java.awt.geom.Point2D;
 
 import playable.Player;
-import playable.TypeOfPlayer;
 import dispatcher.Dispatcher;
 
 /**
@@ -37,37 +36,44 @@ public class Unit{
 		this.direction.y /= normDirection;
 	}
 
+	/**
+	 * Move the unit along his direction vector.
+	 */
 	public void move(){
 		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed), 
 				this.position.y + (this.direction.y * this.moveSpeed));
 	}
 	
-	public boolean atDestination(){
-		if(this.position.distance(this.goal.getCenter()) < 10) {
-			//resolve the attack
-			if(this.goal.getOwner() != this.owner){
-				if(this.nbAgents <= this.goal.getNbAgents())
-					this.goal.reduceNbAgents(this.nbAgents);
-				else if(this.nbAgents == this.goal.getNbAgents()){
-					this.goal.reduceNbAgents(this.nbAgents);
-					this.goal.setOwner(Dispatcher.getPlayers().get("Neutral"));
-					//update display
-					Dispatcher.getRenderer().getSprite(this.goal.getId()).setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
-					Dispatcher.getRenderer().getSprite(this.goal.getId()).repaint();
-				}
-				else{
-					this.goal.reduceNbAgents(this.nbAgents);
-					this.goal.setOwner(this.owner);
-					this.goal.makeTheChangeOfCamp();
-					//update display
-					Dispatcher.getRenderer().getSprite(this.goal.getId()).setImage(this.goal.getOwner().getType().getImageOfBase());
-					Dispatcher.getRenderer().getSprite(this.goal.getId()).repaint();
-				}
+	/**
+	 * Called when the unit is at his destination. Resolves the situation (depend on the owner of the base).
+	 */
+	public void resolveAttack(){
+		//resolve the attack 
+		if(this.goal.getOwner() != this.owner){
+			if(this.nbAgents <= this.goal.getNbAgents()){
+				this.goal.reduceNbAgents(this.nbAgents);
 			}
-			else
-				this.goal.increaseNbAgents(this.nbAgents);
-			return true;
+			else if(this.nbAgents == this.goal.getNbAgents()){
+				this.goal.reduceNbAgents(this.nbAgents);
+				this.goal.setOwner(Dispatcher.getPlayers().get("Neutral"));
+			}
+			else{
+				this.goal.reduceNbAgents(this.nbAgents);
+				this.goal.setOwner(this.owner);
+				this.goal.makeTheChangeOfCamp();
+			}
 		}
+		else{
+			this.goal.increaseNbAgents(this.nbAgents);
+		}
+	}
+	
+	/**
+	 * Return if the unit is at his destination (a base) or not.
+	 */
+	public boolean atDestination(){
+		if(this.position.distance(this.goal.getCenter()) < 10)
+			return true;
 		return false;
 	}
 
