@@ -122,7 +122,7 @@ public class Dispatcher extends Thread{
 		
 		//load the map
 		try {
-			Dispatcher.loadMap("./tex/datamap_tower.png");
+			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
