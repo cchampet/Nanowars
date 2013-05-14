@@ -44,6 +44,10 @@ public class Sprite extends JPanel{
 		this.size = size;
 	}
 	
+	public int getSpriteSize(){
+		return this.size;
+	}
+	
 	public void setImage(BufferedImage img){
 		this.image = img;
 	}

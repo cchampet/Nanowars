@@ -147,7 +147,6 @@ public class MapRenderer{
 	 */
 	public int addTowerSprite(Tower newTower){
 		TowerSprite newSprite = new TowerSprite(newTower);
-		newSprite.setSize((int) newTower.getNbAgents());
 		//set the image of the tower
 		if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.NEUTRAL)
 			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
@@ -157,7 +156,7 @@ public class MapRenderer{
 			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfTower());
 		else if(newTower.getAssociatedBase().getOwner().getType() == TypeOfPlayer.IA_2)
 			newSprite.setImage(TypeOfPlayer.IA_2.getImageOfTower());
-		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, (int)newTower.getNbAgents(), (int)newTower.getNbAgents());
+		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();

@@ -23,13 +23,17 @@ public class TowerSprite extends Sprite implements MouseListener{
 
 	public TowerSprite(Tower newTower) {
 		super();
+		this.setLayout(new BorderLayout());
 		
 		this.engineTower = newTower;
+		
+		this.size = 24;
 		
 		this.nbAgents = new JTextField(String.valueOf(newTower.getNbAgents()));
 		this.nbAgents.setPreferredSize(new Dimension(23, 20));
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
 		this.nbAgents.setEnabled(false);
+		this.nbAgents.setHorizontalAlignment(JTextField.CENTER);
 		this.nbAgents.setBorder(null);
 		this.nbAgents.setOpaque(false);
 		this.nbAgents.setIgnoreRepaint(false); // for better performence
