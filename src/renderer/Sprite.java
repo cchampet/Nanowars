@@ -2,7 +2,6 @@ package renderer;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
 
 /**
