@@ -17,7 +17,6 @@ public class UIRenderer {
 	private int width;
 	private int height;
 	
-	@SuppressWarnings("serial")
 	public UIRenderer(Container c, int width, int height){
 		super();
 		this.background = new JLabel();
