@@ -89,7 +89,7 @@ public class Dispatcher extends Thread{
 				//if the pixel is not black
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
 					//blue [200, 207] => a tower for the player
-					if(color.getBlue() >= 200 && color.getBlue() <= 207 && color.getRed() == 0 && color.getGreen() == 0){
+					if(color.getBlue() == 200 && color.getRed() == 200 && color.getGreen() == 200){
 						//float pixelBlue = mapData.getSampleFloat(x, y, 2);
 						// if for the type of Tower
 						TowerAttack newTower = new TowerAttack(MAP_SCALE*x, MAP_SCALE*y);
