@@ -10,6 +10,7 @@ import java.util.Iterator;
 import javax.swing.JFrame;
 
 import engine.Base;
+import engine.Tower;
 import engine.Unit;
 
 
@@ -121,10 +122,18 @@ public class Renderer{
 	
 	/**
 	 * Add the Unit Sprite to the MapRenderer Sprite Collection
-	 * @param Unewnit : the unit engine, corresponding to the next created sprite.
+	 * @param newUnit : the unit engine, corresponding to the next created sprite.
 	 */
 	public int addUnitSprite(Unit newUnit){
 		return this.mapRenderer.addUnitSprite(newUnit);
+	}
+	
+	/**
+	 * Add the Tower Sprite to the MapRenderer Sprite Collection
+	 * @param newTower : the tower engine, corresponding to the next created sprite.
+	 */
+	public int addTowerSprite(Tower newTower){
+		return this.mapRenderer.addTowerSprite(newTower);
 	}
 	
 	//GETTERS & SETTERS
