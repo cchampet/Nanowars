@@ -14,6 +14,8 @@ import engine.Unit;
  */
 @SuppressWarnings("serial")
 public class UnitSprite extends Sprite{
+	
+	static final private int MIN_SIZE = 20;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
 	 */
@@ -43,5 +45,10 @@ public class UnitSprite extends Sprite{
 
 	public Unit getEngineUnit() {
 		return this.engineUnit;
+	}
+	
+	@Override
+	public void setSize(int size){
+		this.size = UnitSprite.MIN_SIZE + size/2;
 	}
 }
