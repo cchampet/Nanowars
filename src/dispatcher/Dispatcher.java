@@ -14,9 +14,10 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
+import renderer.TowerSprite;
 import engine.Base;
 import engine.Engine;
-import engine.TowerAttack;
+import engine.Tower;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -92,7 +93,7 @@ public class Dispatcher {
 					if(color.getBlue() == 200 && color.getRed() == 200 && color.getGreen() == 200){
 						//float pixelBlue = mapData.getSampleFloat(x, y, 2);
 						// if for the type of Tower
-						TowerAttack newTower = new TowerAttack(MAP_SCALE*x, MAP_SCALE*y);
+						Tower newTower = new Tower(MAP_SCALE*x, MAP_SCALE*y);
 						newTower.setId(Renderer.addTowerSprite(newTower));
 						Engine.addTower(newTower);
 					}
@@ -158,6 +159,11 @@ public class Dispatcher {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
 				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 				BaseSprite.resetEndingBase();
+			}
+			else if(BaseSprite.isAStartingBase() && TowerSprite.isAnEndingTower()) {
+				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
+				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
+				TowerSprite.resetEndingTower();
 			}
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
