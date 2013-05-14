@@ -2,7 +2,6 @@ package renderer;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
 
 /**
@@ -42,6 +41,10 @@ public class Sprite extends JPanel{
 	
 	public void setSize(int size){
 		this.size = size;
+	}
+	
+	public int getSpriteSize(){
+		return this.size;
 	}
 	
 	public void setImage(BufferedImage img){

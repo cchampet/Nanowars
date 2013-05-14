@@ -132,7 +132,7 @@ public class MapRenderer{
 			newSprite.setImage(TypeOfPlayer.IA.getImageOfUnit());
 		else
 			newSprite.setImage(TypeOfPlayer.PLAYER.getImageOfUnit());
-		newSprite.setBounds((int)newUnit.getPosition().x, (int)newUnit.getPosition().y, (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
+		newSprite.setBounds((int)(newUnit.getPosition().x - newSprite.getSpriteSize()/2), (int)(newUnit.getPosition().y - newSprite.getSpriteSize()/2), (int)newUnit.getNbAgents(), (int)newUnit.getNbAgents());
 		container.add(newSprite, new Integer(UNIT_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
