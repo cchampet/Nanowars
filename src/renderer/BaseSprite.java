@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
@@ -22,11 +23,21 @@ public class BaseSprite extends Sprite implements MouseListener{
 	/**
 	 * startingPoint and endingPoint are static variable, useful to decide in which direction the player sends units.
 	 */
-	private static Base startingBase;
+	private static ArrayList<Base> startingBases = new ArrayList<Base>();
 	private static Base endingBase;
+	private static Point2D.Float selectionCornerBegin;
+	private static Point2D.Float selectionCornerEnd;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
 	 */
+	
+	// Ce sera pas un mouse press mais un mouse release
+	// L'envoi de units se fait dans BaseUnit
+	// Dans la boucle principale le dispatcher regarde si il y a une base de départ et d'arrivée
+	//1. CHECK Faire en sorte que tout ce qui marchait avant marche avec une liste de startingBases
+	//2. Faire en sorte que lorsqu'on clique un rectangle transparent apparaisse
+	//3. Faire en sorte que le bases comprises dans le domaine du rectangle soient selectionnées.
+	
 	private JTextField nbAgents;
 	/**
 	 * engineBase is a reference to the corresponding base of this sprite.
@@ -68,12 +79,16 @@ public class BaseSprite extends Sprite implements MouseListener{
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(BaseSprite.startingBase == null && this.engineBase.isAPlayersBase()) {
-			BaseSprite.startingBase = this.engineBase;
+		if(BaseSprite.startingBases.size() == 0 && this.engineBase.isAPlayersBase()) {
+			BaseSprite.startingBases.add(this.engineBase);
 		}
-		if (BaseSprite.startingBase != null && BaseSprite.startingBase != this.engineBase) {
+		// The following 'if' statement rewrites the statement :
+		// if(BaseSprite.startingBases != null && BaseSprite.startingBase != this.engineBase)
+		// in  accordance with the implementation of multiple starting bases.
+		if (BaseSprite.startingBases.size() != 0 && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase))) {
 			BaseSprite.endingBase = this.engineBase;
 		}
+		
 	}
 
 	@Override
@@ -86,7 +101,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {}
 	
 	public static void resetStartingBase() {
-		BaseSprite.startingBase = null;
+		BaseSprite.startingBases.removeAll(startingBases);
 	}
 	
 	public static void resetEndingBase() {
@@ -104,7 +119,12 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 	
 	public static Point2D.Float getStartingPoint() {
-		return BaseSprite.startingBase.getCenter();
+		if(BaseSprite.startingBases.size()>0){
+			return BaseSprite.startingBases.get(0).getCenter();
+		}
+		else{
+			return null;
+		}
 	}
 	
 	public static Point2D.Float getEndingPoint() {
@@ -112,7 +132,13 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 	
 	public static Base getStartingBase() {
-		return BaseSprite.startingBase;
+		if(BaseSprite.startingBases.size()>0){
+			return BaseSprite.startingBases.get(0);
+		}
+		else{
+			System.out.println("Pas de base de départ");
+			return null;
+		}
 	}
 	
 	public static Base getEndingBase() {
@@ -120,7 +146,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 
 	public static boolean isAStartingBase() {
-		return BaseSprite.startingBase == null ? false : true;
+			return BaseSprite.startingBases.size() == 0 ? false : true;
 	}
 	
 	public static boolean isAnEndingBase() {

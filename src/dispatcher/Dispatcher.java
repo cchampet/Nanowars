@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
+import renderer.MapRenderer;
 import renderer.Renderer;
 import engine.Base;
 import engine.Engine;
@@ -106,6 +107,8 @@ public class Dispatcher {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args){
+		
+		
 		//init players
 		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
 		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
@@ -143,6 +146,9 @@ public class Dispatcher {
 		boolean endOfGame = false;
 		//=>what we have to do in each frame
 		while(!endOfGame) {
+			System.out.println("Coin de départ" + MapRenderer.getSelectionStartingCorner());
+			System.out.println("Coin d'arrivée" + MapRenderer.getSelectionEndingCorner());
+			
 			long begin = System.currentTimeMillis();
 			
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
@@ -183,6 +189,22 @@ public class Dispatcher {
 			else if((Players.get("IA_1").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_2").isAlive())
 					|| (Players.get("IA_2").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())){
 				System.out.println("You loose !");
+				try {
+					Dispatcher.Renderer.displayLooser();
+					Dispatcher.Renderer.render();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				try {
+					Thread.sleep(5000);
+					endOfGame = true;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
 				endOfGame = true;

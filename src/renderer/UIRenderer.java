@@ -36,6 +36,17 @@ public class UIRenderer {
 		this.container.add(this.background, new Integer(UI_LAYER));
 	}
 	
+	public void displayLooser() throws IOException{
+		//Load the background image
+		ImageIcon bgImage = new ImageIcon("./tex/youLoose.png");
+		if(bgImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}		
+		this.background.setBounds(0, 0, this.width, this.height);
+		this.background.setIcon(bgImage);
+		this.container.add(this.background, new Integer(UI_LAYER));
+	}
+	
 }
 
 

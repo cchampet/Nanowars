@@ -76,6 +76,15 @@ public class Renderer{
 		this.uiRenderer.displayWinner();
 	}
 	
+	/**
+	 * Display looser message
+	 */
+	public void displayLooser() throws IOException {
+		//Set up the frame
+		this.uiRenderer.displayLooser();
+	}
+	
+	
 	
 	/**
 	 * Display the main frame.
@@ -173,5 +182,9 @@ public class Renderer{
 	
 	public JFrame getFrame(){
 		return frame;
+	}
+
+	public MapRenderer getMapRenderer() {
+		return mapRenderer;
 	}
 }

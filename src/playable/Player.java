@@ -58,9 +58,9 @@ public class Player extends Thread implements Playable {
 							goal=potentialGoal;
 							param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim);
 						}
-						System.out.println("Le nbAgents "+i+" est :" +potentialGoal.getNbAgents());
-						System.out.println("La distance "+i+" est :" +potentialGoal.distanceToBase(baseOfHim));
-						System.out.println("Le paramètre"+i+" est :" +param);
+						//System.out.println("Le nbAgents "+i+" est :" +potentialGoal.getNbAgents());
+						//System.out.println("La distance "+i+" est :" +potentialGoal.distanceToBase(baseOfHim));
+						//System.out.println("Le paramètre"+i+" est :" +param);
 					}
 				}
 				baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
