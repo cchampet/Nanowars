@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.MediaTracker;
 import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import playable.TypeOfPlayer;
 import engine.Base;
@@ -61,8 +63,10 @@ public class MapRenderer{
 				// draw the line between bases
 				if(BaseSprite.isAStartingBase()){
 					g.setColor(Color.WHITE);
+					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+					SwingUtilities.convertPointFromScreen(mousePosition, this);
 					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
-							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y-20);
+							mousePosition.x, mousePosition.y);
 				}
 				this.setVisible(true);
 			}

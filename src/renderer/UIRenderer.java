@@ -3,11 +3,12 @@ package renderer;
 
 import java.awt.Container;
 import java.awt.MediaTracker;
+import java.awt.Point;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+import javax.swing.SwingUtilities;
 
 public class UIRenderer {
 
@@ -25,6 +26,10 @@ public class UIRenderer {
 		this.width=width;
 	}
 	
+	/**
+	 * Display a "WINNER" message when the player win and before exit program
+	 * @throws IOException
+	 */
 	public void displayWinner() throws IOException{
 		//Load the background image
 		ImageIcon bgImage = new ImageIcon("./tex/youWin.png");
@@ -36,6 +41,24 @@ public class UIRenderer {
 		this.container.add(this.background, new Integer(UI_LAYER));
 	}
 	
+	/**
+	 * Display a radial menu to choose how many units send 
+	 * @param mousePosition Position of the mouse, where the radial menu will appear
+	 * @throws IOException
+	 */
+	public void displayRadialMenuMovment(Point mousePosition) throws IOException{
+		//Load the menu image
+		ImageIcon rmImage = new ImageIcon("./tex/radialmenu_movment.png");
+		if(rmImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}
+		
+		SwingUtilities.convertPointFromScreen(mousePosition, this.container);
+		
+		JLabel radialMenu = new JLabel(rmImage);
+		radialMenu.setBounds(mousePosition.x - rmImage.getIconWidth()/2, mousePosition.y - rmImage.getIconHeight()/2, rmImage.getIconWidth(), rmImage.getIconHeight());
+		this.container.add(radialMenu, new Integer(UI_LAYER));
+	}
 }
 
 

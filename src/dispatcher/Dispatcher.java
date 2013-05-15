@@ -1,6 +1,7 @@
 package dispatcher;
 
 import java.awt.Color;
+import java.awt.MouseInfo;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
@@ -156,6 +157,12 @@ public class Dispatcher {
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
 			if(BaseSprite.isAStartingBase() && BaseSprite.isAnEndingBase()) {
+				try {
+					Dispatcher.Renderer.displayRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
 				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 				BaseSprite.resetEndingBase();

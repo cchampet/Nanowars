@@ -68,16 +68,7 @@ public class Renderer{
 		
 		//Set up some images for the map
 		this.mapRenderer.init();
-	}
-	
-	/**
-	 * Display winner message
-	 */
-	public void displayWinner() throws IOException {
-		//Set up the frame
-		this.uiRenderer.displayWinner();
-	}
-	
+	}	
 	
 	/**
 	 * Display the main frame.
@@ -91,7 +82,7 @@ public class Renderer{
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
-		//update sprites list
+		//update sprite list
 		Iterator<Sprite> iterSprites = this.getSprites().iterator();
 		while(iterSprites.hasNext()){
 			Sprite sprite = iterSprites.next();
@@ -133,6 +124,8 @@ public class Renderer{
 		}
 	}
 	
+	//MAPRENDERER INDIRECTIONS
+	
 	/**
 	 * Add the Base Sprite to the MapRenderer Sprite Collection
 	 * @param newBase : the base engine, corresponding to the next created sprite.
@@ -155,6 +148,25 @@ public class Renderer{
 	 */
 	public int addTowerSprite(Tower newTower){
 		return this.mapRenderer.addTowerSprite(newTower);
+	}
+	
+	//UIRENDERER INDIRECTIONS
+	
+	/**
+	 * Display winner message
+	 */
+	public void displayWinner() throws IOException {
+		//Set up the frame
+		this.uiRenderer.displayWinner();
+	}
+	
+	/**
+	 * Display a radial menu to choose how many units send 
+	 * @param mousePosition Position of the mouse, where the radial menu will appear
+	 * @throws IOException
+	 */
+	public void displayRadialMenuMovment(Point mousePosition) throws IOException{
+		this.uiRenderer.displayRadialMenuMovment(mousePosition);
 	}
 	
 	//GETTERS & SETTERS
