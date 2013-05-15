@@ -8,20 +8,17 @@ import playable.TypeOfPlayer;
 import dispatcher.Dispatcher;
 
 /**
- * This class represent an in-game base, physically and graphically. 
+ * This class represent an in-game base, physically.
  * @author jijidici
  *
  */
-public class Base{
+public class Base extends Element {
 	/**
 	 * Best capacity a base can have.
 	 */
 	public static final int MAX_CAPACITY = 100;
 	
-	private int id;
-	private final Point2D.Float position;
 	private double capacity;
-	private double nbAgents;
 	private Player owner;
 		
 	/**
@@ -32,10 +29,8 @@ public class Base{
 	 * @param player - the owner of the base
 	 */
 	public Base(int posX, int posY, int capacity, Player player){
-		super();
+		super(posX, posY, capacity/2);
 	
-		this.position = new Point2D.Float(posX, posY);
-		this.nbAgents = capacity/2;
 		this.capacity = capacity;
 		this.owner = player;
 	}
@@ -56,8 +51,8 @@ public class Base{
 		this.nbAgents += nbAgentsOfUnitSent;
 	}
 	
-	public Unit sendUnit(double nbAgentsOfUnitSent, Base endingBase) {
-		Unit newUnit = new Unit(nbAgentsOfUnitSent, this, endingBase);
+	public Unit sendUnit(double nbAgentsOfUnitSent, Element endingElement) {
+		Unit newUnit = new Unit(nbAgentsOfUnitSent, this, endingElement);
 		this.reduceNbAgents(nbAgentsOfUnitSent);
 		
 		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
@@ -73,14 +68,6 @@ public class Base{
 	
 	// GETTERS & SETTERS
 	
-	public int getId(){
-		return this.id;
-	}
-	
-	public void setId(int id){
-		this.id = id;
-	}
-	
 	public int getXCoord(){
 		return (int) this.position.x;
 	}
@@ -95,10 +82,6 @@ public class Base{
 	
 	public int getCapacity(){
 		return (int) this.capacity;
-	}
-	
-	public int getNbAgents() {
-		return (int) nbAgents;
 	}
 
 	public Player getOwner() {
@@ -117,7 +100,7 @@ public class Base{
 		return owner.getType() == TypeOfPlayer.NEUTRAL ? true : false;
 	}
 	
-	public boolean isAPlayersBase() {
+	public boolean isAPlayerBase() {
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
 	}
 	
@@ -130,9 +113,4 @@ public class Base{
 						   *(other.getPosition().getY()-this.getPosition().getY())
 						);
 	}
-
-	public Point2D.Float getPosition() {
-		return position;
-	}
-	
 }

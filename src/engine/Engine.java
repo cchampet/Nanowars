@@ -67,6 +67,7 @@ public class Engine{
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
 			if(unit.atDestination()){
+				unit.resolveAttack();
 				idDeleted.add(unit.getId());
 				//iterUnits.remove();
 				//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
@@ -78,7 +79,6 @@ public class Engine{
 				units = tmpListOfUnits;
 			}
 		}
-		
 		return idDeleted;
 	}
 	
@@ -162,5 +162,14 @@ public class Engine{
 			}
 		}
 		return unitsOfTheOwner;
+	}
+
+	public ArrayList<Tower> getTowerAround(Base base) {
+		ArrayList<Tower> towersAround = new ArrayList<Tower>();
+		for(Tower t:towers){
+			if(t.getAssociatedBase().equals(base))
+				towersAround.add(t);
+		}
+		return towersAround;
 	}
 }

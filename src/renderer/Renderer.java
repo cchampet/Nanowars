@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
+import playable.TypeOfPlayer;
+
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -98,7 +100,7 @@ public class Renderer{
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
-		//update sprites
+		//update sprites list
 		Iterator<Sprite> iterSprites = this.getSprites().iterator();
 		while(iterSprites.hasNext()){
 			Sprite sprite = iterSprites.next();
@@ -114,10 +116,29 @@ public class Renderer{
 			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
 		}
 		
+		//update the sprite depends on the owner, for each base
+		for(BaseSprite baseSprite:this.getBaseSprites()){
+			baseSprite.setImage(baseSprite.getEngineBase().getOwner().getType().getImageOfBase());
+		}
+		
 		//update the position of each unit
 		for(UnitSprite unitSprite:this.getUnitSprites()){
 			Point newPoint = new Point((int)(unitSprite.getEngineUnit().getPosition().x - unitSprite.getSpriteSize()/2), (int)(unitSprite.getEngineUnit().getPosition().y - unitSprite.getSpriteSize()/2));
 			unitSprite.setLocation(newPoint);
+		}
+		
+		//update the sprite depends on the owner of the associated base, for each tower
+		for(TowerSprite towerSprite:this.getTowerSprites()){
+			if(towerSprite.getEngineTower().getLevel() != 0)
+				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTower());
+			else
+				towerSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());	
+		}
+		
+		//update the display of nbAgents and of the level for each tower
+		for(TowerSprite towerSprite:this.getTowerSprites()){
+			towerSprite.getNbAgents().setText(String.valueOf(towerSprite.getEngineTower().getNbAgents()));
+			towerSprite.getLevel().setText("lvl "+String.valueOf(towerSprite.getEngineTower().getLevel()));
 		}
 	}
 	
@@ -178,6 +199,14 @@ public class Renderer{
 	 */
 	public ArrayList<BaseSprite> getBaseSprites() {
 		return this.mapRenderer.getBaseSprites();
+	}
+	
+	/**
+	 * Get only the towersSprites
+	 * @return ArrayList<UnitSprite>
+	 */
+	public ArrayList<TowerSprite> getTowerSprites() {
+		return this.mapRenderer.getTowerSprites();
 	}
 	
 	public JFrame getFrame(){

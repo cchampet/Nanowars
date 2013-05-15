@@ -21,7 +21,7 @@ import engine.Base;
 @SuppressWarnings("serial")
 public class BaseSprite extends Sprite implements MouseListener{
 	/**
-	 * startingPoint and endingPoint are static variable, useful to decide in which direction the player sends units.
+	 * startingBase and endingBase are static variable, useful to decide in which direction the player sends units.
 	 */
 	private static ArrayList<Base> startingBases = new ArrayList<Base>();
 	private static Base endingBase;
@@ -74,13 +74,14 @@ public class BaseSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if(this.engineBase.isAPlayersBase()){
+		if(this.engineBase.isAPlayerBase()){
 			this.setOpaque(true);
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(BaseSprite.startingBases.size() == 0 && this.engineBase.isAPlayersBase()) {
+		if(BaseSprite.startingBases.size() == 0 && this.engineBase.isAPlayerBase()) {
 			BaseSprite.startingBases.add(this.engineBase);
+
 		}
 		// The following 'if' statement rewrites the statement :
 		// if(BaseSprite.startingBases != null && BaseSprite.startingBase != this.engineBase)
