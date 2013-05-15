@@ -118,7 +118,10 @@ public class Renderer{
 		
 		//update the sprite depends on the owner of the associated base, for each tower
 		for(TowerSprite towerSprite:this.getTowerSprites()){
-			towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTower());
+			if(towerSprite.getEngineTower().getLevel() == 0)
+				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
+			else
+				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
 		}
 		
 		//update the display of nbAgents and of the level for each tower

@@ -158,7 +158,7 @@ public class MapRenderer{
 	public int addTowerSprite(Tower newTower){
 		TowerSprite newSprite = new TowerSprite(newTower);
 		//set the image of the tower
-		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
+		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
