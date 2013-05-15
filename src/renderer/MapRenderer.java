@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import dispatcher.Dispatcher;
+
 import playable.TypeOfPlayer;
 import engine.Base;
 import engine.Tower;
@@ -71,24 +73,6 @@ public class MapRenderer{
 				this.setVisible(true);
 			}
 		};
-		
-		//Manage events
-		this.background.addMouseListener(new MouseListener(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				BaseSprite.resetStartingBase();
-				BaseSprite.resetEndingBase();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {}
-			@Override
-			public void mouseExited(MouseEvent arg0) {}
-			@Override
-			public void mousePressed(MouseEvent arg0) {}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {}
-		});
 	}
 	
 	/**
@@ -107,6 +91,25 @@ public class MapRenderer{
 		
 		this.effectsLayer.setBounds(0, 0, this.width, this.height);
 		this.container.add(this.effectsLayer, new Integer(EFFECT_LAYER));
+		
+		//Manage events
+		this.background.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Dispatcher.getRenderer().hideRadialMenuMovment();
+				BaseSprite.resetStartingBase();
+				BaseSprite.resetEndingBase();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+		});
 	}
 	
 	/**

@@ -66,8 +66,9 @@ public class Renderer{
 			public void keyTyped(KeyEvent e) {}
 		});
 		
-		//Set up some images for the map
+		//Initialize secondary renderer
 		this.mapRenderer.init();
+		this.uiRenderer.init();
 	}	
 	
 	/**
@@ -155,7 +156,7 @@ public class Renderer{
 	/**
 	 * Display winner message
 	 */
-	public void displayWinner() throws IOException {
+	public void displayWinner(){
 		//Set up the frame
 		this.uiRenderer.displayWinner();
 	}
@@ -165,8 +166,22 @@ public class Renderer{
 	 * @param mousePosition Position of the mouse, where the radial menu will appear
 	 * @throws IOException
 	 */
-	public void displayRadialMenuMovment(Point mousePosition) throws IOException{
-		this.uiRenderer.displayRadialMenuMovment(mousePosition);
+	public void refreshRadialMenuMovment(Point mousePosition){
+		this.uiRenderer.refreshRadialMenuMovment(mousePosition);
+	}
+	
+	public void hideRadialMenuMovment(){
+		this.uiRenderer.refreshRadialMenuMovment(new Point(0, 0));
+		this.uiRenderer.updateChoosingUnitFlag(false);
+		this.uiRenderer.refreshRadialMenuMovment(new Point(0, 0));
+	}
+	
+	public boolean isChoosingUnit(){
+		return this.uiRenderer.getChoosingUnitFlag();
+	}
+	
+	public double getUnitPercentChosen(){
+		return this.uiRenderer.getUnitPercentChosen();
 	}
 	
 	//GETTERS & SETTERS

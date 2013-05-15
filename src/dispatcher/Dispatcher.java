@@ -157,31 +157,33 @@ public class Dispatcher {
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
 			if(BaseSprite.isAStartingBase() && BaseSprite.isAnEndingBase()) {
-				try {
-					Dispatcher.Renderer.displayRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
+				if(!Dispatcher.Renderer.isChoosingUnit()){
+					double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 
+					if(nbAgentsOfUnitSent == BaseSprite.getStartingBase().getNbAgents()){
+						nbAgentsOfUnitSent -= 1;
+					}
+					BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
+					BaseSprite.resetEndingBase();
 				}
-				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
-				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
-				BaseSprite.resetEndingBase();
 			}
 			else if(BaseSprite.isAStartingBase() && TowerSprite.isAnEndingTower()) {
-				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
-				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
-				TowerSprite.resetEndingTower();
+				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
+				if(!Dispatcher.Renderer.isChoosingUnit()){
+					double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen();
+					if(nbAgentsOfUnitSent == BaseSprite.getStartingBase().getNbAgents()){
+						nbAgentsOfUnitSent -= 1;
+					}
+					BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
+					TowerSprite.resetEndingTower();
+				}
 			}
+			
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
 				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
-				try {
-					Dispatcher.Renderer.displayWinner();
-					Dispatcher.Renderer.render();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				Dispatcher.Renderer.displayWinner();
+				Dispatcher.Renderer.render();
 				
 				try {
 					Thread.sleep(5000);
