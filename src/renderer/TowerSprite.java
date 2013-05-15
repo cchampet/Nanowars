@@ -58,7 +58,8 @@ public class TowerSprite extends Sprite implements MouseListener{
 		this.level.setEnabled(false);
 		this.level.setBorder(null);
 		this.level.setHorizontalAlignment(JTextField.CENTER);
-		this.level.setOpaque(false);
+		this.level.setOpaque(true);
+		this.level.setBackground(new Color(0, 0, 0));
 		this.level.setIgnoreRepaint(false); // for better performence
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);

@@ -74,6 +74,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 		if (BaseSprite.startingBase != null && BaseSprite.startingBase != this.engineBase) {
 			BaseSprite.endingBase = this.engineBase;
 		}
+		
+		if(BaseSprite.startingBase != null && !BaseSprite.startingBase.getOwner().isPlayer()){
+			BaseSprite.startingBase = null;
+			BaseSprite.endingBase = null;
+		}
 	}
 
 	@Override
