@@ -106,6 +106,7 @@ public class Renderer{
 		//update the position of each unit
 		for(UnitSprite unitSprite:this.getUnitSprites()){
 			Point newPoint = new Point((int)(unitSprite.getEngineUnit().getPosition().x - unitSprite.getSpriteSize()/2), (int)(unitSprite.getEngineUnit().getPosition().y - unitSprite.getSpriteSize()/2));
+			unitSprite.updateNbAgents(unitSprite.getEngineUnit().getNbAgents());
 			unitSprite.setLocation(newPoint);
 		}
 		

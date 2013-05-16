@@ -12,6 +12,7 @@ import dispatcher.Dispatcher;
  */
 public class Unit extends Element {
 	private Element goal;
+	private Element start;
 	private int moveSpeed = 2;
 	private Player owner;
 	
@@ -21,7 +22,7 @@ public class Unit extends Element {
 		super((int)start.getCenter().x, (int)start.getCenter().y, nbAgents);
 		
 		this.owner = start.getOwner();
-		
+		this.start = start;
 		this.goal = goal;
 
 		Point2D.Float startingPosition = start.getCenter();
@@ -42,8 +43,9 @@ public class Unit extends Element {
 	
 	/**
 	 * Called when the unit is at his destination. Resolves the situation (depend on the owner of the base).
+	 * @return Boolean - true if the unit have to be delete, else false
 	 */
-	public void resolveAttack(){
+	public boolean resolveAttack(){
 		//if the destination is a base
 		if(this.goal.getClass() == Base.class){
 			Base tmpGoal = (Base) this.goal;
@@ -70,8 +72,21 @@ public class Unit extends Element {
 		//if the destination is a tower
 		else if(this.goal.getClass() == Tower.class){
 			Tower tmpGoal = (Tower) this.goal;
-			tmpGoal.addNbAgents(this.nbAgents);
+			//Send back a unit if the target tower is full
+			int sendBackAgents = tmpGoal.addNbAgents(this.nbAgents);
+			if(sendBackAgents != -1){
+				System.out.println(sendBackAgents);
+				this.nbAgents = sendBackAgents;
+				Element tmpElt = this.start;
+				this.start = this.goal;
+				this.goal = tmpElt;
+				this.direction.x *= -1;
+				this.direction.y *= -1;
+				return false;
+			}
 		}
+		
+		return true;
 	}
 	
 	/**

@@ -67,16 +67,16 @@ public class Engine{
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
 			if(unit.atDestination()){
-				unit.resolveAttack();
-				idDeleted.add(unit.getId());
-				//iterUnits.remove();
-				//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
-				CopyOnWriteArrayList<Unit> tmpListOfUnits = new CopyOnWriteArrayList<Unit>();
-				for(Unit u:units){
-					if(!u.equals(unit))
-						tmpListOfUnits.add(u);
+				if(unit.resolveAttack()){
+					idDeleted.add(unit.getId());
+					//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
+					CopyOnWriteArrayList<Unit> tmpListOfUnits = new CopyOnWriteArrayList<Unit>();
+					for(Unit u:units){
+						if(!u.equals(unit))
+							tmpListOfUnits.add(u);
+					}
+					units = tmpListOfUnits;
 				}
-				units = tmpListOfUnits;
 			}
 		}
 		return idDeleted;

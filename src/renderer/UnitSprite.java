@@ -41,6 +41,14 @@ public class UnitSprite extends Sprite{
 		this.add(this.nbAgents, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Change the number of agents to display
+	 * @param nbAgents
+	 */
+	public void updateNbAgents(int nbAgents){
+		this.nbAgents.setText(String.valueOf(nbAgents));
+	}
+	
 	// GETTERS & SETTERS
 
 	public Unit getEngineUnit() {
