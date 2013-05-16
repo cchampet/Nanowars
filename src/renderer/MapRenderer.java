@@ -7,6 +7,7 @@ import java.awt.MediaTracker;
 import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,18 +25,21 @@ import engine.Unit;
  * @author Jijidici
  *
  */
-public class MapRenderer{
+public class MapRenderer implements MouseListener{
 	private final int BACKGROUND_LAYER = 0;
 	private final int BASE_LAYER = 10;
 	private final int UNIT_LAYER = 100;
 	private final int EFFECT_LAYER = 150;
 
 	private JLabel background;
-	private JLabel effectsLayer;
+	private JLabel effectsLayer;//couche transparente sur lequel on peut ajouter des écouteurs
+								// Les événements du rectangle s'appliqueront là-dessus.
 	private Container container;
 	private int width;
 	private int height;
 	private final ArrayList<Sprite> sprites;
+	private static Point2D.Float selectionStartingCorner;
+	private static Point2D.Float selectionEndingCorner;
 	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
@@ -68,23 +72,11 @@ public class MapRenderer{
 			}
 		};
 		
+		MapRenderer.selectionStartingCorner = new Point2D.Float();
+		MapRenderer.selectionEndingCorner = new Point2D.Float();
+		
 		//Manage events
-		this.background.addMouseListener(new MouseListener(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				BaseSprite.resetStartingBase();
-				BaseSprite.resetEndingBase();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {}
-			@Override
-			public void mouseExited(MouseEvent arg0) {}
-			@Override
-			public void mousePressed(MouseEvent arg0) {}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {}
-		});
+		this.background.addMouseListener(this);
 	}
 	
 	/**
@@ -234,5 +226,46 @@ public class MapRenderer{
 	 */
 	public Container getContainer() {
 		return container;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		BaseSprite.resetStartingBase();
+		BaseSprite.resetEndingBase();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		MapRenderer.selectionStartingCorner.x=arg0.getXOnScreen();
+		MapRenderer.selectionStartingCorner.y=arg0.getYOnScreen();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		if(selectionStartingCorner != null){
+			MapRenderer.selectionEndingCorner.x=arg0.getXOnScreen();
+			MapRenderer.selectionEndingCorner.y=arg0.getYOnScreen();
+		}
+		
+	}
+
+	public static Point2D.Float getSelectionStartingCorner() {
+		return selectionStartingCorner;
+	}
+
+	public static Point2D.Float getSelectionEndingCorner() {
+		return selectionEndingCorner;
 	}
 }
