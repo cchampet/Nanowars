@@ -9,8 +9,6 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
-import playable.TypeOfPlayer;
-
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -70,6 +68,7 @@ public class Renderer{
 		this.mapRenderer.init();
 		this.uiRenderer.init();
 	}	
+
 	
 	/**
 	 * Display the main frame.
@@ -112,10 +111,10 @@ public class Renderer{
 		
 		//update the sprite depends on the owner of the associated base, for each tower
 		for(TowerSprite towerSprite:this.getTowerSprites()){
-			if(towerSprite.getEngineTower().getLevel() != 0)
-				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTower());
+			if(towerSprite.getEngineTower().getLevel() == 0)
+				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
 			else
-				towerSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());	
+				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
 		}
 		
 		//update the display of nbAgents and of the level for each tower
@@ -159,6 +158,14 @@ public class Renderer{
 	public void displayWinner(){
 		//Set up the frame
 		this.uiRenderer.displayWinner();
+	}
+	
+	/**
+	 * Display looser message
+	 */
+	public void displayLooser(){
+		//Set up the frame
+		this.uiRenderer.displayLooser();
 	}
 	
 	/**
@@ -229,5 +236,9 @@ public class Renderer{
 	
 	public JFrame getFrame(){
 		return frame;
+	}
+
+	public MapRenderer getMapRenderer() {
+		return mapRenderer;
 	}
 }

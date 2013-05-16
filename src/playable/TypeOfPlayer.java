@@ -13,10 +13,10 @@ import javax.imageio.ImageIO;
  *
  */
 public enum TypeOfPlayer {
-	PLAYER("./tex/basePlayer.png", "./tex/towerPlayer.png", "./tex/unitPlayer.png"), 
-	IA_1("./tex/baseIA_1.png", "./tex/towerIA_1.png", "./tex/unitIA_1.png"),
-	IA_2("./tex/baseIA_2.png", "./tex/towerIA_2.png", "./tex/unitIA_2.png"),
-	NEUTRAL("./tex/baseNeutral.png", "./tex/towerNeutral.png");
+	PLAYER("./tex/base/basePlayer.png", "./tex/tower/towerPlayer_lvl0.png", "./tex/tower/towerPlayer_lvlup.png", "./tex/unit/unitPlayer.png"), 
+	IA_1("./tex/base/baseIA_1.png", "./tex/tower/towerIA_1_lvl0.png", "./tex/tower/towerIA_1_lvlup.png", "./tex/unit/unitIA_1.png"),
+	IA_2("./tex/base/baseIA_2.png", "./tex/tower/towerIA_2_lvl0.png", "./tex/tower/towerIA_2_lvlup.png", "./tex/unit/unitIA_2.png"),
+	NEUTRAL("./tex/base/baseNeutral.png", "./tex/tower/towerNeutral_lvl0.png", "./tex/tower/towerNeutral_lvlup.png");
 	
 	private HashMap<String, BufferedImage> images;
 		
@@ -25,10 +25,12 @@ public enum TypeOfPlayer {
 		
 		try {
 			this.images.put("base", ImageIO.read(new File(pathOfImages[0])));
-			if(pathOfImages.length > 1)
-				this.images.put("tower", ImageIO.read(new File(pathOfImages[1])));
-			if(pathOfImages.length > 2)
-				this.images.put("unit", ImageIO.read(new File(pathOfImages[2])));
+			if(pathOfImages.length > 1) {
+				this.images.put("tower_lvl0", ImageIO.read(new File(pathOfImages[1])));
+				this.images.put("tower_lvlup", ImageIO.read(new File(pathOfImages[2])));
+			}
+			if(pathOfImages.length > 3)
+				this.images.put("unit", ImageIO.read(new File(pathOfImages[3])));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -49,7 +51,11 @@ public enum TypeOfPlayer {
 		return images.get("unit");
 	}
 	
-	public BufferedImage getImageOfTower() {
-		return images.get("tower");
+	public BufferedImage getImageOfTowerLvl0() {
+		return images.get("tower_lvl0");
+	}
+	
+	public BufferedImage getImageOfTowerLvlup() {
+		return images.get("tower_lvlup");
 	}
 }

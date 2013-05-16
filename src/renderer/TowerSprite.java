@@ -10,7 +10,6 @@ import java.awt.event.MouseListener;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import dispatcher.Dispatcher;
 import engine.Tower;
 
 @SuppressWarnings("serial")
@@ -58,7 +57,8 @@ public class TowerSprite extends Sprite implements MouseListener{
 		this.level.setEnabled(false);
 		this.level.setBorder(null);
 		this.level.setHorizontalAlignment(JTextField.CENTER);
-		this.level.setOpaque(false);
+		this.level.setOpaque(true);
+		this.level.setBackground(new Color(0, 0, 0));
 		this.level.setIgnoreRepaint(false); // for better performence
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
@@ -76,7 +76,7 @@ public class TowerSprite extends Sprite implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		if (BaseSprite.getStartingBase() != null && TowerSprite.endingTower == null) {
-			if(Dispatcher.getEngine().getTowerAround(BaseSprite.getStartingBase()).contains(this.engineTower))
+			if(this.engineTower.getAssociatedBase().isAPlayerBase())
 				TowerSprite.endingTower = this.engineTower;
 		}
 	}
@@ -110,7 +110,7 @@ public class TowerSprite extends Sprite implements MouseListener{
 		return TowerSprite.endingTower;
 	}
 	
-	public static boolean isAnEndingTower() {
+	public static boolean isThereAnEndingTower() {
 		return TowerSprite.endingTower == null ? false : true;
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -28,18 +29,29 @@ import engine.Unit;
  * @author Jijidici
  *
  */
-public class MapRenderer{
+public class MapRenderer implements MouseListener{
 	private final int BACKGROUND_LAYER = 0;
 	private final int BASE_LAYER = 10;
 	private final int UNIT_LAYER = 100;
 	private final int EFFECT_LAYER = 150;
 
+	/**
+	 * background : the background layer. No event connected on it. 
+	 */
 	private JLabel background;
+	/**
+	 * effectsLayer : a transparent layer, above the background layer. We connect events on it.
+	 */
 	private JLabel effectsLayer;
 	private Container container;
 	private int width;
 	private int height;
 	private final ArrayList<Sprite> sprites;
+	/**
+	 * 
+	 */
+	private static Point2D.Float selectionStartingCorner;
+	private static Point2D.Float selectionEndingCorner;
 	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
@@ -63,7 +75,7 @@ public class MapRenderer{
 				
 				this.setVisible(false);
 				// draw the line between bases
-				if(BaseSprite.isAStartingBase()){
+				if(BaseSprite.isThereAStartingBase()){
 					g.setColor(Color.WHITE);
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this);
@@ -73,6 +85,10 @@ public class MapRenderer{
 				this.setVisible(true);
 			}
 		};
+
+		
+		MapRenderer.selectionStartingCorner = new Point2D.Float();
+		MapRenderer.selectionEndingCorner = new Point2D.Float();
 	}
 	
 	/**
@@ -165,11 +181,36 @@ public class MapRenderer{
 	public int addTowerSprite(Tower newTower){
 		TowerSprite newSprite = new TowerSprite(newTower);
 		//set the image of the tower
-		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTower());
+		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, new Integer(BASE_LAYER));
 		sprites.add(newSprite);
 		return newSprite.getId();
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		BaseSprite.resetStartingBase();
+		BaseSprite.resetEndingBase();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {}
+	@Override
+	public void mouseExited(MouseEvent arg0) {}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		MapRenderer.selectionStartingCorner.x=arg0.getXOnScreen();
+		MapRenderer.selectionStartingCorner.y=arg0.getYOnScreen();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		if(selectionStartingCorner != null){
+			MapRenderer.selectionEndingCorner.x=arg0.getXOnScreen();
+			MapRenderer.selectionEndingCorner.y=arg0.getYOnScreen();
+		}
 	}
 	
 	// GETTERS & SETTERS
@@ -241,5 +282,13 @@ public class MapRenderer{
 	 */
 	public Container getContainer() {
 		return container;
+	}
+
+	public static Point2D.Float getSelectionStartingCorner() {
+		return selectionStartingCorner;
+	}
+
+	public static Point2D.Float getSelectionEndingCorner() {
+		return selectionEndingCorner;
 	}
 }
