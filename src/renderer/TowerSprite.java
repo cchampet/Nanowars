@@ -110,7 +110,7 @@ public class TowerSprite extends Sprite implements MouseListener{
 		return TowerSprite.endingTower;
 	}
 	
-	public static boolean isAnEndingTower() {
+	public static boolean isThereAnEndingTower() {
 		return TowerSprite.endingTower == null ? false : true;
 	}
 }

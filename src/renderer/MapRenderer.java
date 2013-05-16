@@ -71,7 +71,7 @@ public class MapRenderer implements MouseListener{
 				
 				this.setVisible(false);
 				// draw the line between bases
-				if(BaseSprite.isAStartingBase()){
+				if(BaseSprite.isThereAStartingBase()){
 					g.setColor(Color.WHITE);
 					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
 							MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y-20);

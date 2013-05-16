@@ -38,9 +38,17 @@ public class Dispatcher {
 		
 	/**
 	 * This method load the map from a datamap image.
+	 * For making the map (from photoshop for example) :
+	 * 	- blue[50, 150], red[0], green[0] => a base for the player
+	 * 	- red[50, 150], blue[0], green[0] => a base for the IA_1
+	 * 	- green[50, 150], blue[0], red[0] => a base for the IA_2
+	 * 	- white[50, 150], blue[50, 150], red[50, 150] => a neutral base
+	 * 
+	 * 	- blue [200], red [200], green [200] => a tower
+	 * 
+	 * 	- blue [255], red [255], green [255] => the gold base
 	 * 
 	 * @param filepath path of the datamap grey-scale image
-	 * @param players 
 	 * @throws IOException
 	 */
 	public static void loadMap(String filepath) throws IOException{
@@ -90,10 +98,8 @@ public class Dispatcher {
 				Color color = new Color(map.getRGB(x, y));
 				//if the pixel is not black
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
-					//blue [200, 207] => a tower for the player
+					//blue [200], red [200], green [200] => a tower
 					if(color.getBlue() == 200 && color.getRed() == 200 && color.getGreen() == 200){
-						//float pixelBlue = mapData.getSampleFloat(x, y, 2);
-						// if for the type of Tower
 						Tower newTower = new Tower(MAP_SCALE*x, MAP_SCALE*y);
 						newTower.setId(Renderer.addTowerSprite(newTower));
 						Engine.addTower(newTower);
@@ -108,8 +114,6 @@ public class Dispatcher {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args){
-		
-		
 		//init players
 		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
 		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
@@ -161,27 +165,24 @@ public class Dispatcher {
 			
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
-			if(BaseSprite.isAStartingBase() && BaseSprite.isAnEndingBase()) {
+			if(BaseSprite.isThereAStartingBase() && BaseSprite.isThereAnEndingBase()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
 				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 				BaseSprite.resetEndingBase();
 			}
-			else if(BaseSprite.isAStartingBase() && TowerSprite.isAnEndingTower()) {
+			else if(BaseSprite.isThereAStartingBase() && TowerSprite.isThereAnEndingTower()) {
 				double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() / 2; // agents of the unit sent = 50% of agents in the base
 				BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
 				TowerSprite.resetEndingTower();
 			}
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
-				System.out.println("The winner is "+Players.get("Player").getNameOfPlayer());
 				try {
 					Dispatcher.Renderer.displayWinner();
 					Dispatcher.Renderer.render();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 				try {
 					Thread.sleep(5000);
 					endOfGame = true;
@@ -190,17 +191,15 @@ public class Dispatcher {
 				}
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
-				
 			}
 			else if((Players.get("IA_1").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_2").isAlive())
 					|| (Players.get("IA_2").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())){
-				System.out.println("You loose !");
 				try {
 					Dispatcher.Renderer.displayLooser();
 					Dispatcher.Renderer.render();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.exit(0);
 				}
 				
 				try {
@@ -208,12 +207,10 @@ public class Dispatcher {
 					endOfGame = true;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					System.exit(0);
 				}
-				
-				
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
-				endOfGame = true;
 			}
 			
 			//if the loop is too fast, we need to wait 

@@ -133,7 +133,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 	
 	public static Point2D.Float getStartingPoint() {
-		if(BaseSprite.startingBases.size()>0){
+		if(!BaseSprite.startingBases.isEmpty()){
 			return BaseSprite.startingBases.get(0).getCenter();
 		}
 		else{
@@ -146,7 +146,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 	
 	public static Base getStartingBase() {
-		if(BaseSprite.startingBases.size()>0){
+		if(!BaseSprite.startingBases.isEmpty()){
 			return BaseSprite.startingBases.get(0);
 		}
 		else{
@@ -159,11 +159,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 		return BaseSprite.endingBase;
 	}
 
-	public static boolean isAStartingBase() {
-			return BaseSprite.startingBases.size() == 0 ? false : true;
+	public static boolean isThereAStartingBase() {
+			return BaseSprite.startingBases.isEmpty() ? false : true;
 	}
 	
-	public static boolean isAnEndingBase() {
+	public static boolean isThereAnEndingBase() {
 		return BaseSprite.endingBase == null ? false : true;
 	}
 }
