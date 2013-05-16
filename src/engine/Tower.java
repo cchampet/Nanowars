@@ -10,7 +10,7 @@ import dispatcher.Dispatcher;
  *
  */
 public class Tower extends Element {
-	private static final double STEP_FOR_NEXT_LVL = 2;
+	private static final double STEP_FOR_NEXT_LVL = 20;
 	private static final int  MAX_LVL = 3;
 	private final Base associatedBase;
 	protected int level;
