@@ -10,6 +10,9 @@ import engine.Base;
  */
 public class Player extends Thread implements Playable {
 	private final String name;
+	/**
+	 * The type of the player is an enum, which contains all images we need to display the right elements (bases, towers...)
+	 */
 	private final TypeOfPlayer type;
 	/**
 	 * flagThread is useful for stop the last player's thread (at the end of the game).
@@ -25,24 +28,10 @@ public class Player extends Thread implements Playable {
 	
 	public void run() {
 		while(!this.lost() && flagThread){
-			//System.out.println(this.name+" : already in the course !");
 			if(this.isIA())
 				chooseAction();
 		}
 	}
-
-	/*@Override
-	public void chooseAction() {
-		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
-			if(baseOfHim.getNbAgents() > 50){
-				for(Base goal:Dispatcher.getEngine().getBases()){
-					if(goal.getOwner().isNeutral()){
-						baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
-					}
-				}
-			}
-		}
-	}*/
 	
 	@Override
 	public void chooseAction() {

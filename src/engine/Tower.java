@@ -21,6 +21,7 @@ public class Tower extends Element {
 		this.level = 0;
 		this.vision = 0;
 		
+		//define the associatedBase of the tower
 		int idOfTheNearestBase = -1;
 		for(Base base:Dispatcher.getEngine().getBases()){
 			if(idOfTheNearestBase < 0) 

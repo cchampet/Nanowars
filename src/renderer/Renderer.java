@@ -84,8 +84,6 @@ public class Renderer{
 		this.uiRenderer.displayLooser();
 	}
 	
-	
-	
 	/**
 	 * Display the main frame.
 	 */

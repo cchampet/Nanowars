@@ -25,8 +25,11 @@ public class BaseSprite extends Sprite implements MouseListener{
 	 */
 	private static ArrayList<Base> startingBases = new ArrayList<Base>();
 	private static Base endingBase;
-	private static Point2D.Float selectionCornerBegin;
-	private static Point2D.Float selectionCornerEnd;
+	/**
+	 * selectionCornerBegin and selectionCornerEnd are static variable, useful to select several bases.
+	 */
+	//private static Point2D.Float selectionCornerBegin;
+	//private static Point2D.Float selectionCornerEnd;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
 	 */
@@ -79,16 +82,14 @@ public class BaseSprite extends Sprite implements MouseListener{
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(BaseSprite.startingBases.isEmpty() && this.engineBase.isAPlayerBase()) {
+		if(BaseSprite.startingBases.isEmpty() && this.engineBase.isAPlayerBase())
 			BaseSprite.startingBases.add(this.engineBase);
 
-		}
 		// The following 'if' statement rewrites the statement :
 		// if(BaseSprite.startingBases != null && BaseSprite.startingBase != this.engineBase)
 		// in  accordance with the implementation of multiple starting bases.
-		if (BaseSprite.startingBases.size() != 0 && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase))) {
+		if (!BaseSprite.startingBases.isEmpty() && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase)))
 			BaseSprite.endingBase = this.engineBase;
-		}
 
 		//to fix the bug when you can control the IA
 		if(!BaseSprite.startingBases.isEmpty()){

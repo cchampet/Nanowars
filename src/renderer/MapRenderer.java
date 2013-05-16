@@ -31,13 +31,21 @@ public class MapRenderer implements MouseListener{
 	private final int UNIT_LAYER = 100;
 	private final int EFFECT_LAYER = 150;
 
+	/**
+	 * background : the background layer. No event connected on it. 
+	 */
 	private JLabel background;
-	private JLabel effectsLayer;//couche transparente sur lequel on peut ajouter des écouteurs
-								// Les événements du rectangle s'appliqueront là-dessus.
+	/**
+	 * effectsLayer : a transparent layer, above the background layer. We connect events on it.
+	 */
+	private JLabel effectsLayer;
 	private Container container;
 	private int width;
 	private int height;
 	private final ArrayList<Sprite> sprites;
+	/**
+	 * 
+	 */
 	private static Point2D.Float selectionStartingCorner;
 	private static Point2D.Float selectionEndingCorner;
 	
@@ -157,6 +165,31 @@ public class MapRenderer implements MouseListener{
 		return newSprite.getId();
 	}
 	
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		BaseSprite.resetStartingBase();
+		BaseSprite.resetEndingBase();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {}
+	@Override
+	public void mouseExited(MouseEvent arg0) {}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		MapRenderer.selectionStartingCorner.x=arg0.getXOnScreen();
+		MapRenderer.selectionStartingCorner.y=arg0.getYOnScreen();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		if(selectionStartingCorner != null){
+			MapRenderer.selectionEndingCorner.x=arg0.getXOnScreen();
+			MapRenderer.selectionEndingCorner.y=arg0.getYOnScreen();
+		}
+	}
+	
 	// GETTERS & SETTERS
 
 	/**
@@ -226,39 +259,6 @@ public class MapRenderer implements MouseListener{
 	 */
 	public Container getContainer() {
 		return container;
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		BaseSprite.resetStartingBase();
-		BaseSprite.resetEndingBase();
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		MapRenderer.selectionStartingCorner.x=arg0.getXOnScreen();
-		MapRenderer.selectionStartingCorner.y=arg0.getYOnScreen();
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		if(selectionStartingCorner != null){
-			MapRenderer.selectionEndingCorner.x=arg0.getXOnScreen();
-			MapRenderer.selectionEndingCorner.y=arg0.getYOnScreen();
-		}
-		
 	}
 
 	public static Point2D.Float getSelectionStartingCorner() {
