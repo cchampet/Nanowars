@@ -152,9 +152,7 @@ public class Dispatcher {
 		boolean endOfGame = false;
 		//=>what we have to do in each frame
 		while(!endOfGame) {
-			System.out.println("Coin de départ" + MapRenderer.getSelectionStartingCorner());
-			System.out.println("Coin d'arrivée" + MapRenderer.getSelectionEndingCorner());
-			
+				
 			long begin = System.currentTimeMillis();
 			
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
