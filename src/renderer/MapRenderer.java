@@ -3,7 +3,6 @@ package renderer;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -89,21 +88,23 @@ public class MapRenderer implements MouseListener{
 							mousePosition.x, mousePosition.y);
 				}
 				if(MapRenderer.mouseDown==true){
+					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+					SwingUtilities.convertPointFromScreen(mousePosition, this);
 					g.drawRect(
 						Math.min(
 							(int)MapRenderer.selectionStartingCorner.x,
-							MouseInfo.getPointerInfo().getLocation().x 
+							mousePosition.x 
 						),	
 						Math.min(	
 							(int)MapRenderer.selectionStartingCorner.y,
-							MouseInfo.getPointerInfo().getLocation().y 
+							mousePosition.y 
 						), 
 						Math.abs(
-							MouseInfo.getPointerInfo().getLocation().x 
+							mousePosition.x 
 							- (int)MapRenderer.selectionStartingCorner.x
 						), 
 						Math.abs(	
-							MouseInfo.getPointerInfo().getLocation().y
+							mousePosition.y
 							- (int)MapRenderer.selectionStartingCorner.y
 						)
 					);
