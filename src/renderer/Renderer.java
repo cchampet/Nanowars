@@ -164,9 +164,9 @@ public class Renderer{
 	/**
 	 * Display looser message
 	 */
-	public void displayLooser(){
+	public void displayLoser(){
 		//Set up the frame
-		this.uiRenderer.displayLooser();
+		this.uiRenderer.displayLoser();
 	}
 	
 	/**

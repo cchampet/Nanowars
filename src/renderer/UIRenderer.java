@@ -16,7 +16,7 @@ public class UIRenderer {
 
 	private final int UI_LAYER = 200;
 	private JLabel winnerBackground;
-	private JLabel looserBackground;
+	private JLabel loserBackground;
 	private JLabel radialMenuMovment;
 	private Container container;
 	private int width;
@@ -27,7 +27,7 @@ public class UIRenderer {
 	public UIRenderer(Container c, int width, int height){
 		super();
 		this.winnerBackground = new JLabel();
-		this.looserBackground = new JLabel();
+		this.loserBackground = new JLabel();
 		this.radialMenuMovment = new JLabel();
 		this.container = c;
 		this.height=height;
@@ -44,12 +44,12 @@ public class UIRenderer {
 		this.winnerBackground.setIcon(bgWinnerImage);
 		
 		//Load the looser background image
-		ImageIcon bgLooserImage = new ImageIcon("./tex/youLoose.png");
-		if(bgLooserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+		ImageIcon bgLoserImage = new ImageIcon("./tex/youLose.png");
+		if(bgLoserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}
-		this.looserBackground.setBounds(0, 0, this.width, this.height);
-		this.looserBackground.setIcon(bgLooserImage);
+		this.loserBackground.setBounds(0, 0, this.width, this.height);
+		this.loserBackground.setIcon(bgLoserImage);
 		
 		//Load the menu image
 		ImageIcon rmImage = new ImageIcon("./tex/radialmenu_movment.png");
@@ -101,10 +101,10 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Display a "LOOSER" message when the player lose and before exit program
+	 * Display a "LOSER" message when the player lose and before exit program
 	 */
-	public void displayLooser(){
-		this.container.add(this.looserBackground, new Integer(UI_LAYER));
+	public void displayLoser(){
+		this.container.add(this.loserBackground, new Integer(UI_LAYER));
 	}
 	
 	/**

@@ -111,7 +111,6 @@ public class MapRenderer implements MouseListener{
 						)
 					);
 				}
-				
 				this.setVisible(true);
 			}
 		};
@@ -319,6 +318,8 @@ public class MapRenderer implements MouseListener{
 		}
 		MapRenderer.selectionStartingCorner.x=(float)arg0.getX();
 		MapRenderer.selectionStartingCorner.y=(float)arg0.getY();
+	
+	
 	}
 
 	@Override

@@ -203,7 +203,7 @@ public class Dispatcher {
 			}
 			else if((Players.get("IA_1").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_2").isAlive())
 					|| (Players.get("IA_2").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())){
-				Dispatcher.Renderer.displayLooser();
+				Dispatcher.Renderer.displayLoser();
 				Dispatcher.Renderer.render();
 				
 				try {
