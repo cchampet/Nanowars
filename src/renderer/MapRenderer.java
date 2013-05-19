@@ -84,8 +84,10 @@ public class MapRenderer implements MouseListener{
 					g.setColor(Color.WHITE);
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this);
-					g.drawLine((int)BaseSprite.getStartingPoint().x, (int)BaseSprite.getStartingPoint().y, 
+					for(Base startingBase:BaseSprite.getStartingBases()){
+						g.drawLine((int)startingBase.getCenter().getX(), (int)startingBase.getCenter().getY(), 
 							mousePosition.x, mousePosition.y);
+					}
 				}
 				if(MapRenderer.mouseDown==true){
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();

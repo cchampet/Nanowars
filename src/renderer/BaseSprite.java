@@ -175,4 +175,8 @@ public class BaseSprite extends Sprite implements MouseListener{
 			}
 		}
 	}
+
+	public static ArrayList<Base> getStartingBases() {
+		return startingBases;
+	}
 }
