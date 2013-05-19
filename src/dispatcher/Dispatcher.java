@@ -166,22 +166,26 @@ public class Dispatcher {
 			if(BaseSprite.isThereAStartingBase() && BaseSprite.isThereAnEndingBase()) {
 				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
 				if(!Dispatcher.Renderer.isChoosingUnit()){
-					double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 
-					if(nbAgentsOfUnitSent == BaseSprite.getStartingBase().getNbAgents()){
-						nbAgentsOfUnitSent -= 1;
+					for(Base b:BaseSprite.getStartingBases()){
+						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 
+						if(nbAgentsOfUnitSent == b.getNbAgents()){
+							nbAgentsOfUnitSent -= 1;
+						}
+						b.sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 					}
-					BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
 					BaseSprite.resetEndingBase();
 				}
 			}
 			else if(BaseSprite.isThereAStartingBase() && TowerSprite.isThereAnEndingTower()) {
 				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
 				if(!Dispatcher.Renderer.isChoosingUnit()){
-					double nbAgentsOfUnitSent = BaseSprite.getStartingBase().getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen();
-					if(nbAgentsOfUnitSent == BaseSprite.getStartingBase().getNbAgents()){
-						nbAgentsOfUnitSent -= 1;
+					for(Base b:BaseSprite.getStartingBases()){
+						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen();
+						if(nbAgentsOfUnitSent == b.getNbAgents()){
+							nbAgentsOfUnitSent -= 1;
+						}
+						b.sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
 					}
-					BaseSprite.getStartingBase().sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
 					TowerSprite.resetEndingTower();
 				}
 			}

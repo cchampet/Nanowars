@@ -75,7 +75,7 @@ public class TowerSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (BaseSprite.getStartingBase() != null && TowerSprite.endingTower == null) {
+		if (BaseSprite.isThereAStartingBase() && TowerSprite.endingTower == null) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
 				TowerSprite.endingTower = this.engineTower;
 		}

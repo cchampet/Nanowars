@@ -72,13 +72,13 @@ public class BaseSprite extends Sprite implements MouseListener{
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(BaseSprite.startingBases.isEmpty() && this.engineBase.isAPlayerBase())
+		if(!BaseSprite.isThereAStartingBase() && this.engineBase.isAPlayerBase())
 			BaseSprite.startingBases.add(this.engineBase);
 
 		// The following 'if' statement rewrites the statement :
 		// if(BaseSprite.startingBases != null && BaseSprite.startingBase != this.engineBase)
 		// in  accordance with the implementation of multiple starting bases.
-		if (!BaseSprite.startingBases.isEmpty() && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase)))
+		if (BaseSprite.isThereAStartingBase() && !(BaseSprite.startingBases.contains(this.engineBase)))
 			BaseSprite.endingBase = this.engineBase;
 
 		//to fix the bug when you can control the IA
@@ -135,9 +135,9 @@ public class BaseSprite extends Sprite implements MouseListener{
 		return BaseSprite.endingBase.getCenter();
 	}
 	
-	public static Base getStartingBase() {
+	public static ArrayList<Base> getStartingBases() {
 		if(!BaseSprite.startingBases.isEmpty()){
-			return BaseSprite.startingBases.get(0);
+			return BaseSprite.startingBases;
 		}
 		else{
 			return null;
@@ -149,7 +149,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 	}
 
 	public static boolean isThereAStartingBase() {
-			return BaseSprite.startingBases.isEmpty() ? false : true;
+		return BaseSprite.startingBases.isEmpty() ? false : true;
 	}
 	
 	public static boolean isThereAnEndingBase() {
@@ -168,9 +168,5 @@ public class BaseSprite extends Sprite implements MouseListener{
 				}
 			}
 		}
-	}
-
-	public static ArrayList<Base> getStartingBases() {
-		return startingBases;
 	}
 }
