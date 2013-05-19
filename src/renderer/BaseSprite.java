@@ -128,7 +128,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 		return this.nbAgents;
 	}
 	
-	
+
 	public static Point2D.Float getEndingPoint() {
 		return BaseSprite.endingBase.getCenter();
 	}
