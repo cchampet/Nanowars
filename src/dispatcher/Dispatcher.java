@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
-import renderer.MapRenderer;
 import renderer.Renderer;
 import renderer.TowerSprite;
 import engine.Base;

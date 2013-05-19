@@ -24,19 +24,13 @@ import engine.Base;
 @SuppressWarnings("serial")
 public class BaseSprite extends Sprite implements MouseListener{
 	/**
-	 * startingBase and endingBase are static variable, useful to decide in which direction the player sends units.
+	 * startingBases and endingBase are static variable, useful to decide in which direction the player sends units.
 	 */
 	private static ArrayList<Base> startingBases = new ArrayList<Base>();
 	private static Base endingBase;
 	/**
-	 * selectionCornerBegin and selectionCornerEnd are static variable, useful to select several bases.
-	 */
-	//private static Point2D.Float selectionCornerBegin;
-	//private static Point2D.Float selectionCornerEnd;
-	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
-	
 	private JTextField nbAgents;
 	/**
 	 * engineBase is a reference to the corresponding base of this sprite.
