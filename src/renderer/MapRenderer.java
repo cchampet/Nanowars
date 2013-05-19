@@ -328,6 +328,7 @@ public class MapRenderer implements MouseListener{
 			}
 			MapRenderer.selectionEndingCorner.x=arg0.getX();
 			MapRenderer.selectionEndingCorner.y=arg0.getY();
+			BaseSprite.setStartingBases(selectionStartingCorner,selectionEndingCorner);
 		}
 		
 	}

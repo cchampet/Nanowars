@@ -7,9 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.lang.Math;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+
+import dispatcher.Dispatcher;
 
 import engine.Base;
 
@@ -31,15 +34,8 @@ public class BaseSprite extends Sprite implements MouseListener{
 	//private static Point2D.Float selectionCornerBegin;
 	//private static Point2D.Float selectionCornerEnd;
 	/**
-	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding base.
+	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
-	
-	// Ce sera pas un mouse press mais un mouse release
-	// L'envoi de units se fait dans BaseUnit
-	// Dans la boucle principale le dispatcher regarde si il y a une base de départ et d'arrivée
-	//1. CHECK Faire en sorte que tout ce qui marchait avant marche avec une liste de startingBases
-	//2. Faire en sorte que lorsqu'on clique un rectangle transparent apparaisse
-	//3. Faire en sorte que le bases comprises dans le domaine du rectangle soient selectionnées.
 	
 	private JTextField nbAgents;
 	/**
@@ -150,7 +146,6 @@ public class BaseSprite extends Sprite implements MouseListener{
 			return BaseSprite.startingBases.get(0);
 		}
 		else{
-			System.out.println("Pas de base de départ");
 			return null;
 		}
 	}
@@ -165,5 +160,19 @@ public class BaseSprite extends Sprite implements MouseListener{
 	
 	public static boolean isThereAnEndingBase() {
 		return BaseSprite.endingBase == null ? false : true;
+	}
+	
+	public static void setStartingBases(Point2D.Float startingCorner,Point2D.Float endingCorner){
+		for(Base potentialStartingBase:Dispatcher.getEngine().getBases()){
+			if(potentialStartingBase.getOwner().isPlayer()){	
+				if(Math.min(startingCorner.x,endingCorner.x) < potentialStartingBase.getCenter().x 
+					&&	potentialStartingBase.getCenter().x < Math.max(startingCorner.x,endingCorner.x)
+					&&	Math.min(startingCorner.y,endingCorner.y) < potentialStartingBase.getCenter().y
+					&&  potentialStartingBase.getCenter().y < Math.max(startingCorner.y,endingCorner.y)
+				){
+					startingBases.add(potentialStartingBase);
+				}
+			}
+		}
 	}
 }
