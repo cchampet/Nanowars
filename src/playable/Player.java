@@ -37,7 +37,6 @@ public class Player extends Thread implements Playable {
 	@Override
 	public void chooseAction() {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
-			System.out.println(buildTowerCounter);
 			if(baseOfHim.getNbAgents() > 0.8*baseOfHim.getCapacity()){
 				// The IA builds Towers once every 3 turns if it isn't in minority
 				if(buildTowerCounter == 3 
