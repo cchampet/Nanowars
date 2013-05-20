@@ -39,7 +39,7 @@ public class Base extends Element {
 		if(this.isNeutral()) //if it's a neutral base, it doesn't product
 			return;
 		if(this.nbAgents<=this.capacity){
-			this.nbAgents+=0.001*this.capacity;
+			this.nbAgents+=0.0005*this.capacity;
 		}
 	}
 

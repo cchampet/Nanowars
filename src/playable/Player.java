@@ -2,6 +2,7 @@ package playable;
 
 import dispatcher.Dispatcher;
 import engine.Base;
+import engine.Tower;
 
 /**
  * This class represents a player in the game. It's a thread, which is running while the player has at least one base or one unit.
@@ -18,7 +19,7 @@ public class Player extends Thread implements Playable {
 	 * flagThread is useful for stop the last player's thread (at the end of the game).
 	 */
 	public static boolean flagThread = true; 
-	
+	public int buildTowerCounter = 0;
 	public Player(String name, TypeOfPlayer type){
 		super();
 		
@@ -36,19 +37,35 @@ public class Player extends Thread implements Playable {
 	@Override
 	public void chooseAction() {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
-			if(baseOfHim.getNbAgents() > 0.9*baseOfHim.getCapacity()){
-				Base goal=null;
-				double param=1000000000;
-				for(Base potentialGoal:Dispatcher.getEngine().getAdversaryBasesOfAPlayer(this)){
-					if(!potentialGoal.equals(baseOfHim)){
-						if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim)<param){
-							goal=potentialGoal;
-							param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim);
-						}
+			System.out.println(buildTowerCounter);
+			if(baseOfHim.getNbAgents() > 0.8*baseOfHim.getCapacity()){
+				// The IA builds Towers once every 3 turns if it isn't in minority
+				if(buildTowerCounter == 3 
+						&& Dispatcher.getEngine().getBasesOfAPlayer(baseOfHim.getOwner()).size()
+						>= Dispatcher.getEngine().getAdversaryBasesOfAPlayer(baseOfHim.getOwner()).size()
+				){
+					buildTowerCounter=0;
+					for(Tower towerAround:Dispatcher.getEngine().getTowerAround(baseOfHim)){
+						baseOfHim.sendUnit(baseOfHim.getNbAgents()/5,towerAround);
 					}
 				}
-				baseOfHim.sendUnit(baseOfHim.getNbAgents() / 2, goal);
-			}
+				else{
+					Base goal=null;
+					double param=1000000000;
+					for(Base potentialGoal:Dispatcher.getEngine().getAdversaryBasesOfAPlayer(this)){
+						if(!potentialGoal.equals(baseOfHim)){
+							if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim)<param){
+								goal=potentialGoal;
+								param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim);
+							}
+						}
+					}
+					baseOfHim.sendUnit(baseOfHim.getNbAgents() / 3, goal);
+					if(buildTowerCounter < 3){
+						buildTowerCounter++;
+					}
+				}
+			}	
 		}
 	}
 	
