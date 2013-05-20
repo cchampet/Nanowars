@@ -120,7 +120,11 @@ public class Renderer{
 		
 		//update the display of nbAgents and of the level for each tower
 		for(TowerSprite towerSprite:this.getTowerSprites()){
-			towerSprite.getNbAgents().setText(String.valueOf(towerSprite.getEngineTower().getNbAgents()));
+			if(towerSprite.getEngineTower().isLevelMax())
+				towerSprite.getNbAgents().setText("Max");
+			else
+				towerSprite.getNbAgents().setText(String.valueOf(towerSprite.getEngineTower().getNbAgents()));
+			
 			towerSprite.getLevel().setText("lvl "+String.valueOf(towerSprite.getEngineTower().getLevel()));
 		}
 	}

@@ -78,4 +78,8 @@ public class Tower extends Element {
 	public Point2D.Float getCenter() {
 		return new Point2D.Float(this.position.x + 12, this.position.y + 12);
 	}
+
+	public boolean isLevelMax() {
+		return this.level == Tower.MAX_LVL ? true : false;
+	}
 }
