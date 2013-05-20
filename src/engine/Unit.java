@@ -27,10 +27,15 @@ public class Unit extends Element {
 
 		Point2D.Float startingPosition = start.getCenter();
 		Point2D.Float endingPosition = goal.getCenter();
-		this.direction = new Point2D.Float(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
-		float normDirection = (float) this.direction.distance(0, 0);
-		this.direction.x /= normDirection;
-		this.direction.y /= normDirection;
+		if(this.start!=this.goal){
+			this.direction = new Point2D.Float(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
+			float normDirection = (float) this.direction.distance(0, 0);
+			this.direction.x /= normDirection;
+			this.direction.y /= normDirection;
+		}
+		else{
+			this.direction = new Point2D.Float(1,1);
+		}
 	}
 	
 	/**
