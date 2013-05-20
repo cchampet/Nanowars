@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
@@ -63,6 +65,14 @@ public class TowerSprite extends ElementSprite implements MouseListener{
 		this.level.setIgnoreRepaint(false); // for better performence
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		if(this.engineTower.isLevelMax())
+			this.setBorder(BorderFactory.createLineBorder(Color.yellow));
 	}
 
 	@Override
