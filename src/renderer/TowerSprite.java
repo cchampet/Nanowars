@@ -5,11 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
 import engine.Tower;
@@ -20,7 +23,7 @@ import engine.Tower;
  *
  */
 @SuppressWarnings("serial")
-public class TowerSprite extends ElementSprite implements MouseListener{
+public class TowerSprite extends ElementSprite implements MouseListener, ActionListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
@@ -29,6 +32,11 @@ public class TowerSprite extends ElementSprite implements MouseListener{
 	 * level is the JTextField which is used to display the level of the correpsonding tower.
 	 */
 	private JTextField level;
+	/**
+	 * timer and blink are useful to create the blink when the tower is waiting for building.
+	 */
+	private Timer timer; 
+	private boolean blink;
 	/**
 	 * engineBase is a reference to the corresponding base of this sprite.
 	 */
@@ -39,6 +47,9 @@ public class TowerSprite extends ElementSprite implements MouseListener{
 		this.setLayout(new BorderLayout());
 		
 		this.engineTower = newTower;
+		
+		this.timer = new Timer (500, this);
+	    this.blink = false;
 		
 		this.size = 24;
 		
@@ -73,6 +84,11 @@ public class TowerSprite extends ElementSprite implements MouseListener{
 		
 		if(this.engineTower.isLevelMax())
 			this.setBorder(BorderFactory.createLineBorder(Color.yellow));
+		
+		if(this.engineTower.isWaitingForBuilding())
+			this.timer.start();
+		else
+			this.timer.stop();
 	}
 
 	@Override
@@ -94,6 +110,21 @@ public class TowerSprite extends ElementSprite implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
+	
+	/**
+	 * method called each blinks (when the tower is waiting for building).
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (blink){
+      	  this.setBorder(BorderFactory.createLineBorder(Color.gray));
+      	  this.blink = false;
+		}
+        else{
+      	  this.setBorder(BorderFactory.createLineBorder(Color.black));
+      	  this.blink = true;
+        }
+	}
 	
 	// GETTERS & SETTERS
 
