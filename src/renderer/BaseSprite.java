@@ -75,9 +75,6 @@ public class BaseSprite extends Sprite implements MouseListener{
 		if(!BaseSprite.isThereAStartingBase() && this.engineBase.isAPlayerBase())
 			BaseSprite.startingBases.add(this.engineBase);
 
-		// The following 'if' statement rewrites the statement :
-		// if(BaseSprite.startingBases != null && BaseSprite.startingBase != this.engineBase)
-		// in  accordance with the implementation of multiple starting bases.
 		if (BaseSprite.isThereAStartingBase() && !(BaseSprite.startingBases.contains(this.engineBase)))
 			BaseSprite.endingBase = this.engineBase;
 

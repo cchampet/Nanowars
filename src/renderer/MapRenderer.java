@@ -55,7 +55,6 @@ public class MapRenderer implements MouseListener{
 	private static Point2D.Float selectionEndingCorner;
 	
 	private static boolean mouseDown = false;
-	//private boolean isRunning = false;
 	
 	/**
 	 * Constructor which asking the frame container in which the game elements will be rendered. Il also ask the frame dimensions
