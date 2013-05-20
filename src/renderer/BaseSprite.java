@@ -75,7 +75,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 		if(!BaseSprite.isThereAStartingBase() && this.engineBase.isAPlayerBase())
 			BaseSprite.startingBases.add(this.engineBase);
 
-		if (BaseSprite.isThereAStartingBase() && !(BaseSprite.startingBases.contains(this.engineBase)))
+		if (BaseSprite.isThereAStartingBase() && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase)))
 			BaseSprite.endingBase = this.engineBase;
 
 		//to fix the bug when you can control the IA
