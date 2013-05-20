@@ -12,12 +12,13 @@ import javax.swing.text.JTextComponent;
 
 import engine.Tower;
 
+/**
+ * This class display a Tower.
+ * @author Yuki
+ *
+ */
 @SuppressWarnings("serial")
-public class TowerSprite extends Sprite implements MouseListener{
-	/**
-	 * endingTower are static variable, useful to decide in which direction the player sends units.
-	 */
-	private static Tower endingTower;
+public class TowerSprite extends ElementSprite implements MouseListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
@@ -75,18 +76,14 @@ public class TowerSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (BaseSprite.isThereAStartingBase() && TowerSprite.endingTower == null) {
+		if (BaseSprite.isThereAtLeastOneStartingElement() && TowerSprite.endingElement == null) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
-				TowerSprite.endingTower = this.engineTower;
+				TowerSprite.endingElement = this.engineTower;
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
-	
-	public static void resetEndingTower() {
-		TowerSprite.endingTower = null;
-	}
 	
 	// GETTERS & SETTERS
 
@@ -104,13 +101,5 @@ public class TowerSprite extends Sprite implements MouseListener{
 	
 	public Tower getEngineTower() {
 		return engineTower;
-	}
-	
-	public static Tower getEndingTower() {
-		return TowerSprite.endingTower;
-	}
-	
-	public static boolean isThereAnEndingTower() {
-		return TowerSprite.endingTower == null ? false : true;
 	}
 }

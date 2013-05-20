@@ -79,7 +79,7 @@ public class MapRenderer implements MouseListener{
 				
 				this.setVisible(false);
 				// draw the line between bases
-				if(BaseSprite.isThereAStartingBase()){
+				if(BaseSprite.isThereAtLeastOneStartingElement()){
 					g.setColor(Color.WHITE);
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this);
@@ -203,8 +203,8 @@ public class MapRenderer implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		Dispatcher.getRenderer().hideRadialMenuMovment();
-		BaseSprite.resetStartingBase();
-		BaseSprite.resetEndingBase();
+		BaseSprite.resetStartingElements();
+		BaseSprite.resetEndingElement();
 	}
 
 	@Override
@@ -228,12 +228,12 @@ public class MapRenderer implements MouseListener{
 	public void mouseReleased(MouseEvent arg0) {
 		mouseDown = false;
 		if(selectionStartingCorner != null){
-			if(MapRenderer.selectionEndingCorner==null){
+			if(MapRenderer.selectionEndingCorner==null)
 				MapRenderer.selectionEndingCorner=new Point2D.Float();
-			}
+			
 			MapRenderer.selectionEndingCorner.x=arg0.getX();
 			MapRenderer.selectionEndingCorner.y=arg0.getY();
-			BaseSprite.setStartingBases(selectionStartingCorner,selectionEndingCorner);
+			BaseSprite.setStartingBases(selectionStartingCorner, selectionEndingCorner);
 		}
 		
 	}

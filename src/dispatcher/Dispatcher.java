@@ -15,7 +15,6 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
-import renderer.TowerSprite;
 import engine.Base;
 import engine.Engine;
 import engine.Tower;
@@ -163,7 +162,7 @@ public class Dispatcher {
 			
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
-			if(BaseSprite.isThereAStartingBase() && BaseSprite.isThereAnEndingBase()) {
+			if(BaseSprite.isThereAtLeastOneStartingElement() && BaseSprite.isThereAnEndingElement()) {
 				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
 				if(!Dispatcher.Renderer.isChoosingUnit()){
 					for(Base b:BaseSprite.getStartingBases()){
@@ -171,22 +170,9 @@ public class Dispatcher {
 						if(nbAgentsOfUnitSent == b.getNbAgents()){
 							nbAgentsOfUnitSent -= 1;
 						}
-						b.sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingBase());
+						b.sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingElement());
 					}
-					BaseSprite.resetEndingBase();
-				}
-			}
-			else if(BaseSprite.isThereAStartingBase() && TowerSprite.isThereAnEndingTower()) {
-				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
-				if(!Dispatcher.Renderer.isChoosingUnit()){
-					for(Base b:BaseSprite.getStartingBases()){
-						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen();
-						if(nbAgentsOfUnitSent == b.getNbAgents()){
-							nbAgentsOfUnitSent -= 1;
-						}
-						b.sendUnit(nbAgentsOfUnitSent, TowerSprite.getEndingTower());
-					}
-					TowerSprite.resetEndingTower();
+					BaseSprite.resetEndingElement();
 				}
 			}
 			

@@ -7,14 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.lang.Math;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 import dispatcher.Dispatcher;
-
 import engine.Base;
+import engine.Element;
 
 /**
  * This class display a base.
@@ -22,12 +21,7 @@ import engine.Base;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends Sprite implements MouseListener{
-	/**
-	 * startingBases and endingBase are static variable, useful to decide in which direction the player sends units.
-	 */
-	private static ArrayList<Base> startingBases = new ArrayList<Base>();
-	private static Base endingBase;
+public class BaseSprite extends ElementSprite implements MouseListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
@@ -72,22 +66,24 @@ public class BaseSprite extends Sprite implements MouseListener{
 			this.setBackground(new Color(255, 100, 100));
 		}
 
-		if(!BaseSprite.isThereAStartingBase() && this.engineBase.isAPlayerBase())
-			BaseSprite.startingBases.add(this.engineBase);
+		if(!BaseSprite.isThereAtLeastOneStartingElement() && this.engineBase.isAPlayerBase())
+			BaseSprite.startingElements.add(this.engineBase);
 
-		if (BaseSprite.isThereAStartingBase() && !(BaseSprite.startingBases.size()==1 && BaseSprite.startingBases.contains(this.engineBase)))
-			BaseSprite.endingBase = this.engineBase;
+		if (BaseSprite.isThereAtLeastOneStartingElement() && !(BaseSprite.startingElements.size()==1 && BaseSprite.startingElements.contains(this.engineBase)))
+			BaseSprite.endingElement = this.engineBase;
 
 		//to fix the bug when you can control the IA
-		if(!BaseSprite.startingBases.isEmpty()){
+		if(!BaseSprite.startingElements.isEmpty()){
 			boolean aSeletedBaseIsNotAPlayerBase = false;
-			for(Base base:BaseSprite.startingBases){
-				if(!base.isAPlayerBase())
-					aSeletedBaseIsNotAPlayerBase = true;
+			for(Element element:BaseSprite.startingElements){
+				if(element.getClass() == Base.class){
+					if(!((Base) element).isAPlayerBase())
+						aSeletedBaseIsNotAPlayerBase = true;
+				}
 			}
 			if(aSeletedBaseIsNotAPlayerBase){
-				BaseSprite.startingBases.clear();
-				BaseSprite.endingBase = null;
+				BaseSprite.resetStartingElements();
+				BaseSprite.resetEndingElement();
 			}
 		}
 	}
@@ -101,14 +97,6 @@ public class BaseSprite extends Sprite implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
 	
-	public static void resetStartingBase() {
-		BaseSprite.startingBases.removeAll(startingBases);
-	}
-	
-	public static void resetEndingBase() {
-		BaseSprite.endingBase = null;
-	}
-	
 	// GETTERS & SETTERS
 	
 	public Base getEngineBase() {
@@ -119,30 +107,13 @@ public class BaseSprite extends Sprite implements MouseListener{
 		return this.nbAgents;
 	}
 	
-
-	public static Point2D.Float getEndingPoint() {
-		return BaseSprite.endingBase.getCenter();
-	}
-	
 	public static ArrayList<Base> getStartingBases() {
-		if(!BaseSprite.startingBases.isEmpty()){
-			return BaseSprite.startingBases;
+		ArrayList<Base> res = new ArrayList<Base>();
+		for(Element el:BaseSprite.startingElements){
+			if(el.getClass() == Base.class)
+				res.add((Base) el);
 		}
-		else{
-			return null;
-		}
-	}
-	
-	public static Base getEndingBase() {
-		return BaseSprite.endingBase;
-	}
-
-	public static boolean isThereAStartingBase() {
-		return BaseSprite.startingBases.isEmpty() ? false : true;
-	}
-	
-	public static boolean isThereAnEndingBase() {
-		return BaseSprite.endingBase == null ? false : true;
+		return res;
 	}
 	
 	public static void setStartingBases(Point2D.Float startingCorner,Point2D.Float endingCorner){
@@ -153,7 +124,7 @@ public class BaseSprite extends Sprite implements MouseListener{
 					&&	Math.min(startingCorner.y,endingCorner.y) < potentialStartingBase.getCenter().y
 					&&  potentialStartingBase.getCenter().y < Math.max(startingCorner.y,endingCorner.y)
 				){
-					startingBases.add(potentialStartingBase);
+					BaseSprite.startingElements.add(potentialStartingBase);
 				}
 			}
 		}

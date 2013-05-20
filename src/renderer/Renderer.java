@@ -53,8 +53,8 @@ public class Renderer{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == 32){ //key "space"
-					BaseSprite.resetStartingBase();
-					BaseSprite.resetEndingBase();
+					BaseSprite.resetStartingElements();
+					BaseSprite.resetEndingElement();
 				}
 			}
 

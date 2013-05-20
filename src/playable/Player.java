@@ -29,7 +29,7 @@ public class Player extends Thread implements Playable {
 	public void run() {
 		while(!this.lost() && flagThread){
 			if(this.isIA())
-			chooseAction();
+				chooseAction();
 		}
 	}
 	
