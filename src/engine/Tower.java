@@ -49,16 +49,26 @@ public class Tower extends Element {
 	 */
 	public int addNbAgents(double nbAgentsOfUnitSent){
 		this.nbAgents += nbAgentsOfUnitSent;
-		while(this.nbAgents > (this.level+1)*Tower.STEP_FOR_NEXT_LVL && this.level < Tower.MAX_LVL){
-			if(this.isNotBuiltYet())
-				this.waitingForBuilding = true;
-			levelUp();
-		}
 		
-		if(this.isLevelMax()){
-			int agentsExcess = (int) (this.nbAgents - this.level*Tower.STEP_FOR_NEXT_LVL);
-			this.nbAgents -= agentsExcess;
-			return agentsExcess;
+		//Construction step of the tower
+		if(this.isNotBuiltYet()){
+			if(this.nbAgents >= this.getTowerCost()){
+				this.waitingForBuilding = true;
+				int agentsExcess = (int) (this.nbAgents - STEP_FOR_NEXT_LVL);
+				this.nbAgents -= agentsExcess;
+				return agentsExcess;
+			}
+		}else{
+			//Leveling step
+			while(this.nbAgents > (this.level+1)*Tower.STEP_FOR_NEXT_LVL && this.level < Tower.MAX_LVL){
+				levelUp();
+			}
+			
+			if(this.isLevelMax()){
+				int agentsExcess = (int) (this.nbAgents - this.level*Tower.STEP_FOR_NEXT_LVL);
+				this.nbAgents -= agentsExcess;
+				return agentsExcess;
+			}
 		}
 		return -1;
 	}
@@ -66,6 +76,7 @@ public class Tower extends Element {
 	public void destroyTower(){
 		this.nbAgents = 0;
 		this.level = 0;
+		this.waitingForBuilding = false;
 	}
 	
 	public void action(Unit unit){};
@@ -91,6 +102,14 @@ public class Tower extends Element {
 
 	public int getVision() {
 		return vision;
+	}
+	
+	/**
+	 * Get the cost for build a tower
+	 * @return cost
+	 */
+	private double getTowerCost(){
+		return Tower.STEP_FOR_NEXT_LVL;
 	}
 	
 	public Point2D.Float getCenter() {
