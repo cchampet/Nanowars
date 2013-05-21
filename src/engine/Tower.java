@@ -119,7 +119,11 @@ public class Tower extends Element {
 	public boolean isWaitingForBuilding() {
 		return waitingForBuilding;
 	}
-
+	
+	public void stopWaitingBuilding(){
+		this.waitingForBuilding = false;
+	}
+	
 	public boolean isLevelMax() {
 		return this.level == Tower.MAX_LVL ? true : false;
 	}

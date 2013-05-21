@@ -110,9 +110,16 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		}
 		
 		//set ending element
-		if (BaseSprite.isThereAtLeastOneStartingElement()) {
+		if(SelectedSprite.isThereAtLeastOneStartingElement()) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
 				SelectedSprite.endingElement = this.engineTower;
+		}
+		
+		//Build tower
+		if(!SelectedSprite.isThereAtLeastOneStartingElement() && this.engineTower.isNotBuiltYet() 
+															  && this.engineTower.isWaitingForBuilding()){
+			this.engineTower.stopWaitingBuilding();
+			this.engineTower.levelUp();
 		}
 	}
 
