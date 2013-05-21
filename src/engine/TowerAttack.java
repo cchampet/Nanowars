@@ -1,38 +1,42 @@
 package engine;
 
 public class TowerAttack extends Tower {
-	private int DPS;
+	private int attackSpeed=50;
+	private int damage;
 	private Unit target;
+	private int attackCounter=0;
 
 	public TowerAttack(int posX, int posY) {
 		super(posX, posY);
 		
-		this.DPS = 5 * this.level;
+		this.damage = 5 * this.level;
 	}
 	
 	@Override
 	public void levelUp() {
 		super.levelUp();
 		
-		this.DPS = 5 * this.level;
+		this.damage = 5 * this.level;
 	}
 	
-	public void action(){
-		for(Unit unit:Unit.getUnits()){
-			if(unit.getOwner().isIA() && unit.distanceToElement(this)<this.vision){
-				this.sendUnit(10, unit);
-			}
+	public void action(Unit unit){
+		if(attackCounter==attackSpeed){
+			unit.reduceNbAgents(damage);	
+			attackCounter=0;
+		}
+		else{
+			attackCounter++;
 		}
 	}
 	
 	// GETTERS & SETTERS
 	
-	public int getDPS() {
-		return DPS;
+	public int getDamage() {
+		return damage;
 	}
 	
-	public void setDPS(int dPS) {
-		DPS = dPS;
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
 	public Unit getTarget() {

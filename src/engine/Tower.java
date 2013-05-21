@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import dispatcher.Dispatcher;
 
@@ -67,13 +68,8 @@ public class Tower extends Element {
 		this.nbAgents = 0;
 		this.level = 0;
 	}
-
-	public Unit sendUnit(double nbAgentsOfUnitSent, Element endingElement) {
-		Unit newUnit = new Unit(nbAgentsOfUnitSent, this.getAssociatedBase(), endingElement);
-		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
-		Dispatcher.getEngine().addUnit(newUnit);
-		return newUnit;
-	}
+	
+	public void action(Unit unit){};
 	
 	
 	

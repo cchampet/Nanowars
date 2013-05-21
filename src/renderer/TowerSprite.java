@@ -25,7 +25,7 @@ import engine.Tower;
  *
  */
 @SuppressWarnings("serial")
-public class TowerSprite extends ElementSprite implements MouseListener, ActionListener{
+public class TowerSprite extends SeletedSprite implements MouseListener, ActionListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
