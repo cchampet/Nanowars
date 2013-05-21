@@ -12,6 +12,16 @@ public abstract class Element {
 		this.nbAgents = nbAgents;
 	}
 	
+	public double distanceToElement(Element other){
+		return Math.sqrt(
+						   (other.getPosition().getX()-this.getPosition().getX())
+						   *(other.getPosition().getX()-this.getPosition().getX())
+													+
+						   (other.getPosition().getY()-this.getPosition().getY())
+						   *(other.getPosition().getY()-this.getPosition().getY())
+						);
+	}
+	
 	// GETTERS & SETTERS
 	
 	public int getId(){

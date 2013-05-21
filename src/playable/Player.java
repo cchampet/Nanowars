@@ -53,9 +53,9 @@ public class Player extends Thread implements Playable {
 					double param=1000000000;
 					for(Base potentialGoal:Dispatcher.getEngine().getAdversaryBasesOfAPlayer(this)){
 						if(!potentialGoal.equals(baseOfHim)){
-							if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim)<param){
+							if(10*potentialGoal.getNbAgents()+potentialGoal.distanceToElement(baseOfHim)<param){
 								goal=potentialGoal;
-								param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToBase(baseOfHim);
+								param=10*potentialGoal.getNbAgents()+potentialGoal.distanceToElement(baseOfHim);
 							}
 						}
 					}

@@ -103,14 +103,4 @@ public class Base extends Element {
 	public boolean isAPlayerBase() {
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
 	}
-	
-	public double distanceToBase(Base other){
-		return Math.sqrt(
-						   (other.getPosition().getX()-this.getPosition().getX())
-						   *(other.getPosition().getX()-this.getPosition().getX())
-													+
-						   (other.getPosition().getY()-this.getPosition().getY())
-						   *(other.getPosition().getY()-this.getPosition().getY())
-						);
-	}
 }
