@@ -118,7 +118,7 @@ public class UIRenderer {
 		switch(UIRenderer.choosingUnitFlag){
 			//if the player don't choose yet
 			case 0:
-				if(BaseSprite.isThereAtLeastOneStartingElement() && BaseSprite.isThereAnEndingElement()){
+				if(SelectedSprite.isThereAtLeastOneStartingElement() && SelectedSprite.isThereAnEndingElement()){
 					UIRenderer.choosingUnitFlag = 1;
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this.container);

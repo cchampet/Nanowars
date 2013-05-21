@@ -14,6 +14,7 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
+import renderer.SelectedSprite;
 import engine.Base;
 import engine.Engine;
 import engine.Tower;
@@ -162,16 +163,16 @@ public class Dispatcher {
 			
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
-			if(BaseSprite.isThereAtLeastOneStartingElement() && BaseSprite.isThereAnEndingElement()) {
+			if(SelectedSprite.isThereAtLeastOneStartingElement() && SelectedSprite.isThereAnEndingElement()) {
 				if(!Dispatcher.Renderer.isChoosingUnit()){
 					for(Base b:BaseSprite.getStartingBases()){
 						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 
 						if(nbAgentsOfUnitSent == b.getNbAgents()){
 							nbAgentsOfUnitSent -= 1;
 						}
-						b.sendUnit(nbAgentsOfUnitSent, BaseSprite.getEndingElement());
+						b.sendUnit(nbAgentsOfUnitSent, SelectedSprite.getEndingElement());
 					}
-					BaseSprite.resetEndingElement();
+					SelectedSprite.resetEndingElement();
 				}
 			}
 			

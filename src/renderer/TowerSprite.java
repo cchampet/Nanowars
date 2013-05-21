@@ -25,7 +25,7 @@ import engine.Tower;
  *
  */
 @SuppressWarnings("serial")
-public class TowerSprite extends SeletedSprite implements MouseListener, ActionListener{
+public class TowerSprite extends SelectedSprite implements MouseListener, ActionListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
@@ -105,14 +105,14 @@ public class TowerSprite extends SeletedSprite implements MouseListener, ActionL
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		//check if the player isn't choosing unit on another base
-		if(TowerSprite.isThereAnEndingElement()){
+		if(SelectedSprite.isThereAnEndingElement()){
 			Dispatcher.getRenderer().hideRadialMenuMovment();
 		}
 		
 		//set ending element
 		if (BaseSprite.isThereAtLeastOneStartingElement()) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
-				TowerSprite.endingElement = this.engineTower;
+				SelectedSprite.endingElement = this.engineTower;
 		}
 	}
 
