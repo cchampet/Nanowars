@@ -21,7 +21,7 @@ import engine.Element;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends ElementSprite implements MouseListener{
+public class BaseSprite extends SeletedSprite implements MouseListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
