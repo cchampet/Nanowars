@@ -4,20 +4,26 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
 import engine.Tower;
 
+/**
+ * This class display a Tower.
+ * @author Yuki
+ *
+ */
 @SuppressWarnings("serial")
-public class TowerSprite extends Sprite implements MouseListener{
-	/**
-	 * endingTower are static variable, useful to decide in which direction the player sends units.
-	 */
-	private static Tower endingTower;
+public class TowerSprite extends ElementSprite implements MouseListener, ActionListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
@@ -26,6 +32,11 @@ public class TowerSprite extends Sprite implements MouseListener{
 	 * level is the JTextField which is used to display the level of the correpsonding tower.
 	 */
 	private JTextField level;
+	/**
+	 * timer and blink are useful to create the blink when the tower is waiting for building.
+	 */
+	private Timer timer; 
+	private boolean blink;
 	/**
 	 * engineBase is a reference to the corresponding base of this sprite.
 	 */
@@ -36,6 +47,9 @@ public class TowerSprite extends Sprite implements MouseListener{
 		this.setLayout(new BorderLayout());
 		
 		this.engineTower = newTower;
+		
+		this.timer = new Timer (500, this);
+	    this.blink = false;
 		
 		this.size = 24;
 		
@@ -63,6 +77,19 @@ public class TowerSprite extends Sprite implements MouseListener{
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
 	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		if(this.engineTower.isLevelMax())
+			this.setBorder(BorderFactory.createLineBorder(Color.yellow));
+		
+		if(this.engineTower.isWaitingForBuilding())
+			this.timer.start();
+		else
+			this.timer.stop();
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
@@ -75,17 +102,28 @@ public class TowerSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (BaseSprite.isThereAStartingBase() && TowerSprite.endingTower == null) {
+		if (BaseSprite.isThereAtLeastOneStartingElement() && TowerSprite.endingElement == null) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
-				TowerSprite.endingTower = this.engineTower;
+				TowerSprite.endingElement = this.engineTower;
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 	
-	public static void resetEndingTower() {
-		TowerSprite.endingTower = null;
+	/**
+	 * method called each blinks (when the tower is waiting for building).
+	 */
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (blink){
+      	  this.setBorder(BorderFactory.createLineBorder(Color.gray));
+      	  this.blink = false;
+		}
+        else{
+      	  this.setBorder(BorderFactory.createLineBorder(Color.black));
+      	  this.blink = true;
+        }
 	}
 	
 	// GETTERS & SETTERS
@@ -104,13 +142,5 @@ public class TowerSprite extends Sprite implements MouseListener{
 	
 	public Tower getEngineTower() {
 		return engineTower;
-	}
-	
-	public static Tower getEndingTower() {
-		return TowerSprite.endingTower;
-	}
-	
-	public static boolean isThereAnEndingTower() {
-		return TowerSprite.endingTower == null ? false : true;
 	}
 }

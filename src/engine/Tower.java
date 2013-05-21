@@ -12,15 +12,19 @@ import dispatcher.Dispatcher;
 public class Tower extends Element {
 	private static final double STEP_FOR_NEXT_LVL = 20;
 	private static final int  MAX_LVL = 3;
+	
 	private final Base associatedBase;
 	protected int level;
 	protected int vision;
+	
+	private boolean waitingForBuilding;
 	
 	public Tower(int posX, int posY) {
 		super(posX, posY, 0);
 		
 		this.level = 0;
 		this.vision = 0;
+		this.waitingForBuilding = false;
 		
 		//define the associatedBase of the tower
 		int idOfTheNearestBase = -1;
@@ -46,8 +50,11 @@ public class Tower extends Element {
 	public int addNbAgents(double nbAgentsOfUnitSent){
 		this.nbAgents += nbAgentsOfUnitSent;
 		while(Tower.STEP_FOR_NEXT_LVL*(2*this.level+1) < this.nbAgents && this.level < Tower.MAX_LVL){
+			if(this.isNotBuiltYet())
+				this.waitingForBuilding = true;
 			levelUp();
 		}
+		
 		if(this.level >= Tower.MAX_LVL){
 			int agentsExcess = (int) (this.nbAgents - 2*this.level*Tower.STEP_FOR_NEXT_LVL);
 			this.nbAgents -= agentsExcess;
@@ -77,5 +84,17 @@ public class Tower extends Element {
 	
 	public Point2D.Float getCenter() {
 		return new Point2D.Float(this.position.x + 12, this.position.y + 12);
+	}
+
+	public boolean isWaitingForBuilding() {
+		return waitingForBuilding;
+	}
+
+	public boolean isLevelMax() {
+		return this.level == Tower.MAX_LVL ? true : false;
+	}
+	
+	public boolean isNotBuiltYet(){
+		return this.level == 0 ? true : false;
 	}
 }
