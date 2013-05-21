@@ -1,7 +1,6 @@
 package engine;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 import dispatcher.Dispatcher;
 

@@ -13,6 +13,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import dispatcher.Dispatcher;
+
+import engine.Base;
+import engine.Element;
+
 public class UIRenderer {
 
 	private final int UI_LAYER = 200;
@@ -75,6 +80,21 @@ public class UIRenderer {
 			public void mouseEntered(MouseEvent arg0) {}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				//fix the bug of controling opponent units when he takes our base during the choice
+				boolean aSeletedBaseIsNotAPlayerBase = false;
+				for(Element element:SelectedSprite.startingElements){
+					if(element.getClass() == Base.class){
+						if(!((Base) element).isAPlayerBase())
+							aSeletedBaseIsNotAPlayerBase = true;
+					}
+				}
+				if(aSeletedBaseIsNotAPlayerBase){
+					SelectedSprite.resetStartingElements();
+					SelectedSprite.resetEndingElement();
+					Dispatcher.getRenderer().hideRadialMenuMovment();
+					return;
+				}
+				
 				UIRenderer.choosingUnitFlag = 2;
 				JLabel radialMenu = (JLabel) arg0.getComponent();
 				Point rmPosition = new Point(radialMenu.getWidth()/2, radialMenu.getHeight()/2);
