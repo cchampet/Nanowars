@@ -78,8 +78,8 @@ public class Unit extends Element {
 			}
 		}
 		//if the destination is a tower
-		else if(this.goal.getClass() == Tower.class){
-			Tower tmpGoal = (Tower) this.goal;
+		else if(this.goal instanceof Tower){
+			Tower tmpGoal = (Tower)this.goal;
 			//Send back a unit if the target tower is full
 			int sendBackAgents = tmpGoal.addNbAgents(this.nbAgents);
 			if(sendBackAgents != -1){
@@ -98,6 +98,14 @@ public class Unit extends Element {
 		if(this.position.distance(this.goal.getCenter()) < 10)
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Reduce the number of agents of a unit when attacked by a TowerAttack
+	 * @param reduceNumber
+	 */
+	public void reduceNbAgents(double damage){
+		nbAgents-=damage;
 	}
 
 	// GETTERS & SETTERS

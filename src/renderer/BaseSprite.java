@@ -21,7 +21,7 @@ import engine.Element;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends SeletedSprite implements MouseListener{
+public class BaseSprite extends SelectedSprite implements MouseListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
@@ -65,25 +65,32 @@ public class BaseSprite extends SeletedSprite implements MouseListener{
 			this.setOpaque(true);
 			this.setBackground(new Color(255, 100, 100));
 		}
-
-		if(!BaseSprite.isThereAtLeastOneStartingElement() && this.engineBase.isAPlayerBase())
-			BaseSprite.startingElements.add(this.engineBase);
-
-		if (BaseSprite.isThereAtLeastOneStartingElement() && !(BaseSprite.startingElements.size()==1 && BaseSprite.startingElements.contains(this.engineBase)))
-			BaseSprite.endingElement = this.engineBase;
+		
+		//set starting base
+		if(!SelectedSprite.isThereAtLeastOneStartingElement() && this.engineBase.isAPlayerBase())			
+			SelectedSprite.startingElements.add(this.engineBase);
+		
+		//check if the player isn't choosing unit on another base
+		if(SelectedSprite.isThereAnEndingElement()){
+			Dispatcher.getRenderer().hideRadialMenuMovment();
+		}
+		
+		//set ending base
+		if (SelectedSprite.isThereAtLeastOneStartingElement() && !(SelectedSprite.startingElements.size()==1 && SelectedSprite.startingElements.contains(this.engineBase)))
+			SelectedSprite.endingElement = this.engineBase;
 
 		//to fix the bug when you can control the IA
-		if(!BaseSprite.startingElements.isEmpty()){
+		if(!SelectedSprite.startingElements.isEmpty()){
 			boolean aSeletedBaseIsNotAPlayerBase = false;
-			for(Element element:BaseSprite.startingElements){
+			for(Element element:SelectedSprite.startingElements){
 				if(element.getClass() == Base.class){
 					if(!((Base) element).isAPlayerBase())
 						aSeletedBaseIsNotAPlayerBase = true;
 				}
 			}
 			if(aSeletedBaseIsNotAPlayerBase){
-				BaseSprite.resetStartingElements();
-				BaseSprite.resetEndingElement();
+				SelectedSprite.resetStartingElements();
+				SelectedSprite.resetEndingElement();
 			}
 		}
 	}
@@ -109,7 +116,7 @@ public class BaseSprite extends SeletedSprite implements MouseListener{
 	
 	public static ArrayList<Base> getStartingBases() {
 		ArrayList<Base> res = new ArrayList<Base>();
-		for(Element el:BaseSprite.startingElements){
+		for(Element el:SelectedSprite.startingElements){
 			if(el.getClass() == Base.class)
 				res.add((Base) el);
 		}
@@ -124,7 +131,7 @@ public class BaseSprite extends SeletedSprite implements MouseListener{
 					&&	Math.min(startingCorner.y,endingCorner.y) < potentialStartingBase.getCenter().y
 					&&  potentialStartingBase.getCenter().y < Math.max(startingCorner.y,endingCorner.y)
 				){
-					BaseSprite.startingElements.add(potentialStartingBase);
+					SelectedSprite.startingElements.add(potentialStartingBase);
 				}
 			}
 		}

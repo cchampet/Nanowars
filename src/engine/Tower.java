@@ -67,13 +67,8 @@ public class Tower extends Element {
 		this.nbAgents = 0;
 		this.level = 0;
 	}
-
-	public Unit sendUnit(double nbAgentsOfUnitSent, Element endingElement) {
-		Unit newUnit = new Unit(nbAgentsOfUnitSent, this.getAssociatedBase(), endingElement);
-		newUnit.setId(Dispatcher.getRenderer().addUnitSprite(newUnit));
-		Dispatcher.getEngine().addUnit(newUnit);
-		return newUnit;
-	}
+	
+	public void action(Unit unit){};
 	
 
 	public void sendUnitBackToBase(int sendBackAgents, Unit unit) {
