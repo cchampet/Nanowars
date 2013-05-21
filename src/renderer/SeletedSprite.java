@@ -11,7 +11,7 @@ import engine.Element;
  *
  */
 @SuppressWarnings("serial")
-public class ElementSprite extends Sprite {
+public class SeletedSprite extends Sprite {
 	/**
 	 * startingBases and endingBase are static variable, useful to decide in which direction the player sends units.
 	 */
@@ -19,11 +19,11 @@ public class ElementSprite extends Sprite {
 	protected static Element endingElement;
 	
 	public static void resetStartingElements() {
-		ElementSprite.startingElements.clear();
+		SeletedSprite.startingElements.clear();
 	}
 	
 	public static void resetEndingElement() {
-		ElementSprite.endingElement = null;
+		SeletedSprite.endingElement = null;
 	}
 	
 	// GETTERS & SETTERS
@@ -33,7 +33,7 @@ public class ElementSprite extends Sprite {
 	}
 
 	public static void setStartingElements(ArrayList<Element> startingElements) {
-		ElementSprite.startingElements = startingElements;
+		SeletedSprite.startingElements = startingElements;
 	}
 
 	public static Element getEndingElement() {
@@ -41,7 +41,7 @@ public class ElementSprite extends Sprite {
 	}
 
 	public static void setEndingElement(Element endingElement) {
-		ElementSprite.endingElement = endingElement;
+		SeletedSprite.endingElement = endingElement;
 	}
 
 	public static boolean isThereAtLeastOneStartingElement() {
