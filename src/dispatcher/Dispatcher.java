@@ -18,6 +18,7 @@ import renderer.Renderer;
 import engine.Base;
 import engine.Engine;
 import engine.Tower;
+import engine.TowerAttack;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -99,7 +100,7 @@ public class Dispatcher {
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
 					//blue [200], red [200], green [200] => a tower
 					if(color.getBlue() == 200 && color.getRed() == 200 && color.getGreen() == 200){
-						Tower newTower = new Tower(MAP_SCALE*x, MAP_SCALE*y);
+						TowerAttack newTower = new TowerAttack(MAP_SCALE*x, MAP_SCALE*y);
 						newTower.setId(Renderer.addTowerSprite(newTower));
 						Engine.addTower(newTower);
 					}
@@ -149,8 +150,8 @@ public class Dispatcher {
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
 		//=>what we have to do in each frame
-		while(!endOfGame) {
-				
+		while(!endOfGame) {	
+			
 			long begin = System.currentTimeMillis();
 			
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;

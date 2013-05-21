@@ -62,7 +62,16 @@ public class Engine{
 			unit.move();
 		}
 		
-		//stop movment of concerned units
+		//launch action of towers
+		for(Tower tower:Engine.towers){
+			for(Unit unit:Engine.units){
+				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) && tower.distanceToElement(unit)<10*tower.vision){
+					tower.action(unit);
+				}
+			}
+		}
+		
+		//stop movement of concerned units
 		Iterator<Unit> iterUnits = units.iterator();
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
@@ -171,5 +180,9 @@ public class Engine{
 				towersAround.add(t);
 		}
 		return towersAround;
+	}
+
+	public static CopyOnWriteArrayList<Tower> getTowers() {
+		return towers;
 	}
 }
