@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import playable.Player;
 import dispatcher.Dispatcher;
@@ -11,6 +12,7 @@ import dispatcher.Dispatcher;
  *
  */
 public class Unit extends Element {
+	private static ArrayList<Unit> units=new ArrayList<Unit>();
 	private Element goal;
 	private Element start;
 	private int moveSpeed = 2;
@@ -36,6 +38,7 @@ public class Unit extends Element {
 		else{
 			this.direction = new Point2D.Float(1,1);
 		}
+		units.add(this);
 	}
 	
 	/**
