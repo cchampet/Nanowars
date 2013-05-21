@@ -1,7 +1,6 @@
 package dispatcher;
 
 import java.awt.Color;
-import java.awt.MouseInfo;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.io.File;
@@ -163,7 +162,6 @@ public class Dispatcher {
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
 			if(BaseSprite.isThereAtLeastOneStartingElement() && BaseSprite.isThereAnEndingElement()) {
-				Dispatcher.Renderer.refreshRadialMenuMovment(MouseInfo.getPointerInfo().getLocation());
 				if(!Dispatcher.Renderer.isChoosingUnit()){
 					for(Base b:BaseSprite.getStartingBases()){
 						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 

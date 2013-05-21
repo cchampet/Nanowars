@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
+import dispatcher.Dispatcher;
+
 import engine.Tower;
 
 /**
@@ -102,7 +104,13 @@ public class TowerSprite extends ElementSprite implements MouseListener, ActionL
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (BaseSprite.isThereAtLeastOneStartingElement() && TowerSprite.endingElement == null) {
+		//check if the player isn't choosing unit on another base
+		if(TowerSprite.isThereAnEndingElement()){
+			Dispatcher.getRenderer().hideRadialMenuMovment();
+		}
+		
+		//set ending element
+		if (BaseSprite.isThereAtLeastOneStartingElement()) {
 			if(this.engineTower.getAssociatedBase().isAPlayerBase())
 				TowerSprite.endingElement = this.engineTower;
 		}

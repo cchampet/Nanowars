@@ -65,10 +65,17 @@ public class BaseSprite extends ElementSprite implements MouseListener{
 			this.setOpaque(true);
 			this.setBackground(new Color(255, 100, 100));
 		}
-
-		if(!BaseSprite.isThereAtLeastOneStartingElement() && this.engineBase.isAPlayerBase())
+		
+		//set starting base
+		if(!BaseSprite.isThereAtLeastOneStartingElement() && this.engineBase.isAPlayerBase())			
 			BaseSprite.startingElements.add(this.engineBase);
-
+		
+		//check if the player isn't choosing unit on another base
+		if(BaseSprite.isThereAnEndingElement()){
+			Dispatcher.getRenderer().hideRadialMenuMovment();
+		}
+		
+		//set ending base
 		if (BaseSprite.isThereAtLeastOneStartingElement() && !(BaseSprite.startingElements.size()==1 && BaseSprite.startingElements.contains(this.engineBase)))
 			BaseSprite.endingElement = this.engineBase;
 

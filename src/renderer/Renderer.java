@@ -127,6 +127,9 @@ public class Renderer{
 			
 			towerSprite.getLevel().setText("lvl "+String.valueOf(towerSprite.getEngineTower().getLevel()));
 		}
+		
+		//update the display or hide of radial menu
+		this.uiRenderer.refreshRadialMenuMovment();
 	}
 	
 	//MAPRENDERER INDIRECTIONS
@@ -173,23 +176,15 @@ public class Renderer{
 		this.uiRenderer.displayLoser();
 	}
 	
-	/**
-	 * Display a radial menu to choose how many units send 
-	 * @param mousePosition Position of the mouse, where the radial menu will appear
-	 * @throws IOException
-	 */
-	public void refreshRadialMenuMovment(Point mousePosition){
-		this.uiRenderer.refreshRadialMenuMovment(mousePosition);
-	}
-	
 	public void hideRadialMenuMovment(){
-		this.uiRenderer.refreshRadialMenuMovment(new Point(0, 0));
-		this.uiRenderer.updateChoosingUnitFlag(false);
-		this.uiRenderer.refreshRadialMenuMovment(new Point(0, 0));
+		this.uiRenderer.hideRadialMenuMovment();
 	}
-	
+	/**
+	 * Indicates if the player is choosing the number of agents to send with the radial menu
+	 * @return true if the player is choosing, else false
+	 */
 	public boolean isChoosingUnit(){
-		return this.uiRenderer.getChoosingUnitFlag();
+		return this.uiRenderer.isChoosingUnitFlag();
 	}
 	
 	public double getUnitPercentChosen(){

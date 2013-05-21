@@ -3,6 +3,7 @@ package renderer;
 
 import java.awt.Container;
 import java.awt.MediaTracker;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,7 +22,10 @@ public class UIRenderer {
 	private Container container;
 	private int width;
 	private int height;
-	private static boolean choosingUnitFlag = false;
+	/**
+	 * Represent the state of UIRenderer during unit to send choice. 0 = not choosing, 1 = choosing, 2 = already chosen
+	 */
+	private static int choosingUnitFlag = 0;
 	private static double unitPercentChosen = 0.5;
 	
 	public UIRenderer(Container c, int width, int height){
@@ -71,7 +75,7 @@ public class UIRenderer {
 			public void mouseEntered(MouseEvent arg0) {}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				UIRenderer.choosingUnitFlag = false;
+				UIRenderer.choosingUnitFlag = 2;
 				JLabel radialMenu = (JLabel) arg0.getComponent();
 				Point rmPosition = new Point(radialMenu.getWidth()/2, radialMenu.getHeight()/2);
 				Point mousePosition = arg0.getPoint();
@@ -109,31 +113,54 @@ public class UIRenderer {
 	
 	/**
 	 * Display or hide a radial menu to choose how many units send 
-	 * @param mousePosition Position of the mouse, where the radial menu will appear
 	 */
-	public void refreshRadialMenuMovment(Point mousePosition){
-		//if the player choose how many units to send
-		if(!UIRenderer.choosingUnitFlag){
-			if(this.radialMenuMovment.getParent() == null){
-				UIRenderer.choosingUnitFlag = true;
-				SwingUtilities.convertPointFromScreen(mousePosition, this.container);
-				
-				this.radialMenuMovment.setLocation(mousePosition.x - this.radialMenuMovment.getWidth()/2,
-												 mousePosition.y - this.radialMenuMovment.getHeight()/2);
-				this.container.add(this.radialMenuMovment, new Integer(UI_LAYER));
-			}else{
-				//remove the radial menu
+	public void refreshRadialMenuMovment(){
+		switch(UIRenderer.choosingUnitFlag){
+			//if the player don't choose yet
+			case 0:
+				if(BaseSprite.isThereAtLeastOneStartingElement() && BaseSprite.isThereAnEndingElement()){
+					UIRenderer.choosingUnitFlag = 1;
+					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+					SwingUtilities.convertPointFromScreen(mousePosition, this.container);
+					mousePosition.x -= this.radialMenuMovment.getWidth()/2;
+					mousePosition.y -= this.radialMenuMovment.getHeight()/2;
+					this.radialMenuMovment.setLocation(mousePosition);
+				}
+				break;
+			
+			//if the player is choosing
+			case 1:
+				if(this.radialMenuMovment.getParent() == null){
+					this.container.add(this.radialMenuMovment, new Integer(UI_LAYER));
+				}
+				break;
+			
+			//if the player have just chosen
+			case 2:
 				this.container.remove(this.radialMenuMovment);
-			}
+				UIRenderer.choosingUnitFlag = 0;
+				break;
+				
+			default:
+				break;
 		}
 	}
 	
-	public void updateChoosingUnitFlag(boolean state){
-		UIRenderer.choosingUnitFlag = state;
+	/**
+	 * Hide the radial menu and re-initialize the choice
+	 */
+	public void hideRadialMenuMovment(){
+		UIRenderer.choosingUnitFlag = 0;
+		if(this.radialMenuMovment.getParent() != null){
+			this.container.remove(this.radialMenuMovment);
+		}
 	}
 	
-	public boolean getChoosingUnitFlag(){
-		return UIRenderer.choosingUnitFlag;
+	public boolean isChoosingUnitFlag(){
+		if(UIRenderer.choosingUnitFlag == 1){
+			return true;
+		}
+		return false;
 	}
 	
 	public double getUnitPercentChosen(){
