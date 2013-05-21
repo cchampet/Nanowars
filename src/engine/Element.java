@@ -40,7 +40,11 @@ public abstract class Element {
 		return (int) nbAgents;
 	}
 	
-	// ABSTRACT METHODS
+	public void setNbAgents(double nbAgents) {
+		this.nbAgents = nbAgents;
+	}
 	
+	// ABSTRACT METHODS
+
 	public abstract Point2D.Float getCenter();
 }

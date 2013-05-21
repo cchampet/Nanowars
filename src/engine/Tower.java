@@ -11,7 +11,7 @@ import dispatcher.Dispatcher;
  */
 public class Tower extends Element {
 	private static final double STEP_FOR_NEXT_LVL = 20;
-	private static final int  MAX_LVL = 3;
+	private static final int  MAX_LVL = 4;
 	
 	private final Base associatedBase;
 	protected int level;
@@ -49,14 +49,14 @@ public class Tower extends Element {
 	 */
 	public int addNbAgents(double nbAgentsOfUnitSent){
 		this.nbAgents += nbAgentsOfUnitSent;
-		while(Tower.STEP_FOR_NEXT_LVL*(2*this.level+1) < this.nbAgents && this.level < Tower.MAX_LVL){
+		while(this.nbAgents > (this.level+1)*Tower.STEP_FOR_NEXT_LVL && this.level < Tower.MAX_LVL){
 			if(this.isNotBuiltYet())
 				this.waitingForBuilding = true;
 			levelUp();
 		}
 		
-		if(this.level >= Tower.MAX_LVL){
-			int agentsExcess = (int) (this.nbAgents - 2*this.level*Tower.STEP_FOR_NEXT_LVL);
+		if(this.isLevelMax()){
+			int agentsExcess = (int) (this.nbAgents - this.level*Tower.STEP_FOR_NEXT_LVL);
 			this.nbAgents -= agentsExcess;
 			return agentsExcess;
 		}
@@ -75,7 +75,14 @@ public class Tower extends Element {
 		return newUnit;
 	}
 	
-	
+
+	public void sendUnitBackToBase(int sendBackAgents, Unit unit) {
+		unit.setNbAgents(sendBackAgents);
+		Element tmpElt = unit.getStart();
+		unit.setStart(unit.getGoal());
+		unit.setGoal(tmpElt);
+		unit.setDirectionToOpposite();
+	}
 	
 	// GETTERS & SETTERS
 

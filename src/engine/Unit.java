@@ -83,13 +83,7 @@ public class Unit extends Element {
 			//Send back a unit if the target tower is full
 			int sendBackAgents = tmpGoal.addNbAgents(this.nbAgents);
 			if(sendBackAgents != -1){
-				System.out.println(sendBackAgents);
-				this.nbAgents = sendBackAgents;
-				Element tmpElt = this.start;
-				this.start = this.goal;
-				this.goal = tmpElt;
-				this.direction.x *= -1;
-				this.direction.y *= -1;
+				tmpGoal.sendUnitBackToBase(sendBackAgents, this);
 				return false;
 			}
 		}
@@ -112,12 +106,29 @@ public class Unit extends Element {
 		return goal;
 	}
 	
+	public void setGoal(Element goal) {
+		this.goal = goal;
+	}
+	
 	public Player getOwner() {
 		return owner;
 	}
 
 	public Point2D.Float getDirection() {
 		return direction;
+	}
+	
+	public Element getStart() {
+		return start;
+	}
+
+	public void setStart(Element start) {
+		this.start = start;
+	}
+	
+	public void setDirectionToOpposite() {
+		this.direction.x *= -1;
+		this.direction.y *= -1;
 	}
 
 	@Override
