@@ -124,4 +124,8 @@ public class Unit extends Element {
 	public Point2D.Float getCenter() {
 		return null;
 	}
+
+	public static ArrayList<Unit> getUnits() {
+		return units;
+	}
 }

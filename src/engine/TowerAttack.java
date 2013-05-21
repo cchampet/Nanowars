@@ -16,7 +16,15 @@ public class TowerAttack extends Tower {
 		
 		this.DPS = 5 * this.level;
 	}
-
+	
+	public void action(){
+		for(Unit unit:Unit.getUnits()){
+			if(unit.getOwner().isIA() && unit.distanceToElement(this)<this.vision){
+				this.sendUnit(10, unit);
+			}
+		}
+	}
+	
 	// GETTERS & SETTERS
 	
 	public int getDPS() {
