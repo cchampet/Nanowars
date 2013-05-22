@@ -88,9 +88,28 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
+		//update the sprite of the base if it's necessary
+		if(this.engineTower.getLevel() == 0)
+			this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
+		else
+			this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
+		
+		//update the display of nbAgents
+		if(this.engineTower.isLevelMax())
+			this.nbAgents.setText("Max");
+		else
+			this.nbAgents.setText(String.valueOf(this.engineTower.getNbAgents()));
+		
+		//update the display of the level
+		this.level.setText("lvl "+String.valueOf(this.engineTower.getLevel()));
+		
+		//set the border in yellow color if the tower is level max
 		if(this.engineTower.isLevelMax())
 			this.setBorder(BorderFactory.createLineBorder(Color.yellow));
+		else
+			this.setBorder(null);
 		
+		//start blinking when the tower is waiting for building (and stop when it's not)
 		if(this.engineTower.isWaitingForBuilding())
 			this.timer.start();
 		else

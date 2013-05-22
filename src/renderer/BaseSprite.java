@@ -65,11 +65,16 @@ public class BaseSprite extends SelectedSprite implements MouseListener, ActionL
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
+		//update the sprite of the base if it's necessary
 		if(this.engineBase.isOwnerChanged()){
 			this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
 			this.engineBase.setOwnerChanged(false);
 		}
 		
+		//update the JTextField which represents the nbAgents
+		this.nbAgents.setText(String.valueOf(this.engineBase.getNbAgents()));
+		
+		//start blinking when the base is full (and stop when it's not)
 		if(this.engineBase.isFull())
 			this.timer.start();
 		else

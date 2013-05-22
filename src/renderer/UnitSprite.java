@@ -2,6 +2,8 @@ package renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 
 import javax.swing.JTextField;
 
@@ -41,13 +43,24 @@ public class UnitSprite extends Sprite{
 		this.add(this.nbAgents, BorderLayout.CENTER);
 	}
 	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		//update the JTextField which represents the nbAgents
+		this.nbAgents.setText(String.valueOf(this.engineUnit.getNbAgents()));
+		
+		//update the position of the unit
+		this.setLocation(new Point((int)(this.engineUnit.getPosition().x - this.size/2), (int)(this.engineUnit.getPosition().y - this.size/2)));
+	}
+	
 	/**
 	 * Change the number of agents to display
 	 * @param nbAgents
 	 */
-	public void updateNbAgents(int nbAgents){
-		this.nbAgents.setText(String.valueOf(nbAgents));
-	}
+	//public void updateNbAgents(int nbAgents){
+		
+	//}
 	
 	// GETTERS & SETTERS
 
