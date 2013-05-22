@@ -21,8 +21,6 @@ import engine.Base;
 import engine.Element;
 
 public class UIRenderer {
-
-	private final int UI_LAYER = 200;
 	private JLabel winnerBackground;
 	private JLabel loserBackground;
 	private JLabel radialMenuMovment;
@@ -173,14 +171,14 @@ public class UIRenderer {
 	 * Display a "WINNER" message when the player win and before exit program
 	 */
 	public void displayWinner(){
-		this.container.add(this.winnerBackground, new Integer(UI_LAYER));
+		this.container.add(this.winnerBackground, Layer.UI.id());
 	}
 	
 	/**
 	 * Display a "LOSER" message when the player lose and before exit program
 	 */
 	public void displayLoser(){
-		this.container.add(this.loserBackground, new Integer(UI_LAYER));
+		this.container.add(this.loserBackground, Layer.UI.id());
 	}
 	
 	/**
@@ -203,7 +201,7 @@ public class UIRenderer {
 			//if the player is choosing
 			case 1:
 				if(this.radialMenuMovment.getParent() == null){
-					this.container.add(this.radialMenuMovment, new Integer(UI_LAYER));
+					this.container.add(this.radialMenuMovment, Layer.UI.id());
 				}
 				break;
 			
@@ -238,7 +236,7 @@ public class UIRenderer {
 			//if the player is choosing tower type
 			case 1:
 				if(this.radialMenuTower.getParent() == null){
-					this.container.add(this.radialMenuTower, new Integer(UI_LAYER));
+					this.container.add(this.radialMenuTower, Layer.UI.id());
 				}
 				break;
 				
