@@ -192,6 +192,7 @@ public class MapRenderer implements MouseListener{
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, Layer.TOWER.id());
+		newSprite.initSubSprite();
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}

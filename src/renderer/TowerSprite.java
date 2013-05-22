@@ -16,6 +16,7 @@ import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
 import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 
 import engine.Tower;
 
@@ -38,6 +39,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 * level is the JTextField which is used to display the level of the correpsonding tower.
 	 */
 	private JTextField level;
+	/**
+	 * Semi-transparent Sprite which appears under the tower Sprite. Shape depends on the tower type
+	 */
+	private Sprite subSprite;
 	/**
 	 * timer and blink are useful to create the blink when the tower is waiting for building.
 	 */
@@ -82,6 +87,24 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		this.level.setIgnoreRepaint(false); // for better performence
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
+		
+		this.subSprite = new Sprite();		
+	}
+	
+	/**
+	 * Initialize the subsprite under the tower. Call this function after have placed the TowerSprite
+	 */
+	public void initSubSprite(){
+		this.subSprite.setSize(60);
+		this.subSprite.setImage(TypeOfTower.POISON.getSubSprite());
+		this.subSprite.setBounds(this.getLocation().x + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2,
+								 this.getLocation().y + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2, 
+								 this.subSprite.getSpriteSize(), this.subSprite.getSpriteSize());
+		if(this.getParent() != null){
+			this.getParent().add(this.subSprite, Layer.SUB_EFFECT.id());
+		}else{
+			throw new RuntimeException("Attach the TowerSprite before initialize subSprite");
+		}
 	}
 	
 	@Override
