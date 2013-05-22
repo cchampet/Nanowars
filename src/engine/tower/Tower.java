@@ -42,6 +42,13 @@ public class Tower extends Element {
 		this.associatedBase = Dispatcher.getEngine().getBase(idOfTheNearestBase);
 	}
 	
+	public Tower(Tower other){
+		super((int)other.getPosition().x, (int)other.getPosition().y, other.getNbAgents());
+		this.associatedBase = other.getAssociatedBase();
+		this.level = other.getLevel();
+		this.vision = other.getVision();
+	}
+	
 	public void levelUp() {
 		this.level++;
 		this.vision = 20 * this.level;
