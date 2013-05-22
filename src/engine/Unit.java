@@ -17,6 +17,7 @@ public class Unit extends Element {
 	private Element start;
 	private int moveSpeed = 2;
 	private Player owner;
+	private boolean isAliveFlag;
 	
 	private Point2D.Float direction;
 	
@@ -26,7 +27,8 @@ public class Unit extends Element {
 		this.owner = start.getOwner();
 		this.start = start;
 		this.goal = goal;
-
+		this.isAliveFlag = true;
+		
 		Point2D.Float startingPosition = start.getCenter();
 		Point2D.Float endingPosition = goal.getCenter();
 		if(this.start!=this.goal){
@@ -54,40 +56,42 @@ public class Unit extends Element {
 	 * @return Boolean - true if the unit have to be delete, else false
 	 */
 	public boolean resolveAttack(){
-		//if the destination is a base
-		if(this.goal.getClass() == Base.class){
-			Base tmpGoal = (Base) this.goal;
-			if(tmpGoal.getOwner() != this.owner){
-				if(this.nbAgents <= this.goal.getNbAgents()){
-					tmpGoal.reduceNbAgents(this.nbAgents);
-				}
-				else if(this.nbAgents == this.goal.getNbAgents()){
-					tmpGoal.reduceNbAgents(this.nbAgents);
-					tmpGoal.setOwner(Dispatcher.getPlayers().get("Neutral"));
+		//if the unit isn't destroyed
+		if(this.nbAgents>0){
+			//if the destination is a base
+			if(this.goal.getClass() == Base.class){
+				Base tmpGoal = (Base) this.goal;
+				if(tmpGoal.getOwner() != this.owner){
+					if(this.nbAgents <= this.goal.getNbAgents()){
+						tmpGoal.reduceNbAgents(this.nbAgents);
+					}
+					else if(this.nbAgents == this.goal.getNbAgents()){
+						tmpGoal.reduceNbAgents(this.nbAgents);
+						tmpGoal.setOwner(Dispatcher.getPlayers().get("Neutral"));
+					}
+					else{
+						tmpGoal.reduceNbAgents(this.nbAgents);
+						tmpGoal.setOwner(this.owner);
+						tmpGoal.makeTheChangeOfCamp();
+						for(Tower t:Dispatcher.getEngine().getTowerAround(tmpGoal))
+							t.destroyTower();
+					}
 				}
 				else{
-					tmpGoal.reduceNbAgents(this.nbAgents);
-					tmpGoal.setOwner(this.owner);
-					tmpGoal.makeTheChangeOfCamp();
-					for(Tower t:Dispatcher.getEngine().getTowerAround(tmpGoal))
-						t.destroyTower();
+					tmpGoal.increaseNbAgents(this.nbAgents);
 				}
 			}
-			else{
-				tmpGoal.increaseNbAgents(this.nbAgents);
+			//if the destination is a tower
+			else if(this.goal instanceof Tower){
+				Tower tmpGoal = (Tower)this.goal;
+				//Send back a unit if the target tower is full
+				int sendBackAgents = tmpGoal.addNbAgents(this.nbAgents);
+				if(sendBackAgents != -1){
+					tmpGoal.sendUnitBackToBase(sendBackAgents, this);
+					return false;
+				}
 			}
 		}
-		//if the destination is a tower
-		else if(this.goal instanceof Tower){
-			Tower tmpGoal = (Tower)this.goal;
-			//Send back a unit if the target tower is full
-			int sendBackAgents = tmpGoal.addNbAgents(this.nbAgents);
-			if(sendBackAgents != -1){
-				tmpGoal.sendUnitBackToBase(sendBackAgents, this);
-				return false;
-			}
-		}
-		
 		return true;
 	}
 	
@@ -146,5 +150,13 @@ public class Unit extends Element {
 
 	public static ArrayList<Unit> getUnits() {
 		return units;
+	}
+
+	public boolean isAliveFlag() {
+		return isAliveFlag;
+	}
+
+	public void setAliveFlag(boolean lifeFlag) {
+		this.isAliveFlag = lifeFlag;
 	}
 }

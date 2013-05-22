@@ -1,7 +1,10 @@
 package engine;
 
 public class TowerAttack extends Tower {
-	private int attackSpeed=50;
+	/**
+	 * attackCounterLimit allows to fix the speed of the Tower attacks
+	 */
+	private int attackCounterLimit=40;
 	private int damage;
 	private Unit target;
 	private int attackCounter=0;
@@ -16,16 +19,27 @@ public class TowerAttack extends Tower {
 	public void levelUp() {
 		super.levelUp();
 		
-		this.damage = 5 * this.level;
+		this.damage = 2 * this.level;
 	}
 	
-	public void action(Unit unit){
-		if(attackCounter==attackSpeed){
-			unit.reduceNbAgents(damage);	
-			attackCounter=0;
-		}
-		else{
-			attackCounter++;
+	public void action(){
+		if(unitsInVision.size()>0){
+			if(attackCounter==attackCounterLimit){
+				while((this.distanceToElement(unitsInVision.getFirst())>this.vision 
+						|| !unitsInVision.getFirst().isAliveFlag())){
+					unitsInVision.removeFirst();
+					if(unitsInVision.size()==0){
+						break;
+					}
+				}
+				if(unitsInVision.size()>0){
+					unitsInVision.getFirst().reduceNbAgents(damage);
+					attackCounter=0;
+				}
+			}
+			else{
+				attackCounter++;
+			}
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package engine;
 
 import java.awt.geom.Point2D;
+import java.util.LinkedList;
 
 import dispatcher.Dispatcher;
 
@@ -16,6 +17,7 @@ public class Tower extends Element {
 	private final Base associatedBase;
 	protected int level;
 	protected int vision;
+	protected LinkedList<Unit> unitsInVision;
 	
 	private boolean waitingForBuilding;
 	
@@ -25,6 +27,7 @@ public class Tower extends Element {
 		this.level = 0;
 		this.vision = 0;
 		this.waitingForBuilding = false;
+		this.unitsInVision = new LinkedList<Unit>();
 		
 		//define the associatedBase of the tower
 		int idOfTheNearestBase = -1;
@@ -39,7 +42,7 @@ public class Tower extends Element {
 	
 	public void levelUp() {
 		this.level++;
-		this.vision = 20 * this.level;
+		this.vision = 50 * this.level;
 	}
 	
 	/**
@@ -79,7 +82,7 @@ public class Tower extends Element {
 		this.waitingForBuilding = false;
 	}
 	
-	public void action(Unit unit){};
+	public void action(){};
 	
 
 	public void sendUnitBackToBase(int sendBackAgents, Unit unit) {
@@ -130,5 +133,9 @@ public class Tower extends Element {
 	
 	public boolean isNotBuiltYet(){
 		return this.level == 0 ? true : false;
+	}
+
+	public LinkedList<Unit> getUnitsInVision() {
+		return unitsInVision;
 	}
 }

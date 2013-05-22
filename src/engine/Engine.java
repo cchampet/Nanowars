@@ -65,17 +65,20 @@ public class Engine{
 		//launch action of towers
 		for(Tower tower:Engine.towers){
 			for(Unit unit:Engine.units){
-				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) && tower.distanceToElement(unit)<10*tower.vision){
-					tower.action(unit);
+				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) 
+					&& tower.distanceToElement(unit)<=tower.vision
+					&& !tower.getUnitsInVision().contains(unit)){	
+					tower.getUnitsInVision().add(unit);
 				}
 			}
+			tower.action();
 		}
 		
 		//stop movement of concerned units
 		Iterator<Unit> iterUnits = units.iterator();
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
-			if(unit.atDestination()){
+			if(unit.atDestination() || unit.getNbAgents()<=0){
 				if(unit.resolveAttack()){
 					idDeleted.add(unit.getId());
 					//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
@@ -85,6 +88,7 @@ public class Engine{
 							tmpListOfUnits.add(u);
 					}
 					units = tmpListOfUnits;
+					unit.setAliveFlag(false);
 				}
 			}
 		}
