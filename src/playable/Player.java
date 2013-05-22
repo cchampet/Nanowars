@@ -2,7 +2,7 @@ package playable;
 
 import dispatcher.Dispatcher;
 import engine.Base;
-import engine.Tower;
+import engine.tower.Tower;
 
 /**
  * This class represents a player in the game. It's a thread, which is running while the player has at least one base or one unit.
@@ -29,8 +29,8 @@ public class Player extends Thread implements Playable {
 	
 	public void run() {
 		while(!this.lost() && flagThread){
-			if(this.isIA())
-				chooseAction();
+			//if(this.isIA())
+				//chooseAction();
 		}
 	}
 	

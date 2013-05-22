@@ -15,10 +15,11 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
+
 import dispatcher.Dispatcher;
 import dispatcher.TypeOfTower;
+import engine.tower.Tower;
 
-import engine.Tower;
 
 /**
  * This class display a Tower.
@@ -31,6 +32,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 * static variable which contains a tower to build (player click on it)
 	 */
 	private static TowerSprite towerToBuild = null;
+	/**
+	 * Type of tower chosen by the user
+	 */
+	private static TypeOfTower chosenTowerType = null;
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
@@ -96,7 +101,6 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	public void initSubSprite(){
 		this.subSprite.setSize(60);
-		this.subSprite.setImage(TypeOfTower.POISON.getSubSprite());
 		this.subSprite.setBounds(this.getLocation().x + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2,
 								 this.getLocation().y + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2, 
 								 this.subSprite.getSpriteSize(), this.subSprite.getSpriteSize());
@@ -200,5 +204,13 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	static public TowerSprite getTowerToBuild(){
 		return TowerSprite.towerToBuild;
+	}
+	
+	static public void setChosenTowerType(TypeOfTower tower){
+		TowerSprite.chosenTowerType = tower;
+	}
+	
+	static public TypeOfTower getChosenTowerType(){
+		return TowerSprite.chosenTowerType;
 	}
 }

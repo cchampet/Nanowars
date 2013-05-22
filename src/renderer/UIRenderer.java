@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 
 import engine.Base;
 import engine.Element;
@@ -160,6 +161,11 @@ public class UIRenderer {
 							UIRenderer.choosingTowerFlag = 3;
 						}
 					}else{
+						if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
+							TowerSprite.setChosenTowerType(TypeOfTower.SPEED);
+						}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
+							TowerSprite.setChosenTowerType(TypeOfTower.ZONE);
+						}
 						UIRenderer.choosingTowerFlag = 4;
 					}
 				}
@@ -256,6 +262,7 @@ public class UIRenderer {
 					this.container.remove(this.radialMenuTower);
 					this.radialMenuTower.goToSprite(0);
 					UIRenderer.choosingTowerFlag = 0;
+					TowerSprite.setChosenTowerType(null);
 				}
 				break;
 				

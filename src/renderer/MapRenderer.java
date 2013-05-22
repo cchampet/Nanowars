@@ -21,8 +21,8 @@ import dispatcher.Dispatcher;
 
 import playable.TypeOfPlayer;
 import engine.Base;
-import engine.Tower;
 import engine.Unit;
+import engine.tower.Tower;
 
 
 /**

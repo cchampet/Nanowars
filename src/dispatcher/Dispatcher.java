@@ -18,8 +18,8 @@ import renderer.SelectedSprite;
 import renderer.TowerSprite;
 import engine.Base;
 import engine.Engine;
-import engine.Tower;
-import engine.TowerAttack;
+import engine.tower.Tower;
+import engine.tower.TowerAttack;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -179,7 +179,7 @@ public class Dispatcher {
 			//create tower
 			if(TowerSprite.isThereOneTowerToBuild()){
 				if(Dispatcher.Renderer.isTowerTypeChosen()){
-					TowerSprite.getTowerToBuild().getEngineTower().buildTower();
+					Dispatcher.Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
 					TowerSprite.resetTowerToBuild();
 				}
 			}
