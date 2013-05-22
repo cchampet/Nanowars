@@ -108,11 +108,6 @@ public class Renderer{
 			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
 		}
 		
-		//update the sprite depends on the owner, for each base
-		for(BaseSprite baseSprite:this.getBaseSprites()){
-			baseSprite.setImage(baseSprite.getEngineBase().getOwner().getType().getImageOfBase());
-		}
-		
 		// ----- manage units ----- //
 		//update the position of each unit
 		for(UnitSprite unitSprite:this.getUnitSprites()){

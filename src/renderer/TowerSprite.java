@@ -135,12 +135,12 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (blink){
-      	  this.setBorder(BorderFactory.createLineBorder(Color.gray));
-      	  this.blink = false;
+			this.setBorder(BorderFactory.createLineBorder(Color.gray));
+      	  	this.blink = false;
 		}
         else{
-      	  this.setBorder(BorderFactory.createLineBorder(Color.black));
-      	  this.blink = true;
+        	this.setBorder(BorderFactory.createLineBorder(Color.black));
+        	this.blink = true;
         }
 	}
 	

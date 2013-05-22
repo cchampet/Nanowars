@@ -3,6 +3,9 @@ package renderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import dispatcher.Dispatcher;
 import engine.Base;
@@ -21,11 +25,16 @@ import engine.Element;
  *
  */
 @SuppressWarnings("serial")
-public class BaseSprite extends SelectedSprite implements MouseListener{
+public class BaseSprite extends SelectedSprite implements MouseListener, ActionListener{
 	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding base.
 	 */
 	private JTextField nbAgents;
+	/**
+	 * timer and blink are useful to create the blink when the tower is waiting for building.
+	 */
+	private Timer timer; 
+	private boolean blink;
 	/**
 	 * engineBase is a reference to the corresponding base of this sprite.
 	 */
@@ -37,6 +46,9 @@ public class BaseSprite extends SelectedSprite implements MouseListener{
 		
 		this.engineBase = newBase;
 		
+		this.timer = new Timer (500, this);
+	    this.blink = false;
+		
 		this.nbAgents = new JTextField(String.valueOf(newBase.getNbAgents()));
 		this.nbAgents.setPreferredSize(new Dimension(23, 20));
 		this.nbAgents.setDisabledTextColor(new Color(255, 255, 255));
@@ -47,6 +59,21 @@ public class BaseSprite extends SelectedSprite implements MouseListener{
 		this.nbAgents.setIgnoreRepaint(false); // for better performance
 		this.nbAgents.addMouseListener(this);
 		this.add(this.nbAgents, BorderLayout.CENTER);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		if(this.engineBase.isOwnerChanged()){
+			this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
+			this.engineBase.setOwnerChanged(false);
+		}
+		
+		if(this.engineBase.isFull())
+			this.timer.start();
+		else
+			this.timer.stop();
 	}
 
 	@Override
@@ -109,6 +136,18 @@ public class BaseSprite extends SelectedSprite implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (blink){
+			this.setImage(this.engineBase.getOwner().getType().getImageOfBaseFull());
+      	  this.blink = false;
+		}
+        else{
+        	this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
+        	this.blink = true;
+        }
+	}
 	
 	// GETTERS & SETTERS
 	
