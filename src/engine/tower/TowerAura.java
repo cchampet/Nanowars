@@ -7,5 +7,9 @@ public class TowerAura extends Tower {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public TowerAura(Tower other){
+		super(other);
+	}
 
 }

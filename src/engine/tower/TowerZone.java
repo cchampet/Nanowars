@@ -6,5 +6,8 @@ public class TowerZone extends TowerAttack {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public TowerZone(Tower other){
+		super(other);
+	}
 }

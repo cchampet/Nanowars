@@ -6,5 +6,8 @@ public class TowerFreeze extends TowerAttack {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public TowerFreeze(Tower other){
+		super(other);
+	}
 }

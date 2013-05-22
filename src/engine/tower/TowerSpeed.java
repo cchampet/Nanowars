@@ -6,5 +6,8 @@ public class TowerSpeed extends TowerAura {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public TowerSpeed(Tower other){
+		super(other);
+	}
 }

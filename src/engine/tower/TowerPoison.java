@@ -6,5 +6,8 @@ public class TowerPoison extends TowerAttack {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public TowerPoison(Tower other){
+		super(other);
+	}
 }

@@ -6,5 +6,8 @@ public class TowerResistant extends TowerAura {
 		super(posX, posY);
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	public TowerResistant(Tower other){
+		super(other);
+	}
 }
