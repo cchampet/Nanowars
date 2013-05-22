@@ -55,9 +55,10 @@ public class Renderer{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == 32){ //key "space"
-					BaseSprite.resetStartingElements();
-					BaseSprite.resetEndingElement();
-					Dispatcher.getRenderer().hideRadialMenuMovment();
+					SelectedSprite.resetStartingElements();
+					SelectedSprite.resetEndingElement();
+					TowerSprite.resetTowerToBuild();
+					Dispatcher.getRenderer().hideRadialMenus();
 					
 				}
 			}
@@ -180,10 +181,7 @@ public class Renderer{
 		//Set up the frame
 		this.uiRenderer.displayLoser();
 	}
-	
-	public void hideRadialMenuMovment(){
-		this.uiRenderer.hideRadialMenuMovment();
-	}
+
 	/**
 	 * Indicates if the player is choosing the number of agents to send with the radial menu
 	 * @return true if the player is choosing, else false
@@ -203,6 +201,11 @@ public class Renderer{
 		return this.uiRenderer.isTowerTypeChosen();
 	}
 	
+	
+	public void hideRadialMenus(){
+		this.uiRenderer.hideRadialMenuMovment();
+		this.uiRenderer.hideRadialMenuTower();
+	}
 	//GETTERS & SETTERS
 	
 	/**

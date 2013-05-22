@@ -110,7 +110,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	public void mousePressed(MouseEvent arg0) {
 		//check if the player isn't choosing unit on another base
 		if(SelectedSprite.isThereAnEndingElement()){
-			Dispatcher.getRenderer().hideRadialMenuMovment();
+			Dispatcher.getRenderer().hideRadialMenus();
 		}
 		
 		//set ending element

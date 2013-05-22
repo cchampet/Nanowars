@@ -112,7 +112,8 @@ public class UIRenderer {
 				if(aSeletedBaseIsNotAPlayerBase){
 					SelectedSprite.resetStartingElements();
 					SelectedSprite.resetEndingElement();
-					Dispatcher.getRenderer().hideRadialMenuMovment();
+					TowerSprite.resetTowerToBuild();
+					Dispatcher.getRenderer().hideRadialMenus();
 					return;
 				}
 				
@@ -266,12 +267,22 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Hide the radial menu and re-initialize the choice
+	 * Hide the radial menu for unit choice and re-initialize it
 	 */
 	public void hideRadialMenuMovment(){
 		UIRenderer.choosingUnitFlag = 0;
 		if(this.radialMenuMovment.getParent() != null){
 			this.container.remove(this.radialMenuMovment);
+		}
+	}
+	
+	/**
+	 * Hide the radial menu for tower choice and re-initialize it
+	 */
+	public void hideRadialMenuTower(){
+		UIRenderer.choosingTowerFlag = 0;
+		if(this.radialMenuTower.getParent() != null){
+			this.container.remove(this.radialMenuTower);
 		}
 	}
 	

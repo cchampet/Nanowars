@@ -2,6 +2,8 @@ package engine;
 
 import java.awt.geom.Point2D;
 
+import renderer.TowerSprite;
+
 import dispatcher.Dispatcher;
 
 /**
@@ -82,6 +84,8 @@ public class Tower extends Element {
 		this.nbAgents = 0;
 		this.level = 0;
 		this.waitingForBuilding = false;
+		TowerSprite.resetTowerToBuild();
+		Dispatcher.getRenderer().hideRadialMenus();
 	}
 	
 	public void action(Unit unit){};

@@ -204,7 +204,8 @@ public class MapRenderer implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		BaseSprite.resetStartingElements();
 		BaseSprite.resetEndingElement();
-		Dispatcher.getRenderer().hideRadialMenuMovment();
+		TowerSprite.resetTowerToBuild();
+		Dispatcher.getRenderer().hideRadialMenus();
 	}
 
 	@Override
