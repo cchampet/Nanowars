@@ -111,6 +111,41 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		}
 	}
 	
+	/**
+	 * Change the image of the SubSprite depending the type of the tower
+	 * @param type type of tower to use for the update
+	 */
+	public void updateSubSprite(TypeOfTower type){
+		switch(type){
+			case DAMAGE:
+				this.subSprite.setImage(TypeOfTower.DAMAGE.getSubSprite());
+				break;
+			case POISON:
+				this.subSprite.setImage(TypeOfTower.POISON.getSubSprite());
+				break;
+			case FREEZE:
+				this.subSprite.setImage(TypeOfTower.FREEZE.getSubSprite());
+				break;
+			case ZONE:
+				this.subSprite.setImage(TypeOfTower.ZONE.getSubSprite());
+				break;
+			case DIVISION:
+				this.subSprite.setImage(TypeOfTower.DIVISION.getSubSprite());
+				break;
+			case PROLIFERATION:
+				this.subSprite.setImage(TypeOfTower.PROLIFERATION.getSubSprite());
+				break;
+			case RESISTANT:
+				this.subSprite.setImage(TypeOfTower.RESISTANT.getSubSprite());
+				break;
+			case SPEED:
+				this.subSprite.setImage(TypeOfTower.SPEED.getSubSprite());
+				break;
+			default:
+				break;
+		}
+	}
+	
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -183,6 +218,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	public JTextComponent getLevel() {
 		return this.level;
+	}
+	
+	public void setEngineTower(Tower engineTower){
+		this.engineTower = engineTower;
 	}
 	
 	public Tower getEngineTower() {

@@ -5,7 +5,6 @@ import java.awt.geom.Point2D;
 import renderer.TowerSprite;
 
 import dispatcher.Dispatcher;
-import dispatcher.TypeOfTower;
 import engine.Base;
 import engine.Element;
 import engine.Unit;

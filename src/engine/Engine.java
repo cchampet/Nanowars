@@ -107,8 +107,9 @@ public class Engine{
 	 * Specialize the given tower by a tower of the given type. Replace it in the engine's tower list
 	 * @param type
 	 * @param towerToSpecialize
+	 * @return new specialized Tower id to update the corresponding TowerSprite
 	 */
-	public void specializeTower(TypeOfTower type, Tower towerToSpecialize){
+	public Tower specializeTower(TypeOfTower type, Tower towerToSpecialize){
 		Tower specializedTower = null;
 		try{
 			specializedTower = constructChosenTowerFromSimpleTower(type, towerToSpecialize);
@@ -128,6 +129,7 @@ public class Engine{
 			}
 		}
 		Engine.towers = tmpListOfTowers;
+		return specializedTower;
 	}
 	
 	/**

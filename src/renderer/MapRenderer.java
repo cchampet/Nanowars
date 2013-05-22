@@ -197,6 +197,24 @@ public class MapRenderer implements MouseListener{
 		return newSprite.getId();
 	}
 	
+	/**
+	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * @param oldId ID of the old non-specialized Tower
+	 * @param newTower The new specialized Tower
+	 * @param type Type of the specialized Tower
+	 */
+	public void updateTowerSprite(Tower newTower){
+		for(Sprite s:this.sprites){
+			if(s.getId() == TowerSprite.getTowerToBuild().getId()){
+				TowerSprite towerToChange = (TowerSprite) s;
+				towerToChange.setId(newTower.getId());
+				towerToChange.setEngineTower(newTower);
+				towerToChange.updateSubSprite(TowerSprite.getChosenTowerType());
+				break;
+			}
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		BaseSprite.resetStartingElements();
