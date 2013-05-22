@@ -5,10 +5,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.swing.JFrame;
 
+import playable.Player;
+import playable.TypeOfPlayer;
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -35,6 +38,7 @@ public class Renderer{
 	 */
 	public Renderer(String frameTitle){
 		super();
+		
 		this.frame = new JFrame(frameTitle);
 		this.mapRenderer = new MapRenderer(this.frame.getLayeredPane(), WIDTH, HEIGHT);
 		this.uiRenderer = new UIRenderer(this.frame.getLayeredPane(), WIDTH, HEIGHT);
@@ -82,6 +86,7 @@ public class Renderer{
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
+		// ----- manage deletion ----- //
 		//update sprite list
 		Iterator<Sprite> iterSprites = this.getSprites().iterator();
 		while(iterSprites.hasNext()){
@@ -93,6 +98,7 @@ public class Renderer{
 			}
 		}
 		
+		// ----- manage bases ----- //
 		//update the display of nbAgents for each base
 		for(BaseSprite baseSprite:this.getBaseSprites()){
 			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
@@ -103,6 +109,7 @@ public class Renderer{
 			baseSprite.setImage(baseSprite.getEngineBase().getOwner().getType().getImageOfBase());
 		}
 		
+		// ----- manage units ----- //
 		//update the position of each unit
 		for(UnitSprite unitSprite:this.getUnitSprites()){
 			Point newPoint = new Point((int)(unitSprite.getEngineUnit().getPosition().x - unitSprite.getSpriteSize()/2), (int)(unitSprite.getEngineUnit().getPosition().y - unitSprite.getSpriteSize()/2));
@@ -110,6 +117,7 @@ public class Renderer{
 			unitSprite.setLocation(newPoint);
 		}
 		
+		// ----- manage towers ----- //
 		//update the sprite depends on the owner of the associated base, for each tower
 		for(TowerSprite towerSprite:this.getTowerSprites()){
 			if(towerSprite.getEngineTower().getLevel() == 0)
@@ -128,9 +136,18 @@ public class Renderer{
 			towerSprite.getLevel().setText("lvl "+String.valueOf(towerSprite.getEngineTower().getLevel()));
 		}
 		
+		// ----- manage uiRenderer ----- //
 		//update the display or hide of radial menu
 		this.uiRenderer.refreshRadialMenuMovment();
 		this.uiRenderer.refreshRadialMenuTower();
+		
+		// ----- manage players ----- //
+		for(PlayerSprite p:this.uiRenderer.getPlayerSprites()){
+			p.getNbAgents().setText(String.valueOf(p.getEnginePlayer().getTotalNbAgents()));
+			if(!p.getEnginePlayer().isAlive())
+				p.setImage(TypeOfPlayer.NEUTRAL.getImageOfPlayer());
+		}
+		
 	}
 	
 	//MAPRENDERER INDIRECTIONS
@@ -180,6 +197,7 @@ public class Renderer{
 	public void hideRadialMenuMovment(){
 		this.uiRenderer.hideRadialMenuMovment();
 	}
+	
 	/**
 	 * Indicates if the player is choosing the number of agents to send with the radial menu
 	 * @return true if the player is choosing, else false
@@ -197,6 +215,14 @@ public class Renderer{
 	 */
 	public boolean isTowerTypeChosen(){
 		return this.uiRenderer.isTowerTypeChosen();
+	}
+
+	/**
+	 * Add the Player Sprite to the Sprite Collection of the uiRenderer
+	 * @param newPlayer : the player engine, corresponding to the next created sprite.
+	 */
+	public void addPlayerSprites(HashMap<String, Player> newPlayers) {
+		this.uiRenderer.addPlayerSprites(newPlayers);
 	}
 	
 	//GETTERS & SETTERS

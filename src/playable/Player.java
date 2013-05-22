@@ -3,6 +3,7 @@ package playable;
 import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Tower;
+import engine.Unit;
 
 /**
  * This class represents a player in the game. It's a thread, which is running while the player has at least one base or one unit.
@@ -93,5 +94,14 @@ public class Player extends Thread implements Playable {
 
 	public boolean isPlayer(){
 		return this.type == TypeOfPlayer.PLAYER ? true : false;
+	}
+	
+	public int getTotalNbAgents(){
+		int totalNbAgents = 0;
+		for(Base b:Dispatcher.getEngine().getBasesOfAPlayer(this))
+			totalNbAgents += b.getNbAgents();
+		for(Unit u:Dispatcher.getEngine().getUnitsOfAPlayer(this))
+			totalNbAgents += u.getNbAgents();
+		return totalNbAgents;
 	}
 }

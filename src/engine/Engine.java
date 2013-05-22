@@ -93,6 +93,18 @@ public class Engine{
 	
 	// GETTERS & SETTERS
 	
+	public CopyOnWriteArrayList<Base> getBases(){
+		return bases;
+	}
+
+	public CopyOnWriteArrayList<Unit> getUnits(){
+		return units;
+	}
+	
+	public static CopyOnWriteArrayList<Tower> getTowers() {
+		return towers;
+	}
+	
 	/**
 	 * Get the unit by an id.
 	 * @param id
@@ -134,14 +146,6 @@ public class Engine{
 		}
 		return null;
 	}
-	
-	public CopyOnWriteArrayList<Base> getBases(){
-		return bases;
-	}
-
-	public CopyOnWriteArrayList<Unit> getUnits(){
-		return units;
-	}
 
 	public ArrayList<Base> getBasesOfAPlayer(Player owner) {
 		ArrayList<Base> basesOfTheOwner = new ArrayList<Base>();
@@ -172,6 +176,16 @@ public class Engine{
 		}
 		return unitsOfTheOwner;
 	}
+	
+	public ArrayList<Tower> getTowersOfAPlayer(Player owner) {
+		ArrayList<Tower> towersOfTheOwner = new ArrayList<Tower>();
+		for(Tower t:towers){
+			if(t.getAssociatedBase().getOwner() == owner){
+				towersOfTheOwner.add(t);
+			}
+		}
+		return towersOfTheOwner;
+	}
 
 	public ArrayList<Tower> getTowerAround(Base base) {
 		ArrayList<Tower> towersAround = new ArrayList<Tower>();
@@ -180,9 +194,5 @@ public class Engine{
 				towersAround.add(t);
 		}
 		return towersAround;
-	}
-
-	public static CopyOnWriteArrayList<Tower> getTowers() {
-		return towers;
 	}
 }

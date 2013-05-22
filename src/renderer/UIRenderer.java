@@ -9,27 +9,39 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import playable.Player;
+import playable.TypeOfPlayer;
 import dispatcher.Dispatcher;
-
 import engine.Base;
 import engine.Element;
 
 public class UIRenderer {
-
 	private final int UI_LAYER = 200;
+	
 	private JLabel winnerBackground;
 	private JLabel loserBackground;
+	
 	private JLabel radialMenuMovment;
 	private MultipleSprite radialMenuTower;
+	
 	private Container container;
+	
 	private int width;
 	private int height;
+	
+	/**
+	 * playerSprites contains all sprites which display the info of players (total nbAgents...)
+	 */
+	private final ArrayList<PlayerSprite> playerSprites;
+	
 	/**
 	 * Represent the state of UIRenderer during unit to send choice. 
 	 * 0 = not choosing, 
@@ -50,13 +62,19 @@ public class UIRenderer {
 	
 	public UIRenderer(Container c, int width, int height){
 		super();
+		
 		this.winnerBackground = new JLabel();
 		this.loserBackground = new JLabel();
+		
 		this.radialMenuMovment = new JLabel();
 		this.radialMenuTower = new MultipleSprite(3);
+		
 		this.container = c;
+		
 		this.height=height;
 		this.width=width;
+		
+		this.playerSprites = new ArrayList<PlayerSprite>();
 	}
 	
 	public void init() throws IOException{
@@ -275,6 +293,28 @@ public class UIRenderer {
 		}
 	}
 	
+	public void addPlayerSprites(HashMap<String, Player> newPlayers){		
+		PlayerSprite newSpritePlayer = new PlayerSprite(newPlayers.get("Player"));
+		newSpritePlayer.setImage(TypeOfPlayer.PLAYER.getImageOfPlayer());
+		newSpritePlayer.setBounds(10, this.height - newSpritePlayer.size - 30, newSpritePlayer.size, newSpritePlayer.size);
+		this.container.add(newSpritePlayer, new Integer(UI_LAYER));
+		this.playerSprites.add(newSpritePlayer);
+		
+		PlayerSprite newSpriteIA_1 = new PlayerSprite(newPlayers.get("IA_1"));
+		newSpriteIA_1.setImage(TypeOfPlayer.IA_1.getImageOfPlayer());
+		newSpriteIA_1.setBounds(this.width / 2, this.height - newSpriteIA_1.size - 30, newSpriteIA_1.size, newSpriteIA_1.size);
+		this.container.add(newSpriteIA_1, new Integer(UI_LAYER));
+		this.playerSprites.add(newSpriteIA_1);
+		
+		PlayerSprite newSpriteIA_2 = new PlayerSprite(newPlayers.get("IA_2"));
+		newSpriteIA_2.setImage(TypeOfPlayer.IA_2.getImageOfPlayer());
+		newSpriteIA_2.setBounds(this.width - 10 - newSpriteIA_2.size, this.height - newSpriteIA_2.size - 30, newSpriteIA_2.size, newSpriteIA_2.size);
+		this.container.add(newSpriteIA_2, new Integer(UI_LAYER));
+		this.playerSprites.add(newSpriteIA_2);
+	}
+	
+	// GETTERS & SETTERS
+	
 	public boolean isChoosingUnitFlag(){
 		if(UIRenderer.choosingUnitFlag == 1){
 			return true;
@@ -295,6 +335,10 @@ public class UIRenderer {
 			return true;
 		}
 		return false;
+	}
+
+	public ArrayList<PlayerSprite> getPlayerSprites() {
+		return playerSprites;
 	}
 }
 
