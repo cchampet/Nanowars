@@ -1,4 +1,7 @@
-package engine;
+package engine.tower;
+
+import engine.Unit;
+
 
 public class TowerAttack extends Tower {
 	private int attackSpeed=50;

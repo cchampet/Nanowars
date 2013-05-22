@@ -1,10 +1,13 @@
-package engine;
+package engine.tower;
 
 import java.awt.geom.Point2D;
 
 import renderer.TowerSprite;
 
 import dispatcher.Dispatcher;
+import engine.Base;
+import engine.Element;
+import engine.Unit;
 
 /**
  * This class represents a tower for the engine (no display for this class).
