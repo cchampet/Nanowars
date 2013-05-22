@@ -15,6 +15,7 @@ import playable.TypeOfPlayer;
 import renderer.BaseSprite;
 import renderer.Renderer;
 import renderer.SelectedSprite;
+import renderer.TowerSprite;
 import engine.Base;
 import engine.Engine;
 import engine.Tower;
@@ -175,6 +176,14 @@ public class Dispatcher {
 					SelectedSprite.resetEndingElement();
 				}
 			}
+			//create tower
+			if(TowerSprite.isThereOneTowerToBuild()){
+				if(Dispatcher.Renderer.isTowerTypeChosen()){
+					TowerSprite.getTowerToBuild().getEngineTower().buildTower();
+					TowerSprite.resetTowerToBuild();
+				}
+			}
+			
 			
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){

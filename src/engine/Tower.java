@@ -3,6 +3,8 @@ package engine;
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
 
+import renderer.TowerSprite;
+
 import dispatcher.Dispatcher;
 
 /**
@@ -76,10 +78,17 @@ public class Tower extends Element {
 		return -1;
 	}
 	
+	public void buildTower(){
+		this.waitingForBuilding = false;
+		this.levelUp();
+	}
+	
 	public void destroyTower(){
 		this.nbAgents = 0;
 		this.level = 0;
 		this.waitingForBuilding = false;
+		TowerSprite.resetTowerToBuild();
+		Dispatcher.getRenderer().hideRadialMenus();
 	}
 	
 	public void action(){};
@@ -121,10 +130,6 @@ public class Tower extends Element {
 
 	public boolean isWaitingForBuilding() {
 		return waitingForBuilding;
-	}
-	
-	public void stopWaitingBuilding(){
-		this.waitingForBuilding = false;
 	}
 	
 	public boolean isLevelMax() {

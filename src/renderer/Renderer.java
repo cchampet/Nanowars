@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
+import dispatcher.Dispatcher;
+
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -53,8 +55,11 @@ public class Renderer{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == 32){ //key "space"
-					BaseSprite.resetStartingElements();
-					BaseSprite.resetEndingElement();
+					SelectedSprite.resetStartingElements();
+					SelectedSprite.resetEndingElement();
+					TowerSprite.resetTowerToBuild();
+					Dispatcher.getRenderer().hideRadialMenus();
+					
 				}
 			}
 
@@ -130,6 +135,7 @@ public class Renderer{
 		
 		//update the display or hide of radial menu
 		this.uiRenderer.refreshRadialMenuMovment();
+		this.uiRenderer.refreshRadialMenuTower();
 	}
 	
 	//MAPRENDERER INDIRECTIONS
@@ -175,10 +181,7 @@ public class Renderer{
 		//Set up the frame
 		this.uiRenderer.displayLoser();
 	}
-	
-	public void hideRadialMenuMovment(){
-		this.uiRenderer.hideRadialMenuMovment();
-	}
+
 	/**
 	 * Indicates if the player is choosing the number of agents to send with the radial menu
 	 * @return true if the player is choosing, else false
@@ -190,7 +193,19 @@ public class Renderer{
 	public double getUnitPercentChosen(){
 		return this.uiRenderer.getUnitPercentChosen();
 	}
+	/**
+	 * Check if the player have chosen his tower type
+	 * @return boolean - true if te tower type is chosen
+	 */
+	public boolean isTowerTypeChosen(){
+		return this.uiRenderer.isTowerTypeChosen();
+	}
 	
+	
+	public void hideRadialMenus(){
+		this.uiRenderer.hideRadialMenuMovment();
+		this.uiRenderer.hideRadialMenuTower();
+	}
 	//GETTERS & SETTERS
 	
 	/**
