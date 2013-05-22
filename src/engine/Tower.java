@@ -73,6 +73,11 @@ public class Tower extends Element {
 		return -1;
 	}
 	
+	public void buildTower(){
+		this.waitingForBuilding = false;
+		this.levelUp();
+	}
+	
 	public void destroyTower(){
 		this.nbAgents = 0;
 		this.level = 0;
@@ -118,10 +123,6 @@ public class Tower extends Element {
 
 	public boolean isWaitingForBuilding() {
 		return waitingForBuilding;
-	}
-	
-	public void stopWaitingBuilding(){
-		this.waitingForBuilding = false;
 	}
 	
 	public boolean isLevelMax() {

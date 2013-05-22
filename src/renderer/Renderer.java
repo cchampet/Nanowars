@@ -130,6 +130,7 @@ public class Renderer{
 		
 		//update the display or hide of radial menu
 		this.uiRenderer.refreshRadialMenuMovment();
+		this.uiRenderer.refreshRadialMenuTower();
 	}
 	
 	//MAPRENDERER INDIRECTIONS
@@ -189,6 +190,13 @@ public class Renderer{
 	
 	public double getUnitPercentChosen(){
 		return this.uiRenderer.getUnitPercentChosen();
+	}
+	/**
+	 * Check if the player have chosen his tower type
+	 * @return boolean - true if te tower type is chosen
+	 */
+	public boolean isTowerTypeChosen(){
+		return this.uiRenderer.isTowerTypeChosen();
 	}
 	
 	//GETTERS & SETTERS

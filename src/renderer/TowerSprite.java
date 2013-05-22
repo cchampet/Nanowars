@@ -27,6 +27,10 @@ import engine.Tower;
 @SuppressWarnings("serial")
 public class TowerSprite extends SelectedSprite implements MouseListener, ActionListener{
 	/**
+	 * static variable which contains a tower to build (player click on it)
+	 */
+	private static TowerSprite towerToBuild = null;
+	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
 	private JTextField nbAgents;
@@ -118,8 +122,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		//Build tower
 		if(!SelectedSprite.isThereAtLeastOneStartingElement() && this.engineTower.isNotBuiltYet() 
 															  && this.engineTower.isWaitingForBuilding()){
-			this.engineTower.stopWaitingBuilding();
-			this.engineTower.levelUp();
+			TowerSprite.towerToBuild = this;
 		}
 	}
 
@@ -157,5 +160,22 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	public Tower getEngineTower() {
 		return engineTower;
+	}
+	
+	//About tower to build
+	static public boolean isThereOneTowerToBuild(){
+		if(TowerSprite.towerToBuild == null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	static public void resetTowerToBuild(){
+		TowerSprite.towerToBuild = null;
+	}
+	
+	static public TowerSprite getTowerToBuild(){
+		return TowerSprite.towerToBuild;
 	}
 }
