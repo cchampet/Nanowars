@@ -31,10 +31,6 @@ import engine.Unit;
  *
  */
 public class MapRenderer implements MouseListener{
-	private final int BACKGROUND_LAYER = 0;
-	private final int BASE_LAYER = 10;
-	private final int UNIT_LAYER = 100;
-	private final int EFFECT_LAYER = 150;
 	/**
 	 * background : the background layer. No event connected on it. 
 	 */
@@ -131,10 +127,10 @@ public class MapRenderer implements MouseListener{
 		}		
 		this.background.setBounds(0, 0, this.width, this.height);
 		this.background.setIcon(bgImage);
-		this.container.add(this.background, new Integer(BACKGROUND_LAYER));
+		this.container.add(this.background, Layer.BACKGROUND.id());
 		
 		this.effectsLayer.setBounds(0, 0, this.width, this.height);
-		this.container.add(this.effectsLayer, new Integer(EFFECT_LAYER));
+		this.container.add(this.effectsLayer, Layer.EFFECT.id());
 		
 		//Manage events
 		this.background.addMouseListener(this);
@@ -159,7 +155,7 @@ public class MapRenderer implements MouseListener{
 		else
 			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(newBase.getXCoord(), newBase.getYCoord(), newBase.getCapacity(), newBase.getCapacity());
-		container.add(newSprite, new Integer(BASE_LAYER));
+		container.add(newSprite, Layer.BASE.id());
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}
@@ -181,7 +177,7 @@ public class MapRenderer implements MouseListener{
 		
 		newSprite.setBounds((int)(newUnit.getPosition().x - newSprite.getSpriteSize()/2), (int)(newUnit.getPosition().y - newSprite.getSpriteSize()/2), newSprite.getSpriteSize(), newSprite.getSpriteSize());
 
-		container.add(newSprite, new Integer(UNIT_LAYER));
+		container.add(newSprite, Layer.UNIT.id());
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}
@@ -195,7 +191,7 @@ public class MapRenderer implements MouseListener{
 		//set the image of the tower
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
-		container.add(newSprite, new Integer(BASE_LAYER));
+		container.add(newSprite, Layer.TOWER.id());
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}
@@ -204,7 +200,8 @@ public class MapRenderer implements MouseListener{
 	public void mouseClicked(MouseEvent arg0) {
 		BaseSprite.resetStartingElements();
 		BaseSprite.resetEndingElement();
-		Dispatcher.getRenderer().hideRadialMenuMovment();
+		TowerSprite.resetTowerToBuild();
+		Dispatcher.getRenderer().hideRadialMenus();
 	}
 
 	@Override

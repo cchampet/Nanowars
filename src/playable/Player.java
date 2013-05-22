@@ -20,7 +20,7 @@ public class Player extends Thread implements Playable {
 	 * flagThread is useful for stop the last player's thread (at the end of the game).
 	 */
 	public static boolean flagThread = true; 
-	public int buildTowerCounter = 0;
+	public int sendUnitsToTowerCounter = 0;
 	public Player(String name, TypeOfPlayer type){
 		super();
 		
@@ -30,8 +30,8 @@ public class Player extends Thread implements Playable {
 	
 	public void run() {
 		while(!this.lost() && flagThread){
-			//if(this.isIA())
-				//chooseAction();
+			if(this.isIA())
+				chooseAction();
 		}
 	}
 	
@@ -40,11 +40,11 @@ public class Player extends Thread implements Playable {
 		for(Base baseOfHim:Dispatcher.getEngine().getBasesOfAPlayer(this)){
 			if(baseOfHim.getNbAgents() > 0.8*baseOfHim.getCapacity()){
 				// The IA builds Towers once every 3 turns if it isn't in minority
-				if(buildTowerCounter == 3 
-						&& Dispatcher.getEngine().getBasesOfAPlayer(baseOfHim.getOwner()).size()
-						>= Dispatcher.getEngine().getAdversaryBasesOfAPlayer(baseOfHim.getOwner()).size()
+				if(sendUnitsToTowerCounter == 3
+					&& Dispatcher.getEngine().getBasesOfAPlayer(baseOfHim.getOwner()).size()
+					>= Dispatcher.getEngine().getAdversaryBasesOfAPlayer(baseOfHim.getOwner()).size()
 				){
-					buildTowerCounter=0;
+					sendUnitsToTowerCounter=0;
 					for(Tower towerAround:Dispatcher.getEngine().getTowerAround(baseOfHim)){
 						baseOfHim.sendUnit(baseOfHim.getNbAgents()/5,towerAround);
 					}
@@ -61,8 +61,8 @@ public class Player extends Thread implements Playable {
 						}
 					}
 					baseOfHim.sendUnit(baseOfHim.getNbAgents() / 3, goal);
-					if(buildTowerCounter < 3){
-						buildTowerCounter++;
+					if(sendUnitsToTowerCounter < 3){
+						sendUnitsToTowerCounter++;
 					}
 				}
 			}	

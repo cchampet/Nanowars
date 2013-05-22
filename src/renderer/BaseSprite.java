@@ -72,7 +72,13 @@ public class BaseSprite extends SelectedSprite implements MouseListener{
 		
 		//check if the player isn't choosing unit on another base
 		if(SelectedSprite.isThereAnEndingElement()){
-			Dispatcher.getRenderer().hideRadialMenuMovment();
+			Dispatcher.getRenderer().hideRadialMenus();
+		}
+		
+		//check if the player isn't choosing a tower type
+		if(TowerSprite.isThereOneTowerToBuild()){
+			TowerSprite.resetTowerToBuild();
+			Dispatcher.getRenderer().hideRadialMenus();
 		}
 		
 		//set ending base

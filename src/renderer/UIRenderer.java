@@ -130,7 +130,8 @@ public class UIRenderer {
 				if(aSeletedBaseIsNotAPlayerBase){
 					SelectedSprite.resetStartingElements();
 					SelectedSprite.resetEndingElement();
-					Dispatcher.getRenderer().hideRadialMenuMovment();
+					TowerSprite.resetTowerToBuild();
+					Dispatcher.getRenderer().hideRadialMenus();
 					return;
 				}
 				
@@ -190,14 +191,14 @@ public class UIRenderer {
 	 * Display a "WINNER" message when the player win and before exit program
 	 */
 	public void displayWinner(){
-		this.container.add(this.winnerBackground, new Integer(UI_LAYER));
+		this.container.add(this.winnerBackground, Layer.UI.id());
 	}
 	
 	/**
 	 * Display a "LOSER" message when the player lose and before exit program
 	 */
 	public void displayLoser(){
-		this.container.add(this.loserBackground, new Integer(UI_LAYER));
+		this.container.add(this.loserBackground, Layer.UI.id());
 	}
 	
 	/**
@@ -220,7 +221,7 @@ public class UIRenderer {
 			//if the player is choosing
 			case 1:
 				if(this.radialMenuMovment.getParent() == null){
-					this.container.add(this.radialMenuMovment, new Integer(UI_LAYER));
+					this.container.add(this.radialMenuMovment, Layer.UI.id());
 				}
 				break;
 			
@@ -255,7 +256,7 @@ public class UIRenderer {
 			//if the player is choosing tower type
 			case 1:
 				if(this.radialMenuTower.getParent() == null){
-					this.container.add(this.radialMenuTower, new Integer(UI_LAYER));
+					this.container.add(this.radialMenuTower, Layer.UI.id());
 				}
 				break;
 				
@@ -284,7 +285,7 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Hide the radial menu and re-initialize the choice
+	 * Hide the radial menu for unit choice and re-initialize it
 	 */
 	public void hideRadialMenuMovment(){
 		UIRenderer.choosingUnitFlag = 0;
@@ -293,6 +294,10 @@ public class UIRenderer {
 		}
 	}
 	
+	/**
+	 * Add the player's images at the bottom of the window.
+	 * @param newPlayers
+	 */
 	public void addPlayerSprites(HashMap<String, Player> newPlayers){		
 		PlayerSprite newSpritePlayer = new PlayerSprite(newPlayers.get("Player"));
 		newSpritePlayer.setImage(TypeOfPlayer.PLAYER.getImageOfPlayer());
@@ -314,6 +319,15 @@ public class UIRenderer {
 	}
 	
 	// GETTERS & SETTERS
+	/**
+	 * Hide the radial menu for tower choice and re-initialize it
+	 */
+	public void hideRadialMenuTower(){
+		UIRenderer.choosingTowerFlag = 0;
+		if(this.radialMenuTower.getParent() != null){
+			this.container.remove(this.radialMenuTower);
+		}
+	}
 	
 	public boolean isChoosingUnitFlag(){
 		if(UIRenderer.choosingUnitFlag == 1){

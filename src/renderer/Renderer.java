@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -57,8 +58,11 @@ public class Renderer{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == 32){ //key "space"
-					BaseSprite.resetStartingElements();
-					BaseSprite.resetEndingElement();
+					SelectedSprite.resetStartingElements();
+					SelectedSprite.resetEndingElement();
+					TowerSprite.resetTowerToBuild();
+					Dispatcher.getRenderer().hideRadialMenus();
+					
 				}
 			}
 
@@ -197,7 +201,7 @@ public class Renderer{
 	public void hideRadialMenuMovment(){
 		this.uiRenderer.hideRadialMenuMovment();
 	}
-	
+
 	/**
 	 * Indicates if the player is choosing the number of agents to send with the radial menu
 	 * @return true if the player is choosing, else false
@@ -225,6 +229,11 @@ public class Renderer{
 		this.uiRenderer.addPlayerSprites(newPlayers);
 	}
 	
+	
+	public void hideRadialMenus(){
+		this.uiRenderer.hideRadialMenuMovment();
+		this.uiRenderer.hideRadialMenuTower();
+	}
 	//GETTERS & SETTERS
 	
 	/**
