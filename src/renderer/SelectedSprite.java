@@ -11,7 +11,7 @@ import engine.Element;
  *
  */
 @SuppressWarnings("serial")
-public class SelectedSprite extends Sprite {
+public abstract class SelectedSprite extends Sprite {
 	/**
 	 * startingBases and endingBase are static variable, useful to decide in which direction the player sends units.
 	 */

@@ -85,7 +85,7 @@ public class Dispatcher {
 					//white [50, 150] => a neutral base
 					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() >= 50  && color.getBlue() <= 150 && color.getGreen() >= 50  && color.getGreen() <= 150){
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("Neutral"));
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), null);
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
@@ -118,7 +118,6 @@ public class Dispatcher {
 		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
 		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
 		Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
-		Players.put("Neutral", new Player("Neutral", TypeOfPlayer.NEUTRAL));
 		Renderer.addPlayerSprites(Players);
 		
 		//init the renderer
@@ -144,8 +143,6 @@ public class Dispatcher {
 		Players.get("Player").start();
 		Players.get("IA_1").start();
 		Players.get("IA_2").start();
-		Players.get("Neutral").setDaemon(true);
-		Players.get("Neutral").start();
 		
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
@@ -183,7 +180,6 @@ public class Dispatcher {
 					TowerSprite.resetTowerToBuild();
 				}
 			}
-			
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
 				Dispatcher.Renderer.displayWinner();

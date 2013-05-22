@@ -15,6 +15,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+import playable.TypeOfPlayer;
+
 import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Element;
@@ -67,7 +69,10 @@ public class BaseSprite extends SelectedSprite implements MouseListener, ActionL
 		
 		//update the sprite of the base if it's necessary
 		if(this.engineBase.isOwnerChanged()){
-			this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
+			if(!this.engineBase.isANeutralBase())
+				this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
+			else
+				this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 			this.engineBase.setOwnerChanged(false);
 		}
 		
@@ -175,7 +180,7 @@ public class BaseSprite extends SelectedSprite implements MouseListener, ActionL
 	
 	public static void setStartingBases(Point2D.Float startingCorner,Point2D.Float endingCorner){
 		for(Base potentialStartingBase:Dispatcher.getEngine().getBases()){
-			if(potentialStartingBase.getOwner().isPlayer()){	
+			if(potentialStartingBase.isAPlayerBase()){	
 				if(Math.min(startingCorner.x,endingCorner.x) < potentialStartingBase.getCenter().x 
 					&&	potentialStartingBase.getCenter().x < Math.max(startingCorner.x,endingCorner.x)
 					&&	Math.min(startingCorner.y,endingCorner.y) < potentialStartingBase.getCenter().y

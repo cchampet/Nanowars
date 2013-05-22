@@ -40,7 +40,7 @@ public class Base extends Element {
 	}
 	
 	public void prodAgents(){
-		if(this.isNeutral()) //if it's a neutral base, it doesn't product
+		if(this.isANeutralBase()) //if it's a neutral base, it doesn't product
 			return;
 		if(this.nbAgents<=this.capacity){
 			this.nbAgents+=0.0005*this.capacity;
@@ -112,11 +112,13 @@ public class Base extends Element {
 		this.ownerChanged = ownerChanged;
 	}
 
-	public boolean isNeutral() {
-		return owner.getType() == TypeOfPlayer.NEUTRAL ? true : false;
+	public boolean isANeutralBase() {
+		return owner == null ? true : false;
 	}
 	
 	public boolean isAPlayerBase() {
+		if(this.isANeutralBase())
+			return false;
 		return owner.getType() == TypeOfPlayer.PLAYER ? true : false;
 	}
 }

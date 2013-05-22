@@ -83,10 +83,6 @@ public class Player extends Thread implements Playable {
 	public TypeOfPlayer getType() {
 		return type;
 	}
-	
-	public boolean isNeutral(){
-		return this.type == TypeOfPlayer.NEUTRAL ? true : false;
-	}
 
 	public boolean isIA(){
 		return (this.type == TypeOfPlayer.IA_1 || this.type == TypeOfPlayer.IA_2) ? true : false;

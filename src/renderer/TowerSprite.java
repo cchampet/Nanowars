@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
+import playable.TypeOfPlayer;
+
 import dispatcher.Dispatcher;
 
 import engine.Tower;
@@ -89,10 +91,18 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		super.paintComponent(g);
 		
 		//update the sprite of the base if it's necessary
-		if(this.engineTower.getLevel() == 0)
-			this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
-		else
-			this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
+		if(this.engineTower.getLevel() == 0){
+			if(!this.engineTower.getAssociatedBase().isANeutralBase())
+				this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
+			else
+				this.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
+		}
+		else{
+			if(!this.engineTower.getAssociatedBase().isANeutralBase())
+				this.setImage(this.engineTower.getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
+			else
+				this.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvlup());
+		}
 		
 		//update the display of nbAgents
 		if(this.engineTower.isLevelMax())

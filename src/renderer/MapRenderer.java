@@ -144,7 +144,7 @@ public class MapRenderer implements MouseListener{
 		BaseSprite newSprite = new BaseSprite(newBase);
 		newSprite.setSize(newBase.getCapacity());
 		//set the image of the base
-		if(newBase.isNeutral())
+		if(newBase.isANeutralBase())
 			newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		else if(newBase.getOwner().getType() == TypeOfPlayer.IA_1)
 			newSprite.setImage(TypeOfPlayer.IA_1.getImageOfBase());
