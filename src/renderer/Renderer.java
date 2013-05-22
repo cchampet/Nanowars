@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 import javax.swing.JFrame;
 
+import dispatcher.Dispatcher;
+
 import engine.Base;
 import engine.Tower;
 import engine.Unit;
@@ -55,6 +57,8 @@ public class Renderer{
 				if(e.getKeyCode() == 32){ //key "space"
 					BaseSprite.resetStartingElements();
 					BaseSprite.resetEndingElement();
+					Dispatcher.getRenderer().hideRadialMenuMovment();
+					
 				}
 			}
 
