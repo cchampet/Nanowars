@@ -181,10 +181,30 @@ public class UIRenderer {
 							UIRenderer.choosingTowerFlag = 3;
 						}
 					}else{
-						if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
-							TowerSprite.setChosenTowerType(TypeOfTower.SPEED);
-						}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
-							TowerSprite.setChosenTowerType(TypeOfTower.ZONE);
+						if(mousePosition.x > mousePosition.y && radialMenu.getWidth()-mousePosition.x > mousePosition.y){ //click on top quarter
+							if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.SPEED);
+							}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.FREEZE);
+							}
+						}else if(mousePosition.x > mousePosition.y && radialMenu.getWidth()-mousePosition.x < mousePosition.y){ //click on right quarter
+							if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.DIVISION);
+							}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.ZONE);
+							}						
+						}else if(mousePosition.x < mousePosition.y && radialMenu.getWidth()-mousePosition.x > mousePosition.y){ //click on left quarter
+							if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.RESISTANT);
+							}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.DAMAGE);
+							}
+						}else if(mousePosition.x < mousePosition.y && radialMenu.getWidth()-mousePosition.x < mousePosition.y){ //click on bottom quarter
+							if(UIRenderer.choosingTowerFlag == 2){ //offensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.PROLIFERATION);
+							}else if(UIRenderer.choosingTowerFlag == 3){ //defensive wheel
+								TowerSprite.setChosenTowerType(TypeOfTower.POISON);
+							}					
 						}
 						UIRenderer.choosingTowerFlag = 4;
 					}
