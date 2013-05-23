@@ -77,17 +77,20 @@ public class Engine{
 		//launch action of towers
 		for(Tower tower:Engine.towers){
 			for(Unit unit:Engine.units){
-				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) && tower.distanceToElement(unit)<10*tower.getVision()){
-					tower.action(unit);
+				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) 
+					&& tower.distanceToElement(unit)<=tower.getVision()
+					&& !tower.getUnitsInVision().contains(unit)){	
+					tower.getUnitsInVision().add(unit);
 				}
 			}
+			tower.action();
 		}
 		
 		//stop movement of concerned units
 		Iterator<Unit> iterUnits = units.iterator();
 		while(iterUnits.hasNext()){
 			Unit unit = iterUnits.next();
-			if(unit.atDestination()){
+			if(unit.atDestination() || unit.getNbAgents()<=0){
 				if(unit.resolveAttack()){
 					idDeleted.add(unit.getId());
 					//we can't make this action with a CopyOnWriteArrayList : we need to create an other list based on the first one.
@@ -97,6 +100,7 @@ public class Engine{
 							tmpListOfUnits.add(u);
 					}
 					units = tmpListOfUnits;
+					unit.setAliveFlag(false);
 				}
 			}
 		}
@@ -173,6 +177,18 @@ public class Engine{
 	
 	// GETTERS & SETTERS
 	
+	public CopyOnWriteArrayList<Base> getBases(){
+		return bases;
+	}
+
+	public CopyOnWriteArrayList<Unit> getUnits(){
+		return units;
+	}
+	
+	public static CopyOnWriteArrayList<Tower> getTowers() {
+		return towers;
+	}
+	
 	/**
 	 * Get the unit by an id.
 	 * @param id
@@ -214,14 +230,6 @@ public class Engine{
 		}
 		return null;
 	}
-	
-	public CopyOnWriteArrayList<Base> getBases(){
-		return bases;
-	}
-
-	public CopyOnWriteArrayList<Unit> getUnits(){
-		return units;
-	}
 
 	public ArrayList<Base> getBasesOfAPlayer(Player owner) {
 		ArrayList<Base> basesOfTheOwner = new ArrayList<Base>();
@@ -252,6 +260,16 @@ public class Engine{
 		}
 		return unitsOfTheOwner;
 	}
+	
+	public ArrayList<Tower> getTowersOfAPlayer(Player owner) {
+		ArrayList<Tower> towersOfTheOwner = new ArrayList<Tower>();
+		for(Tower t:towers){
+			if(t.getAssociatedBase().getOwner() == owner){
+				towersOfTheOwner.add(t);
+			}
+		}
+		return towersOfTheOwner;
+	}
 
 	public ArrayList<Tower> getTowerAround(Base base) {
 		ArrayList<Tower> towersAround = new ArrayList<Tower>();
@@ -260,9 +278,5 @@ public class Engine{
 				towersAround.add(t);
 		}
 		return towersAround;
-	}
-
-	public static CopyOnWriteArrayList<Tower> getTowers() {
-		return towers;
 	}
 }

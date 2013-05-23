@@ -119,6 +119,7 @@ public class Dispatcher {
 		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
 		Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
 		Players.put("Neutral", new Player("Neutral", TypeOfPlayer.NEUTRAL));
+		Renderer.addPlayerSprites(Players);
 		
 		//init the renderer
 		try {
