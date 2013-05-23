@@ -2,7 +2,7 @@ package playable;
 
 import dispatcher.Dispatcher;
 import engine.Base;
-import engine.Tower;
+import engine.tower.Tower;
 import engine.Unit;
 
 /**

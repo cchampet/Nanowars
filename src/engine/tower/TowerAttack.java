@@ -1,4 +1,7 @@
-package engine;
+package engine.tower;
+
+import engine.Unit;
+
 
 public class TowerAttack extends Tower {
 	/**
@@ -15,11 +18,16 @@ public class TowerAttack extends Tower {
 		this.damage = 5 * this.level;
 	}
 	
+	public TowerAttack(Tower other){
+		super(other);
+		this.damage = 5*this.level;
+	}
+	
 	@Override
 	public void levelUp() {
 		super.levelUp();
 		
-		this.damage = 2 * this.level;
+		this.damage = 5 * this.level;
 	}
 	
 	public void action(){

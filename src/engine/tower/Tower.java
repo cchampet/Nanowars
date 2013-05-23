@@ -1,4 +1,4 @@
-package engine;
+package engine.tower;
 
 import java.awt.geom.Point2D;
 import java.util.LinkedList;
@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import renderer.TowerSprite;
 
 import dispatcher.Dispatcher;
+import engine.Base;
+import engine.Element;
+import engine.Unit;
 
 /**
  * This class represents a tower for the engine (no display for this class).
@@ -40,6 +43,14 @@ public class Tower extends Element {
 				idOfTheNearestBase = base.getId();
 		}
 		this.associatedBase = Dispatcher.getEngine().getBase(idOfTheNearestBase);
+	}
+	
+	public Tower(Tower other){
+		super((int)other.getPosition().x, (int)other.getPosition().y, other.getNbAgents());
+		this.associatedBase = other.getAssociatedBase();
+		this.level = other.getLevel();
+		this.vision = other.getVision();
+		this.unitsInVision = other.getUnitsInVision();
 	}
 	
 	public void levelUp() {
@@ -139,7 +150,7 @@ public class Tower extends Element {
 	public boolean isNotBuiltYet(){
 		return this.level == 0 ? true : false;
 	}
-
+	
 	public LinkedList<Unit> getUnitsInVision() {
 		return unitsInVision;
 	}

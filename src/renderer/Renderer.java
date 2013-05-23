@@ -13,8 +13,8 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import dispatcher.Dispatcher;
 import engine.Base;
-import engine.Tower;
 import engine.Unit;
+import engine.tower.Tower;
 
 
 /**
@@ -139,6 +139,14 @@ public class Renderer{
 	 */
 	public int addTowerSprite(Tower newTower){
 		return this.mapRenderer.addTowerSprite(newTower);
+	}
+	
+	/**
+	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * @param newTower The new specialized Tower
+	 */
+	public void updateTowerSprite(Tower newTower){
+		this.mapRenderer.updateTowerSprite(newTower);
 	}
 	
 	//UIRENDERER INDIRECTIONS

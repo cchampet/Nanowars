@@ -21,8 +21,8 @@ import dispatcher.Dispatcher;
 
 import playable.TypeOfPlayer;
 import engine.Base;
-import engine.Tower;
 import engine.Unit;
+import engine.tower.Tower;
 
 
 /**
@@ -192,8 +192,27 @@ public class MapRenderer implements MouseListener{
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfTowerLvl0());
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, Layer.TOWER.id());
+		newSprite.initSubSprite();
 		sprites.add(newSprite);
 		return newSprite.getId();
+	}
+	
+	/**
+	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * @param oldId ID of the old non-specialized Tower
+	 * @param newTower The new specialized Tower
+	 * @param type Type of the specialized Tower
+	 */
+	public void updateTowerSprite(Tower newTower){
+		for(Sprite s:this.sprites){
+			if(s.getId() == TowerSprite.getTowerToBuild().getId()){
+				TowerSprite towerToChange = (TowerSprite) s;
+				towerToChange.setId(newTower.getId());
+				towerToChange.setEngineTower(newTower);
+				towerToChange.updateSubSprite(TowerSprite.getChosenTowerType());
+				break;
+			}
+		}
 	}
 	
 	@Override

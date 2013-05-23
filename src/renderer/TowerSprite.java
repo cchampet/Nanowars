@@ -16,10 +16,10 @@ import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
 import playable.TypeOfPlayer;
-
 import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
+import engine.tower.Tower;
 
-import engine.Tower;
 
 /**
  * This class display a Tower.
@@ -33,6 +33,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	private static TowerSprite towerToBuild = null;
 	/**
+	 * Type of tower chosen by the user
+	 */
+	private static TypeOfTower chosenTowerType = null;
+	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
 	private JTextField nbAgents;
@@ -40,6 +44,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 * level is the JTextField which is used to display the level of the correpsonding tower.
 	 */
 	private JTextField level;
+	/**
+	 * Semi-transparent Sprite which appears under the tower Sprite. Shape depends on the tower type
+	 */
+	private Sprite subSprite;
 	/**
 	 * timer and blink are useful to create the blink when the tower is waiting for building.
 	 */
@@ -84,6 +92,58 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		this.level.setIgnoreRepaint(false); // for better performence
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
+		
+		this.subSprite = new Sprite();		
+	}
+	
+	/**
+	 * Initialize the subsprite under the tower. Call this function after have placed the TowerSprite
+	 */
+	public void initSubSprite(){
+		this.subSprite.setSize(60);
+		this.subSprite.setBounds(this.getLocation().x + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2,
+								 this.getLocation().y + this.getSpriteSize()/2 - this.subSprite.getSpriteSize()/2, 
+								 this.subSprite.getSpriteSize(), this.subSprite.getSpriteSize());
+		if(this.getParent() != null){
+			this.getParent().add(this.subSprite, Layer.SUB_EFFECT.id());
+		}else{
+			throw new RuntimeException("Attach the TowerSprite before initialize subSprite");
+		}
+	}
+	
+	/**
+	 * Change the image of the SubSprite depending the type of the tower
+	 * @param type type of tower to use for the update
+	 */
+	public void updateSubSprite(TypeOfTower type){
+		switch(type){
+			case DAMAGE:
+				this.subSprite.setImage(TypeOfTower.DAMAGE.getSubSprite());
+				break;
+			case POISON:
+				this.subSprite.setImage(TypeOfTower.POISON.getSubSprite());
+				break;
+			case FREEZE:
+				this.subSprite.setImage(TypeOfTower.FREEZE.getSubSprite());
+				break;
+			case ZONE:
+				this.subSprite.setImage(TypeOfTower.ZONE.getSubSprite());
+				break;
+			case DIVISION:
+				this.subSprite.setImage(TypeOfTower.DIVISION.getSubSprite());
+				break;
+			case PROLIFERATION:
+				this.subSprite.setImage(TypeOfTower.PROLIFERATION.getSubSprite());
+				break;
+			case RESISTANT:
+				this.subSprite.setImage(TypeOfTower.RESISTANT.getSubSprite());
+				break;
+			case SPEED:
+				this.subSprite.setImage(TypeOfTower.SPEED.getSubSprite());
+				break;
+			default:
+				break;
+		}
 	}
 	
 	@Override
@@ -187,6 +247,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		return this.level;
 	}
 	
+	public void setEngineTower(Tower engineTower){
+		this.engineTower = engineTower;
+	}
+	
 	public Tower getEngineTower() {
 		return engineTower;
 	}
@@ -206,5 +270,13 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	static public TowerSprite getTowerToBuild(){
 		return TowerSprite.towerToBuild;
+	}
+	
+	static public void setChosenTowerType(TypeOfTower tower){
+		TowerSprite.chosenTowerType = tower;
+	}
+	
+	static public TypeOfTower getChosenTowerType(){
+		return TowerSprite.chosenTowerType;
 	}
 }

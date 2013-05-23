@@ -4,6 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dispatcher.TypeOfTower;
+
+import engine.tower.Tower;
+import engine.tower.TowerDamage;
+import engine.tower.TowerDivision;
+import engine.tower.TowerFreeze;
+import engine.tower.TowerPoison;
+import engine.tower.TowerProliferation;
+import engine.tower.TowerResistant;
+import engine.tower.TowerSpeed;
+import engine.tower.TowerZone;
+
 import playable.Player;
 
 /**
@@ -66,7 +78,7 @@ public class Engine{
 		for(Tower tower:Engine.towers){
 			for(Unit unit:Engine.units){
 				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) 
-					&& tower.distanceToElement(unit)<=tower.vision
+					&& tower.distanceToElement(unit)<=tower.getVision()
 					&& !tower.getUnitsInVision().contains(unit)){	
 					tower.getUnitsInVision().add(unit);
 				}
@@ -93,6 +105,74 @@ public class Engine{
 			}
 		}
 		return idDeleted;
+	}
+	
+	/**
+	 * Specialize the given tower by a tower of the given type. Replace it in the engine's tower list
+	 * @param type
+	 * @param towerToSpecialize
+	 * @return new specialized Tower id to update the corresponding TowerSprite
+	 */
+	public Tower specializeTower(TypeOfTower type, Tower towerToSpecialize){
+		Tower specializedTower = null;
+		try{
+			specializedTower = constructChosenTowerFromSimpleTower(type, towerToSpecialize);
+			specializedTower.buildTower();
+		}catch(RuntimeException e){
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		//replace the tower in tower list
+		CopyOnWriteArrayList<Tower> tmpListOfTowers = new CopyOnWriteArrayList<Tower>();
+		for(Tower tower:Engine.towers){
+			if(tower.equals(towerToSpecialize)){
+				tmpListOfTowers.add(specializedTower);
+			}else{
+				tmpListOfTowers.add(tower);
+			}
+		}
+		Engine.towers = tmpListOfTowers;
+		return specializedTower;
+	}
+	
+	/**
+	 * Construct chosen specialized Tower from a generic one
+	 * @param type Type of the tower to construct
+	 * @param other The generic Tower
+	 * @return the chosen tower
+	 */
+	private Tower constructChosenTowerFromSimpleTower(TypeOfTower type, Tower other){
+		Tower newTower = null;
+		switch(type){
+			case DAMAGE:
+				newTower = new TowerDamage(other);
+				break;
+			case POISON:
+				newTower = new TowerPoison(other);
+				break;
+			case FREEZE:
+				newTower = new TowerFreeze(other);
+				break;
+			case ZONE:
+				newTower = new TowerZone(other);
+				break;
+			case DIVISION:
+				newTower = new TowerDivision(other);
+				break;
+			case PROLIFERATION:
+				newTower = new TowerProliferation(other);
+				break;
+			case RESISTANT:
+				newTower = new TowerResistant(other);
+				break;
+			case SPEED:
+				newTower = new TowerSpeed(other);
+				break;
+			default:
+				throw new RuntimeException("Unvalid TypeOfTower during Tower specialization");
+		}
+		return newTower;
 	}
 	
 	// GETTERS & SETTERS

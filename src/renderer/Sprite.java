@@ -34,6 +34,9 @@ public class Sprite extends JPanel{
 	}
 	
 	// GETTERS & SETTERS
+	public void setId(int id){
+		this.id = id;
+	}
 	
 	public int getId(){
 		return this.id;
