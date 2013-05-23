@@ -307,15 +307,17 @@ public class UIRenderer {
 		
 		PlayerSprite newSpriteIA_1 = new PlayerSprite(newPlayers.get("IA_1"));
 		newSpriteIA_1.setImage(TypeOfPlayer.IA_1.getImageOfPlayer());
-		newSpriteIA_1.setBounds(this.width / 2, this.height - newSpriteIA_1.size - 30, newSpriteIA_1.size, newSpriteIA_1.size);
+		newSpriteIA_1.setBounds(this.width - 10 - newSpriteIA_1.size, this.height - newSpriteIA_1.size - 30, newSpriteIA_1.size, newSpriteIA_1.size);
 		this.container.add(newSpriteIA_1, new Integer(UI_LAYER));
 		this.playerSprites.add(newSpriteIA_1);
 		
-		PlayerSprite newSpriteIA_2 = new PlayerSprite(newPlayers.get("IA_2"));
-		newSpriteIA_2.setImage(TypeOfPlayer.IA_2.getImageOfPlayer());
-		newSpriteIA_2.setBounds(this.width - 10 - newSpriteIA_2.size, this.height - newSpriteIA_2.size - 30, newSpriteIA_2.size, newSpriteIA_2.size);
-		this.container.add(newSpriteIA_2, new Integer(UI_LAYER));
-		this.playerSprites.add(newSpriteIA_2);
+		if(newPlayers.size() == 3){
+			PlayerSprite newSpriteIA_2 = new PlayerSprite(newPlayers.get("IA_2"));
+			newSpriteIA_2.setImage(TypeOfPlayer.IA_2.getImageOfPlayer());
+			newSpriteIA_2.setBounds(this.width / 2, this.height - newSpriteIA_2.size - 30, newSpriteIA_2.size, newSpriteIA_2.size);
+			this.container.add(newSpriteIA_2, new Integer(UI_LAYER));
+			this.playerSprites.add(newSpriteIA_2);
+		}
 	}
 	
 	// GETTERS & SETTERS

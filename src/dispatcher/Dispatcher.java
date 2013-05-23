@@ -63,6 +63,8 @@ public class Dispatcher {
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
 					//blue [50, 150] => a base for the player
 					if(color.getBlue() >= 50 && color.getBlue() <= 150 && color.getRed() == 0 && color.getGreen() == 0){
+						if(!Players.containsKey("Player"))
+							Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
 						float pixelBlue = mapData.getSampleFloat(x, y, 2);
 						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelBlue/150.)), Players.get("Player"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
@@ -70,6 +72,8 @@ public class Dispatcher {
 					}
 					//red [50, 150] => a base for the IA_1
 					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() == 0 && color.getGreen() == 0){
+						if(!Players.containsKey("IA_1"))
+							Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
 						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_1"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
@@ -77,6 +81,8 @@ public class Dispatcher {
 					}
 					//green [50, 150] => a base for the IA_2
 					else if(color.getGreen() >= 50  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
+						if(!Players.containsKey("IA_2"))
+							Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
 						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_2"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
@@ -114,15 +120,9 @@ public class Dispatcher {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args){
-		//init players
-		Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
-		Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
-		Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
-		Renderer.addPlayerSprites(Players);
-		
 		//init the renderer
 		try {
-			Dispatcher.Renderer.init();
+			Renderer.init();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -131,19 +131,18 @@ public class Dispatcher {
 		//load the map
 		try {
 			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
+			Renderer.addPlayerSprites(Players);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 
 		//display the renderer
-		Dispatcher.Renderer.render();
+		Renderer.render();
 		
-		//lauch thread for each player
-		Players.get("Player").start();
-		Players.get("IA_1").start();
-		Players.get("IA_2").start();
-		
+		//start the thrad
+		Dispatcher.startThreadOfPlayers();
+
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
@@ -181,8 +180,12 @@ public class Dispatcher {
 				}
 			}
 			//check if there is a winner
-			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
-				Dispatcher.Renderer.displayWinner();
+			if(Dispatcher.theWinner() != null){
+				if(Dispatcher.theWinner().isPlayer())
+					Dispatcher.Renderer.displayWinner();
+				else
+					Dispatcher.Renderer.displayLoser();
+				
 				Dispatcher.Renderer.render();
 				
 				try {
@@ -190,21 +193,6 @@ public class Dispatcher {
 					endOfGame = true;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
-				Renderer.getFrame().dispose();
-				Player.flagThread = false;
-			}
-			else if((Players.get("IA_1").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_2").isAlive())
-					|| (Players.get("IA_2").isAlive() && !Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())){
-				Dispatcher.Renderer.displayLoser();
-				Dispatcher.Renderer.render();
-				
-				try {
-					Thread.sleep(5000);
-					endOfGame = true;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					System.exit(0);
 				}
 				Renderer.getFrame().dispose();
 				Player.flagThread = false;
@@ -220,6 +208,43 @@ public class Dispatcher {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * This function start the thread of each player concerned.
+	 */
+	private static void startThreadOfPlayers() {
+		Players.get("Player").start();
+		Players.get("IA_1").start();
+		if(Players.size() == 3)
+			Players.get("IA_2").start();
+	}
+
+	/**
+	 * Return the winner of the game (or null if there is no winner yet).
+	 * @return Player : the winner if there is one, or null if not
+	 */
+	public static Player theWinner(){
+		if(Players.size() == 2){
+			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive())
+				return Players.get("Player");
+			else if(!Players.get("Player").isAlive() && Players.get("IA_1").isAlive())
+				return Players.get("IA_1");
+			else
+				return null;
+		}
+		else if(Players.size() == 3){
+			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive())
+				return Players.get("Player");
+			else if(!Players.get("Player").isAlive() && Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive())
+				return Players.get("IA_1");
+			else if(!Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && Players.get("IA_2").isAlive())
+				return Players.get("IA_2");
+			else
+				return null;
+		}
+		else
+			return null;
 	}
 	
 	// GETTERS & SETTERS

@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 
 import javax.swing.JTextField;
 
 import playable.Player;
+import playable.TypeOfPlayer;
 
 /**
  * This class display a player at the bottom of the window (the number of agents, of towers...)
@@ -57,6 +59,18 @@ public class PlayerSprite extends Sprite {
 		this.nbAgents.setOpaque(false);
 		this.nbAgents.setIgnoreRepaint(false); // for better performance
 		this.add(this.nbAgents, BorderLayout.NORTH);
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		//update the JTextField which represents the nbAgents
+		this.nbAgents.setText(String.valueOf(this.enginePlayer.getTotalNbAgents()));
+
+		//update the sprite of the player if it's necessary
+		if(!this.enginePlayer.isAlive())
+			this.setImage(TypeOfPlayer.NEUTRAL.getImageOfPlayer());
 	}
 	
 	// GETTERS & SETTERS
