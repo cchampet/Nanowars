@@ -19,6 +19,10 @@ public class Base extends Element {
 	
 	private double capacity;
 	private Player owner;
+	/**
+	 * 
+	 */
+	private boolean ownerChanged;
 		
 	/**
 	 * Constructor asking a 2D position and a capacity for the base.
@@ -32,6 +36,7 @@ public class Base extends Element {
 	
 		this.capacity = capacity;
 		this.owner = player;
+		this.ownerChanged = false;
 	}
 	
 	public void prodAgents(){
@@ -82,6 +87,10 @@ public class Base extends Element {
 	public int getCapacity(){
 		return (int) this.capacity;
 	}
+	
+	public boolean isFull(){
+		return this.nbAgents < this.capacity ? false : true;
+	}
 
 	public Player getOwner() {
 		return owner;
@@ -93,6 +102,14 @@ public class Base extends Element {
 	
 	public static int getMaxCapacity() {
 		return MAX_CAPACITY;
+	}
+	
+	public boolean isOwnerChanged() {
+		return ownerChanged;
+	}
+
+	public void setOwnerChanged(boolean ownerChanged) {
+		this.ownerChanged = ownerChanged;
 	}
 
 	public boolean isNeutral() {

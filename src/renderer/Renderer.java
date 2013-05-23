@@ -1,6 +1,5 @@
 package renderer;
 
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -91,7 +90,7 @@ public class Renderer{
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
 		// ----- manage deletion ----- //
-		//update sprite list
+		//update sprites list
 		Iterator<Sprite> iterSprites = this.getSprites().iterator();
 		while(iterSprites.hasNext()){
 			Sprite sprite = iterSprites.next();
@@ -101,45 +100,7 @@ public class Renderer{
 				iterSprites.remove();
 			}
 		}
-		
-		// ----- manage bases ----- //
-		//update the display of nbAgents for each base
-		for(BaseSprite baseSprite:this.getBaseSprites()){
-			baseSprite.getNbAgents().setText(String.valueOf(baseSprite.getEngineBase().getNbAgents()));
-		}
-		
-		//update the sprite depends on the owner, for each base
-		for(BaseSprite baseSprite:this.getBaseSprites()){
-			baseSprite.setImage(baseSprite.getEngineBase().getOwner().getType().getImageOfBase());
-		}
-		
-		// ----- manage units ----- //
-		//update the position of each unit
-		for(UnitSprite unitSprite:this.getUnitSprites()){
-			Point newPoint = new Point((int)(unitSprite.getEngineUnit().getPosition().x - unitSprite.getSpriteSize()/2), (int)(unitSprite.getEngineUnit().getPosition().y - unitSprite.getSpriteSize()/2));
-			unitSprite.updateNbAgents(unitSprite.getEngineUnit().getNbAgents());
-			unitSprite.setLocation(newPoint);
-		}
-		
-		// ----- manage towers ----- //
-		//update the sprite depends on the owner of the associated base, for each tower
-		for(TowerSprite towerSprite:this.getTowerSprites()){
-			if(towerSprite.getEngineTower().getLevel() == 0)
-				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvl0());
-			else
-				towerSprite.setImage(towerSprite.getEngineTower().getAssociatedBase().getOwner().getType().getImageOfTowerLvlup());
-		}
-		
-		//update the display of nbAgents and of the level for each tower
-		for(TowerSprite towerSprite:this.getTowerSprites()){
-			if(towerSprite.getEngineTower().isLevelMax())
-				towerSprite.getNbAgents().setText("Max");
-			else
-				towerSprite.getNbAgents().setText(String.valueOf(towerSprite.getEngineTower().getNbAgents()));
-			
-			towerSprite.getLevel().setText("lvl "+String.valueOf(towerSprite.getEngineTower().getLevel()));
-		}
-		
+
 		// ----- manage uiRenderer ----- //
 		//update the display or hide of radial menu
 		this.uiRenderer.refreshRadialMenuMovment();

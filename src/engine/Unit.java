@@ -69,10 +69,12 @@ public class Unit extends Element {
 					else if(this.nbAgents == this.goal.getNbAgents()){
 						tmpGoal.reduceNbAgents(this.nbAgents);
 						tmpGoal.setOwner(Dispatcher.getPlayers().get("Neutral"));
+						tmpGoal.setOwnerChanged(true);
 					}
 					else{
 						tmpGoal.reduceNbAgents(this.nbAgents);
 						tmpGoal.setOwner(this.owner);
+						tmpGoal.setOwnerChanged(true);
 						tmpGoal.makeTheChangeOfCamp();
 						for(Tower t:Dispatcher.getEngine().getTowerAround(tmpGoal))
 							t.destroyTower();

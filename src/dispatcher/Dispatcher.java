@@ -185,7 +185,6 @@ public class Dispatcher {
 				}
 			}
 			
-			
 			//check if there is a winner
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive()){
 				Dispatcher.Renderer.displayWinner();
