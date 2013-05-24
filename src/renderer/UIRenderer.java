@@ -35,6 +35,8 @@ public class UIRenderer {
 	
 	private Container container;
 	
+	private Menu menu;
+	
 	private int width;
 	private int height;
 	
@@ -76,9 +78,16 @@ public class UIRenderer {
 		this.width=width;
 		
 		this.playerSprites = new ArrayList<PlayerSprite>();
+		
+		this.menu = new Menu(c, height, width);
 	}
 	
 	public void init() throws IOException{
+		
+		// Initialize menu
+		
+		this.menu.init();
+		
 		//Load the winner background image
 		ImageIcon bgWinnerImage = new ImageIcon("./tex/youWin.png");
 		if(bgWinnerImage.getImageLoadStatus() != MediaTracker.COMPLETE){
@@ -87,13 +96,14 @@ public class UIRenderer {
 		this.winnerBackground.setBounds(0, 0, this.width, this.height);
 		this.winnerBackground.setIcon(bgWinnerImage);
 		
-		//Load the looser background image
+		//Load the loser background image
 		ImageIcon bgLoserImage = new ImageIcon("./tex/youLose.png");
 		if(bgLoserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}
 		this.loserBackground.setBounds(0, 0, this.width, this.height);
 		this.loserBackground.setIcon(bgLoserImage);
+				
 		
 		//Load the radial menu image for unit choice
 		ImageIcon rmImage = new ImageIcon("./tex/radialmenu_movment.png");
@@ -228,6 +238,13 @@ public class UIRenderer {
 	}
 	
 	/**
+	 * Display the menu at the beginning of the game
+	 */	
+	public void displayMenu(){
+		this.container.add(this.menu.getMenuBackground(), Layer.UI.id());
+	}
+	
+	/**
 	 * Display or hide a radial menu to choose how many units send 
 	 */
 	public void refreshRadialMenuMovment(){
@@ -348,6 +365,10 @@ public class UIRenderer {
 	}
 	
 	// GETTERS & SETTERS
+	
+	public Menu getMenu(){
+		return menu;
+	}
 	/**
 	 * Hide the radial menu for tower choice and re-initialize it
 	 */

@@ -19,7 +19,7 @@ import engine.tower.Tower;
 
 /**
  * Renderer is the main class for all displaying stuff. It creates all specific renderers like MapRenderer.
- * It also manage the main frame.
+ * It also manages the main frame.
  * 
  * @author Jijidici
  *
@@ -85,7 +85,7 @@ public class Renderer{
 	}
 	
 	/**
-	 * This method is called every frame, in order to refresh all important element in our frame.
+	 * This method is called every frame, in order to refresh all important elements in our frame.
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
@@ -160,13 +160,23 @@ public class Renderer{
 	}
 	
 	/**
-	 * Display looser message
+	 * Display loser message
 	 */
 	public void displayLoser(){
 		//Set up the frame
 		this.uiRenderer.displayLoser();
 	}
-	
+
+	/**
+	 * Display the menu
+	 */	
+	public void displayMenu() {
+		this.uiRenderer.displayMenu();		
+	}
+
+	/**
+	 * Hide the radial menu
+	 */		
 	public void hideRadialMenuMovment(){
 		this.uiRenderer.hideRadialMenuMovment();
 	}
@@ -252,5 +262,9 @@ public class Renderer{
 
 	public MapRenderer getMapRenderer() {
 		return mapRenderer;
+	}
+
+	public UIRenderer getUIRenderer() {
+		return uiRenderer;
 	}
 }

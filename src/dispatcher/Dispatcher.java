@@ -127,7 +127,19 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
+
+		//display the renderer
+		Renderer.render();
 		
+		// display the menu
+		Dispatcher.Renderer.displayMenu();
+		while(Renderer.getUIRenderer().getMenu().isGameNotBegun()){
+			// Display the menu image
+			
+			// Localize the user's click
+			// Redirect the user to the right level
+		}
+		//enlever le menu
 		//load the map
 		try {
 			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
@@ -136,13 +148,11 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
-		//display the renderer
-		Renderer.render();
 		
-		//start the thrad
+		//start the thread
 		Dispatcher.startThreadOfPlayers();
 
+		
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
@@ -257,6 +267,7 @@ public class Dispatcher {
 	public static Renderer getRenderer() {
 		return Dispatcher.Renderer;
 	}
+	
 	
 	public static HashMap<String, Player> getPlayers() {
 		return Dispatcher.Players;
