@@ -55,6 +55,11 @@ public class Unit extends Element {
 	 * Move the unit along his direction vector.
 	 */
 	public void move(){
+		//Proliferation modifier
+		if(this.modifiers.contains(UnitModifier.PROLIFERATION)){
+			this.nbAgents += 0.05;
+		}
+		
 		float coefSpeed = 1;
 		//Speed modifier
 		if(this.modifiers.contains(UnitModifier.SPEED)){

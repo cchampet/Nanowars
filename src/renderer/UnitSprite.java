@@ -51,7 +51,9 @@ public class UnitSprite extends Sprite{
 		this.nbAgents.setText(String.valueOf(this.engineUnit.getNbAgents()));
 		
 		//update the position of the unit
+		this.size = UnitSprite.MIN_SIZE + this.engineUnit.getNbAgents()/2;
 		this.setLocation(new Point((int)(this.engineUnit.getPosition().x - this.size/2), (int)(this.engineUnit.getPosition().y - this.size/2)));
+		this.setSize(this.size, this.size);
 	}
 	
 	/**
