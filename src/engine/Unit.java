@@ -55,8 +55,13 @@ public class Unit extends Element {
 	 * Move the unit along his direction vector.
 	 */
 	public void move(){
-		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed), 
-				this.position.y + (this.direction.y * this.moveSpeed));
+		float coefSpeed = 1;
+		//Speed modifier
+		if(this.modifiers.contains(UnitModifier.SPEED)){
+			coefSpeed = 2.f;
+		}
+		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed * coefSpeed), 
+				this.position.y + (this.direction.y * this.moveSpeed * coefSpeed));
 	}
 	
 	/**
