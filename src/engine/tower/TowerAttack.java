@@ -33,8 +33,9 @@ public class TowerAttack extends Tower {
 	public void action(){
 		if(unitsInVision.size()>0){
 			if(attackCounter==attackCounterLimit){
-				while((this.distanceToElement(unitsInVision.getFirst())>this.vision 
-						|| !unitsInVision.getFirst().isAliveFlag())){
+				while(this.distanceToElement(unitsInVision.getFirst())>this.vision 
+						|| !unitsInVision.getFirst().isAliveFlag()
+						|| unitsInVision.getFirst().getOwner().equals(this.getAssociatedBase().getOwner())){
 					unitsInVision.removeFirst();
 					if(unitsInVision.size()==0){
 						break;

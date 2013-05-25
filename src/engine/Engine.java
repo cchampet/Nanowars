@@ -77,9 +77,8 @@ public class Engine{
 		//launch action of towers
 		for(Tower tower:Engine.towers){
 			for(Unit unit:Engine.units){
-				if(!unit.getOwner().equals(tower.getAssociatedBase().getOwner()) 
-					&& tower.distanceToElement(unit)<=tower.getVision()
-					&& !tower.getUnitsInVision().contains(unit)){	
+				if(tower.distanceToElement(unit)<=tower.getVision()
+					&& !tower.getUnitsInVision().contains(unit)){
 					tower.getUnitsInVision().add(unit);
 				}
 			}

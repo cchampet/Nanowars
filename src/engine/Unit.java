@@ -2,9 +2,11 @@ package engine;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import playable.Player;
 import dispatcher.Dispatcher;
+import dispatcher.UnitModifier;
 import engine.tower.Tower;
 
 /**
@@ -19,6 +21,10 @@ public class Unit extends Element {
 	private int moveSpeed = 2;
 	private Player owner;
 	private boolean isAliveFlag;
+	/**
+	 * List of modifiers which affect the unit
+	 */
+	private final LinkedHashSet<UnitModifier> modifiers;
 	
 	private Point2D.Float direction;
 	
@@ -29,6 +35,7 @@ public class Unit extends Element {
 		this.start = start;
 		this.goal = goal;
 		this.isAliveFlag = true;
+		this.modifiers = new LinkedHashSet<UnitModifier>();
 		
 		Point2D.Float startingPosition = start.getCenter();
 		Point2D.Float endingPosition = goal.getCenter();
@@ -114,7 +121,14 @@ public class Unit extends Element {
 	public void reduceNbAgents(double damage){
 		nbAgents-=damage;
 	}
-
+	
+	/**
+	 * Apply a modifier to the unit
+	 * @param newModifier the modifier to apply
+	 */
+	public void addModifier(UnitModifier newModifier){
+		this.modifiers.add(newModifier);
+	}
 	// GETTERS & SETTERS
 	
 	public Element getGoal() {
@@ -136,7 +150,11 @@ public class Unit extends Element {
 	public Element getStart() {
 		return start;
 	}
-
+	
+	public LinkedHashSet<UnitModifier> getModifiers(){
+		return this.modifiers;
+	}
+	
 	public void setStart(Element start) {
 		this.start = start;
 	}
