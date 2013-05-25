@@ -129,6 +129,10 @@ public class Unit extends Element {
 	 * @param reduceNumber
 	 */
 	public void reduceNbAgents(double damage){
+		if(this.modifiers.contains(UnitModifier.RESISTANT)){
+			damage -= 2;
+			if(damage < 0) damage = 0;
+		}
 		nbAgents-=damage;
 	}
 	
