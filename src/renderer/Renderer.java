@@ -142,6 +142,14 @@ public class Renderer{
 	}
 	
 	/**
+	 * Remove the sprite which has the given ID
+	 * @param id the id of the sprite to remove
+	 */
+	public void removeSprite(int id){
+		this.mapRenderer.removeSprite(id);
+	}
+	
+	/**
 	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
 	 * @param newTower The new specialized Tower
 	 */

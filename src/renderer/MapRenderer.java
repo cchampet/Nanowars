@@ -198,6 +198,20 @@ public class MapRenderer implements MouseListener{
 	}
 	
 	/**
+	 * Remove Sprite from the Sprite list
+	 * @param idSprite the id of the sprite to remove
+	 */
+	public void removeSprite(int idSprite){
+		for(Sprite s:this.sprites){
+			if(s.getId() == idSprite){
+				this.sprites.remove(s);
+				this.container.remove(s);
+				break;
+			}
+		}
+	}
+	
+	/**
 	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
 	 * @param oldId ID of the old non-specialized Tower
 	 * @param newTower The new specialized Tower

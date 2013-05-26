@@ -21,6 +21,7 @@ public class Unit extends Element {
 	private int moveSpeed = 2;
 	private Player owner;
 	private boolean isAliveFlag;
+	private boolean isDivided;
 	/**
 	 * List of modifiers which affect the unit
 	 */
@@ -35,6 +36,7 @@ public class Unit extends Element {
 		this.start = start;
 		this.goal = goal;
 		this.isAliveFlag = true;
+		this.isDivided = false;
 		this.modifiers = new LinkedHashSet<UnitModifier>();
 		
 		Point2D.Float startingPosition = start.getCenter();
@@ -128,12 +130,21 @@ public class Unit extends Element {
 	 * Reduce the number of agents of a unit when attacked by a TowerAttack
 	 * @param reduceNumber
 	 */
-	public void reduceNbAgents(double damage){
+	public void reduceNbAgents(double damage){		
 		if(this.modifiers.contains(UnitModifier.RESISTANT)){
 			damage -= 2;
 			if(damage < 0) damage = 0;
 		}
-		nbAgents-=damage;
+		
+		this.nbAgents-=damage;
+		//minimum 0
+		if(this.nbAgents < 0){
+			this.nbAgents = 0;
+		}else{
+			if(this.nbAgents > 1 && this.modifiers.contains(UnitModifier.DIVISION)){
+				this.isDivided = true;
+			}
+		}
 	}
 	
 	/**
@@ -165,6 +176,19 @@ public class Unit extends Element {
 		return start;
 	}
 	
+	/**
+	 * Change the position of the unit. Re-compute the right direction
+	 * @param newPosition the new position of the unit
+	 */
+	public void setPosition(Point2D.Float newPosition){
+		this.position = newPosition;
+		this.direction.x = this.goal.getCenter().x - newPosition.x;
+		this.direction.y = this.goal.getCenter().y - newPosition.y;
+		double normDirection = this.direction.distance(0, 0);
+		this.direction.x /= normDirection;
+		this.direction.y /= normDirection;
+	}
+	
 	public LinkedHashSet<UnitModifier> getModifiers(){
 		return this.modifiers;
 	}
@@ -190,8 +214,12 @@ public class Unit extends Element {
 	public boolean isAliveFlag() {
 		return isAliveFlag;
 	}
-
+	
 	public void setAliveFlag(boolean lifeFlag) {
 		this.isAliveFlag = lifeFlag;
+	}
+	
+	public boolean isDivided(){
+		return this.isDivided;
 	}
 }

@@ -1,9 +1,11 @@
 package engine;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dispatcher.Dispatcher;
 import dispatcher.TypeOfTower;
 
 import engine.tower.Tower;
@@ -69,11 +71,6 @@ public class Engine{
 		    b.prodAgents();
 		}
 		
-		//move units
-		for(Unit unit:units){
-			unit.move();
-		}
-		
 		//launch action of towers
 		for(Tower tower:Engine.towers){
 			for(Unit unit:Engine.units){
@@ -83,6 +80,15 @@ public class Engine{
 				}
 			}
 			tower.action();
+		}
+		
+		//move units
+		for(Unit unit:units){
+			if(unit.isDivided()){
+				divideUnit(unit);
+			}else{
+				unit.move();
+			}
 		}
 		
 		//stop movement of concerned units
@@ -100,6 +106,11 @@ public class Engine{
 					}
 					units = tmpListOfUnits;
 					unit.setAliveFlag(false);
+				}
+				
+				//Remove dead units in tower list
+				for(Tower tower: Engine.towers){
+					tower.refreshTowerVisionList(unit);
 				}
 			}
 		}
@@ -172,6 +183,56 @@ public class Engine{
 				throw new RuntimeException("Unvalid TypeOfTower during Tower specialization");
 		}
 		return newTower;
+	}
+	
+	/**
+	 * In case of damage DIVISION Unit, split it in two little unit
+	 * @param motherUnit the unit to divide
+	 */
+	public void divideUnit(Unit motherUnit){
+		Dispatcher.getRenderer().removeSprite(motherUnit.getId());
+		//remove mother unit in tower vision list
+		for(Tower tower:Engine.towers){
+			tower.refreshTowerVisionList(motherUnit);
+		}
+		
+		//compute orthogonal vector to the mother unit direction
+		Point2D.Float orthDirection = new Point2D.Float();
+		if(motherUnit.getDirection().x == 0){
+			orthDirection.x = 1;
+			orthDirection.y = 0;
+		}else{
+			orthDirection.x = 1;
+			orthDirection.y = - (motherUnit.getDirection().x/motherUnit.getDirection().y);
+			double orthNorm = Math.sqrt(1 + orthDirection.y*orthDirection.y);
+			orthDirection.x /= orthNorm;
+			orthDirection.y /= orthNorm;			
+		}
+		
+		//create children unit
+		Unit childUnit1 = new Unit(motherUnit.getNbAgents()/2, (Base)motherUnit.getStart(), motherUnit.getGoal());
+		Unit childUnit2 = new Unit(motherUnit.getNbAgents()/2, (Base)motherUnit.getStart(), motherUnit.getGoal());
+		
+		Point2D.Float child1Position = new Point2D.Float(motherUnit.getPosition().x + (10+childUnit1.getNbAgents()/4)*orthDirection.x,
+														 motherUnit.getPosition().y + (10+childUnit1.getNbAgents()/4)*orthDirection.y);
+		childUnit1.setPosition(child1Position);
+		Point2D.Float child2Position = new Point2D.Float(motherUnit.getPosition().x - (10+childUnit1.getNbAgents()/4)*orthDirection.x,
+				 										 motherUnit.getPosition().y - (10+childUnit1.getNbAgents()/4)*orthDirection.y);
+		childUnit2.setPosition(child2Position);
+		
+		//add to collections in engine and renderer
+		childUnit1.setId(Dispatcher.getRenderer().addUnitSprite(childUnit1));
+		childUnit2.setId(Dispatcher.getRenderer().addUnitSprite(childUnit2));
+		
+		CopyOnWriteArrayList<Unit> tmpListOfUnits = new CopyOnWriteArrayList<Unit>();
+		for(Unit u:units){
+			if(u != motherUnit)
+				tmpListOfUnits.add(u);
+		}
+		tmpListOfUnits.add(childUnit1);
+		tmpListOfUnits.add(childUnit2);
+		units = tmpListOfUnits;
+		
 	}
 	
 	// GETTERS & SETTERS

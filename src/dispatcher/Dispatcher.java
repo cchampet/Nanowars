@@ -136,7 +136,7 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
+		
 		//display the renderer
 		Renderer.render();
 		
