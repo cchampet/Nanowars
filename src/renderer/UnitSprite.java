@@ -7,6 +7,8 @@ import java.awt.Point;
 
 import javax.swing.JTextField;
 
+import dispatcher.UnitModifier;
+
 import engine.Unit;
 
 /**
@@ -54,6 +56,17 @@ public class UnitSprite extends Sprite{
 		this.size = UnitSprite.MIN_SIZE + this.engineUnit.getNbAgents()/2;
 		this.setLocation(new Point((int)(this.engineUnit.getPosition().x - this.size/2), (int)(this.engineUnit.getPosition().y - this.size/2)));
 		this.setSize(this.size, this.size);
+		
+		//display the modifier icon
+		int cptLayout = 0;
+		for(UnitModifier mod:this.engineUnit.getModifiers()){
+			if(cptLayout<2){
+				g.drawImage(mod.getIcon(), this.size-10*(cptLayout+1), this.size-10, 10, 10, this);
+			}else{
+				g.drawImage(mod.getIcon(), this.size-10*(cptLayout/2+1), this.size-20, 10, 10, this);
+			}
+			cptLayout++;
+		}
 	}
 	
 	/**
