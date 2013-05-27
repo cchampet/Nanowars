@@ -5,36 +5,32 @@ import engine.Unit;
 
 public class TowerAttack extends Tower {
 	/**
-	 * attackCounterLimit allows to fix the speed of the Tower attacks
+	 * ATTACK_COUNTER_LIMIT allows to fix the attack speed of the Tower
 	 */
-	private int attackCounterLimit=40;
+	private static int ATTACK_COUNTER_LIMIT = 20;
 	private int damage;
-	private Unit target;
 	private int attackCounter=0;
 	//temporary flag to practise the projectile system
 	private boolean hasHitTarget = false;
 
 	public TowerAttack(int posX, int posY) {
 		super(posX, posY);
-		
-		this.damage = 5 * this.level;
+		this.damage = 0;
 	}
 	
 	public TowerAttack(Tower other){
 		super(other);
-		this.damage = 5*this.level;
+		this.damage = 0;
 	}
 	
 	@Override
 	public void levelUp() {
 		super.levelUp();
-		
-		this.damage = 5 * this.level;
 	}
 	
 	public void action(){
 		if(unitsInVision.size()>0){
-			if(attackCounter==attackCounterLimit){
+			if(attackCounter>=ATTACK_COUNTER_LIMIT){
 				while(this.distanceToElement(unitsInVision.getFirst())>this.vision 
 						|| !unitsInVision.getFirst().isAliveFlag()
 						|| unitsInVision.getFirst().getOwner().equals(this.getAssociatedBase().getOwner())){
@@ -90,13 +86,5 @@ public class TowerAttack extends Tower {
 	
 	public void setDamage(int damage) {
 		this.damage = damage;
-	}
-
-	public Unit getTarget() {
-		return target;
-	}
-
-	public void setTarget(Unit target) {
-		this.target = target;
 	}
 }
