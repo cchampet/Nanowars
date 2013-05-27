@@ -68,7 +68,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		
 		this.engineTower = newTower;
 		
-		this.timer = new Timer (500, this);
+		this.timer = new Timer (1000, this);
 	    this.blink = false;
 		
 		this.size = 24;
@@ -171,6 +171,8 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		//update the display of nbAgents
 		if(this.engineTower.isLevelMax())
 			this.nbAgents.setText("Max");
+		else if (blink)
+			this.nbAgents.setText("UP");
 		else
 			this.nbAgents.setText(String.valueOf(this.engineTower.getNbAgents()));
 		
@@ -186,8 +188,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		//start blinking when the tower is waiting for building (and stop when it's not)
 		if(this.engineTower.isWaitingForBuilding())
 			this.timer.start();
-		else
+		else{
 			this.timer.stop();
+			this.nbAgents.setText(String.valueOf(this.engineTower.getNbAgents()));
+		}
 	}
 
 	@Override
@@ -231,14 +235,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (blink){
-			this.setBorder(BorderFactory.createLineBorder(Color.gray));
+		if (blink)
       	  	this.blink = false;
-		}
-        else{
-        	this.setBorder(BorderFactory.createLineBorder(Color.black));
+        else
         	this.blink = true;
-        }
 	}
 	
 	// GETTERS & SETTERS
