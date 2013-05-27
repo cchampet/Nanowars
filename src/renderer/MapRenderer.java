@@ -107,6 +107,18 @@ public class MapRenderer implements MouseListener{
 						)
 					);
 				}
+				
+				//draw the highlighted Tower range
+				if(TowerSprite.getHighlightedTower() != null){
+					if(TowerSprite.getHighlightedTower().getEngineTower().getLevel() > 0){
+						Tower hlEngineTower = TowerSprite.getHighlightedTower().getEngineTower();
+						g.setColor(Color.GRAY);
+						g.drawOval((int)(hlEngineTower.getCenter().x - hlEngineTower.getVision()),
+								   (int)(hlEngineTower.getCenter().y - hlEngineTower.getVision()), 
+								   hlEngineTower.getVision()*2,
+								   hlEngineTower.getVision()*2);
+					}
+				}
 				this.setVisible(true);
 			}
 		};

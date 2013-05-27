@@ -37,6 +37,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	private static TypeOfTower chosenTowerType = null;
 	/**
+	 * Tower with Mouse Over : display its range
+	 */
+	private static TowerSprite highlightedTower = null;
+	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
 	private JTextField nbAgents;
@@ -190,10 +194,14 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	public void mouseClicked(MouseEvent arg0) {}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent arg0) {
+		TowerSprite.highlightedTower = this;
+	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {
+		TowerSprite.highlightedTower = null;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -278,5 +286,9 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	static public TypeOfTower getChosenTowerType(){
 		return TowerSprite.chosenTowerType;
+	}
+	
+	static public TowerSprite getHighlightedTower(){
+		return TowerSprite.highlightedTower;
 	}
 }
