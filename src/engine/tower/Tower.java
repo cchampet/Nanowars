@@ -1,7 +1,7 @@
 package engine.tower;
 
 import java.awt.geom.Point2D;
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
 
 import renderer.TowerSprite;
 
@@ -22,7 +22,7 @@ public class Tower extends Element {
 	private final Base associatedBase;
 	protected int level;
 	protected int vision;
-	protected LinkedList<Unit> unitsInVision;
+	protected LinkedHashSet<Unit> unitsInVision;
 	
 	private boolean waitingForBuilding;
 	
@@ -32,7 +32,7 @@ public class Tower extends Element {
 		this.level = 0;
 		this.vision = 0;
 		this.waitingForBuilding = false;
-		this.unitsInVision = new LinkedList<Unit>();
+		this.unitsInVision = new LinkedHashSet<Unit>();
 		
 		//define the associatedBase of the tower
 		int idOfTheNearestBase = -1;
@@ -122,6 +122,12 @@ public class Tower extends Element {
 		unit.setDirectionToOpposite();
 	}
 	
+	/**
+	 * Abstract methode to add a Unit in Tower vision list
+	 * @param unitToAdd the Unit to add
+	 */
+	public void addToUnitsInVision(Unit unitToAdd){}
+	
 	// GETTERS & SETTERS
 
 	public Base getAssociatedBase() {
@@ -160,7 +166,7 @@ public class Tower extends Element {
 		return this.level == 0 ? true : false;
 	}
 	
-	public LinkedList<Unit> getUnitsInVision() {
+	public LinkedHashSet<Unit> getUnitsInVision() {
 		return unitsInVision;
 	}
 }

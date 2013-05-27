@@ -24,45 +24,55 @@ public class TowerAttack extends Tower {
 	}
 	
 	@Override
-	public void levelUp() {
-		super.levelUp();
+	public void addToUnitsInVision(Unit unitToAdd){
+		if(unitToAdd.getOwner() != this.getAssociatedBase().getOwner()){
+			this.unitsInVision.add(unitToAdd);
+		}
 	}
 	
+	@Override
 	public void action(){
-		if(unitsInVision.size()>0){
-			if(attackCounter>=ATTACK_COUNTER_LIMIT){
-				while(this.distanceToElement(unitsInVision.getFirst())>this.vision 
-						|| !unitsInVision.getFirst().isAliveFlag()
-						|| unitsInVision.getFirst().getOwner().equals(this.getAssociatedBase().getOwner())){
-					unitsInVision.removeFirst();
-					if(unitsInVision.size()==0){
-						break;
-					}
-				}
-				if(unitsInVision.size()>0){
-					// TODO: Ici creer un Projectile
-					/*
-					 * Un Projectile a comme attribut 
-					 * - une position
-					 * - une unité cible
-					 * - un flag "a touché"
-					 * Lui donner comme unité cible unitsInVision.getFirst()
-					 * Quand le Projectile arrive sur l'unité, son flag "a touché" passe à vrai
-					 */
-					this.hasHitTarget = true;
-					// Fin TO DO
-					attackCounter=0;
-				}
+		//remove far enough units
+		boolean cleanList = false;
+		while(cleanList){
+			cleanList = true;
+			for(Unit unit:this.unitsInVision){
+				if(unit.distanceToElement(this) > this.vision){
+					this.unitsInVision.remove(unit);
+					cleanList = false;
+					break;
+				}	
 			}
-			else{
-				attackCounter++;
+		}
+		
+		//Attack if there is target
+		if(attackCounter>=ATTACK_COUNTER_LIMIT){
+			if(this.unitsInVision.size() > 0){
+				// TODO: Ici creer un Projectile
+				/*
+				 * Un Projectile a comme attribut 
+				 * - une position
+				 * - une unité cible
+				 * - un flag "a touché"
+				 * Lui donner comme unité cible unitsInVision.getFirst()
+				 * Quand le Projectile arrive sur l'unité, son flag "a touché" passe à vrai
+				 */
+				this.hasHitTarget = true;
+				// Fin TO DO
+				attackCounter=0;
 			}
+		}
+		else{
+			attackCounter++;
 		}
 		
 		//Manage Tower effect
 		if(this.hasHitTarget){
-			applyEffect(this.unitsInVision.getFirst());
-			this.hasHitTarget = false;
+			for(Unit unit:unitsInVision){
+				applyEffect(unit);
+				this.hasHitTarget = false;
+				break;
+			}
 			//TODO: Ici remplacer
 			/*
 			 * - Le if par un test sur le flag "a touché" du Projectile

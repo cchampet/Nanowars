@@ -70,16 +70,18 @@ public class Engine{
 		for(Base b:bases){
 		    b.prodAgents();
 		}
-		
+
 		//launch action of towers
 		for(Tower tower:Engine.towers){
-			for(Unit unit:Engine.units){
-				if(tower.distanceToElement(unit)<=tower.getVision()
-					&& !tower.getUnitsInVision().contains(unit)){
-					tower.getUnitsInVision().add(unit);
+			//no action on neutral tower
+			if(tower.getAssociatedBase().getOwner() != null){
+				for(Unit unit:Engine.units){
+					if(tower.distanceToElement(unit)<=tower.getVision()){
+						tower.addToUnitsInVision(unit);
+					}
 				}
+				tower.action();
 			}
-			tower.action();
 		}
 		
 		//move units
