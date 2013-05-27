@@ -82,8 +82,13 @@ public class BaseSprite extends SelectedSprite implements MouseListener, ActionL
 		//start blinking when the base is full (and stop when it's not)
 		if(this.engineBase.isFull())
 			this.timer.start();
-		else
+		else{
 			this.timer.stop();
+			if(!this.engineBase.isANeutralBase())
+				this.setImage(this.engineBase.getOwner().getType().getImageOfBase());
+			else
+				this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+		}
 	}
 
 	@Override
