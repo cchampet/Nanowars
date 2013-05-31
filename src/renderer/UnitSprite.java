@@ -60,12 +60,15 @@ public class UnitSprite extends Sprite{
 		//display the modifier icon
 		int cptLayout = 0;
 		for(UnitModifier mod:this.engineUnit.getModifiers()){
-			if(cptLayout<2){
-				g.drawImage(mod.getIcon(), this.size-10*(cptLayout+1), this.size-10, 10, 10, this);
-			}else{
-				g.drawImage(mod.getIcon(), this.size-10*(cptLayout/2+1), this.size-20, 10, 10, this);
+			//if the modifier is to display
+			if(mod.isToDisplay()){
+				if(cptLayout<2){
+					g.drawImage(mod.getIcon(), this.size-10*(cptLayout+1), this.size-10, 10, 10, this);
+				}else{
+					g.drawImage(mod.getIcon(), this.size-10*(cptLayout/2+1), this.size-20, 10, 10, this);
+				}
+				cptLayout++;
 			}
-			cptLayout++;
 		}
 	}
 	

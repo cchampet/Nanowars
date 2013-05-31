@@ -35,6 +35,8 @@ public class UIRenderer {
 	
 	private Container container;
 	
+	private Menu menu;
+	
 	private int width;
 	private int height;
 	
@@ -76,9 +78,15 @@ public class UIRenderer {
 		this.width=width;
 		
 		this.playerSprites = new ArrayList<PlayerSprite>();
+		
+		this.menu = new Menu(c, width, height);
 	}
 	
 	public void init() throws IOException{
+		
+		// Initialize menu
+		this.menu.init();
+		
 		//Load the winner background image
 		ImageIcon bgWinnerImage = new ImageIcon("./tex/youWin.png");
 		if(bgWinnerImage.getImageLoadStatus() != MediaTracker.COMPLETE){
@@ -87,13 +95,14 @@ public class UIRenderer {
 		this.winnerBackground.setBounds(0, 0, this.width, this.height);
 		this.winnerBackground.setIcon(bgWinnerImage);
 		
-		//Load the looser background image
+		//Load the loser background image
 		ImageIcon bgLoserImage = new ImageIcon("./tex/youLose.png");
 		if(bgLoserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}
 		this.loserBackground.setBounds(0, 0, this.width, this.height);
 		this.loserBackground.setIcon(bgLoserImage);
+				
 		
 		//Load the radial menu image for unit choice
 		ImageIcon rmImage = new ImageIcon("./tex/radialmenu_movment.png");
@@ -214,21 +223,28 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Display a "WINNER" message when the player win and before exit program
+	 * Display a "WINNER" message when the player wins
 	 */
 	public void displayWinner(){
 		this.container.add(this.winnerBackground, Layer.UI.id());
 	}
 	
 	/**
-	 * Display a "LOSER" message when the player lose and before exit program
+	 * Display a "LOSER" message when the player loses
 	 */
 	public void displayLoser(){
 		this.container.add(this.loserBackground, Layer.UI.id());
 	}
 	
 	/**
-	 * Display or hide a radial menu to choose how many units send 
+	 * Display the menu at the beginning of the game
+	 */	
+	public void displayMenu(){
+		this.container.add(this.menu, Layer.UI.id());
+	}
+	
+	/**
+	 * Display or hide a radial menu to choose how many units to send 
 	 */
 	public void refreshRadialMenuMovment(){
 		switch(UIRenderer.choosingUnitFlag){
@@ -251,7 +267,7 @@ public class UIRenderer {
 				}
 				break;
 			
-			//if the player have just chosen
+			//if the player has just chosen
 			case 2:
 				this.container.remove(this.radialMenuMovment);
 				UIRenderer.choosingUnitFlag = 0;
@@ -297,7 +313,7 @@ public class UIRenderer {
 				this.radialMenuTower.goToSprite(2);
 				break;
 			
-			//if the player have just chosen
+			//if the player has just chosen
 			case 4:
 				if(!TowerSprite.isThereOneTowerToBuild()){
 					this.container.remove(this.radialMenuTower);
@@ -310,6 +326,15 @@ public class UIRenderer {
 			default:
 				break;
 		}
+	}
+	
+	/**
+	 * Hide the menu
+	 */
+	public void hideMenu(){
+		for(Sprite s:this.menu.getLvlSprites())
+			this.container.remove(s);
+		this.container.remove(this.menu);
 	}
 	
 	/**
@@ -349,6 +374,10 @@ public class UIRenderer {
 	}
 	
 	// GETTERS & SETTERS
+	
+	public Menu getMenu(){
+		return menu;
+	}
 	/**
 	 * Hide the radial menu for tower choice and re-initialize it
 	 */
@@ -372,7 +401,7 @@ public class UIRenderer {
 	
 	/**
 	 * Check if the player have chosen his tower type
-	 * @return boolean - true if te tower type is chosen
+	 * @return boolean - true if the tower type is chosen
 	 */
 	public boolean isTowerTypeChosen(){
 		if(UIRenderer.choosingTowerFlag == 4){
@@ -383,6 +412,14 @@ public class UIRenderer {
 
 	public ArrayList<PlayerSprite> getPlayerSprites() {
 		return playerSprites;
+	}
+	
+	public boolean isGameNotBegun() {
+		return this.menu.isGameNotBegun();
+	}
+	
+	public String getPathOfTheLevelSelected(){
+		return this.menu.getPathOfTheLevelSelected();
 	}
 }
 

@@ -62,11 +62,23 @@ public class Unit extends Element {
 			this.nbAgents += 0.05;
 		}
 		
+		//Poison modifier
+		if(this.modifiers.contains(UnitModifier.POISONED)){
+			this.nbAgents -= 0.05;
+		}
+		
 		float coefSpeed = 1;
 		//Speed modifier
 		if(this.modifiers.contains(UnitModifier.SPEED)){
 			coefSpeed = 2.f;
 		}
+		
+		//Slow modifier
+		if(this.modifiers.contains(UnitModifier.SLOWED)){
+			coefSpeed *= 0.5f;
+			System.out.println(true);
+		}
+		
 		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed * coefSpeed), 
 				this.position.y + (this.direction.y * this.moveSpeed * coefSpeed));
 	}

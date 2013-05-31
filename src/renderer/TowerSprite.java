@@ -22,14 +22,14 @@ import engine.tower.Tower;
 
 
 /**
- * This class display a Tower.
+ * This class displays a Tower.
  * @author Yuki
  *
  */
 @SuppressWarnings("serial")
 public class TowerSprite extends SelectedSprite implements MouseListener, ActionListener{
 	/**
-	 * static variable which contains a tower to build (player click on it)
+	 * static variable which contains a tower to build (player clicks on it)
 	 */
 	private static TowerSprite towerToBuild = null;
 	/**
@@ -41,11 +41,11 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	private static TowerSprite highlightedTower = null;
 	/**
-	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
+	 * nbAgents is the JTextField which is used to display the nbAgents of the corresponding tower.
 	 */
 	private JTextField nbAgents;
 	/**
-	 * level is the JTextField which is used to display the level of the correpsonding tower.
+	 * level is the JTextField which is used to display the level of the corresponding tower.
 	 */
 	private JTextField level;
 	/**
@@ -80,7 +80,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		this.nbAgents.setBorder(null);
 		this.nbAgents.setHorizontalAlignment(JTextField.CENTER);
 		this.nbAgents.setOpaque(false);
-		this.nbAgents.setIgnoreRepaint(false); // for better performence
+		this.nbAgents.setIgnoreRepaint(false); // for better performances
 		this.nbAgents.addMouseListener(this);
 		this.add(this.nbAgents, BorderLayout.CENTER);
 		
@@ -93,7 +93,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		this.level.setHorizontalAlignment(JTextField.CENTER);
 		this.level.setOpaque(true);
 		this.level.setBackground(new Color(0, 0, 0));
-		this.level.setIgnoreRepaint(false); // for better performence
+		this.level.setIgnoreRepaint(false); // for better performances
 		this.level.addMouseListener(this);
 		this.add(this.level, BorderLayout.SOUTH);
 		
@@ -101,7 +101,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	}
 	
 	/**
-	 * Initialize the subsprite under the tower. Call this function after have placed the TowerSprite
+	 * Initialize the subsprite under the tower. Call this function after having placed the TowerSprite
 	 */
 	public void initSubSprite(){
 		this.subSprite.setSize(60);
@@ -116,7 +116,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	}
 	
 	/**
-	 * Change the image of the SubSprite depending the type of the tower
+	 * Change the image of the SubSprite depending on the type of the tower
 	 * @param type type of tower to use for the update
 	 */
 	public void updateSubSprite(TypeOfTower type){
@@ -209,7 +209,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		//check if the player isn't choosing unit on another base
+		//check if the player isn't choosing units on another base
 		if(SelectedSprite.isThereAnEndingElement()){
 			Dispatcher.getRenderer().hideRadialMenus();
 		}
@@ -231,7 +231,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	public void mouseReleased(MouseEvent arg0) {}
 	
 	/**
-	 * method called each blinks (when the tower is waiting for building).
+	 * method called at each blink (when the tower is waiting for building).
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

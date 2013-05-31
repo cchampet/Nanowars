@@ -37,8 +37,8 @@ public class Dispatcher {
 	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
 		
 	/**
-	 * This method load the map from a datamap image.
-	 * For making the map (from photoshop for example) :
+	 * This method loads the map from a datamap image.
+	 * To make the map (from Photoshop for example) :
 	 * 	- blue[50, 150], red[0], green[0] => a base for the player
 	 * 	- red[50, 150], blue[0], green[0] => a base for the IA_1
 	 * 	- green[50, 150], blue[0], red[0] => a base for the IA_2
@@ -83,8 +83,8 @@ public class Dispatcher {
 					else if(color.getGreen() >= 50  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
 						if(!Players.containsKey("IA_2"))
 							Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
-						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_2"));
+						float pixelGreen = mapData.getSampleFloat(x, y, 1);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelGreen/150.)), Players.get("IA_2"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
@@ -98,7 +98,7 @@ public class Dispatcher {
 				}
 			}
 		}
-		//For each pixels, create the towers
+		//For each pixel, create the towers
 		for(int y=0;y<map.getHeight();++y){
 			for(int x=0;x<map.getWidth();++x){
 				Color color = new Color(map.getRGB(x, y));
@@ -119,7 +119,7 @@ public class Dispatcher {
 	 * @param args input arguments
 	 * @throws IOException 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args){		
 		//init the renderer
 		try {
 			Renderer.init();
@@ -127,22 +127,28 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
+
+		//display the renderer
+		Renderer.render();
+		
+		//the menu
+		Renderer.displayMenu();
+		while(Renderer.isGameNotBegun()){}
+		Renderer.hideMenu();
 		
 		//load the map
 		try {
-			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
+			Dispatcher.loadMap(Renderer.getPathOfTheLevelSelected());
 			Renderer.addPlayerSprites(Players);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
 		
-		//display the renderer
-		Renderer.render();
-		
-		//start the thrad
+		//start the thread
 		Dispatcher.startThreadOfPlayers();
 
+		
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
@@ -212,7 +218,7 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * This function start the thread of each player concerned.
+	 * This function starts the thread of each player concerned.
 	 */
 	private static void startThreadOfPlayers() {
 		Players.get("Player").start();
@@ -257,6 +263,7 @@ public class Dispatcher {
 	public static Renderer getRenderer() {
 		return Dispatcher.Renderer;
 	}
+	
 	
 	public static HashMap<String, Player> getPlayers() {
 		return Dispatcher.Players;
