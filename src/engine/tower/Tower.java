@@ -55,7 +55,7 @@ public class Tower extends Element {
 	
 	public void levelUp() {
 		this.level++;
-		this.vision = 50 * this.level;
+		this.vision = 500 * this.level;
 	}
 	
 	/**

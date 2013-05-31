@@ -62,6 +62,11 @@ public class Unit extends Element {
 			this.nbAgents += 0.05;
 		}
 		
+		//Poison modifier
+		if(this.modifiers.contains(UnitModifier.POISONED)){
+			this.nbAgents -= 0.05;
+		}
+		
 		float coefSpeed = 1;
 		//Speed modifier
 		if(this.modifiers.contains(UnitModifier.SPEED)){
