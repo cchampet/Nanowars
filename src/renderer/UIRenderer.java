@@ -319,7 +319,6 @@ public class UIRenderer {
 					this.container.remove(this.radialMenuTower);
 					this.radialMenuTower.goToSprite(0);
 					UIRenderer.choosingTowerFlag = 0;
-					TowerSprite.setChosenTowerType(null);
 				}
 				break;
 				

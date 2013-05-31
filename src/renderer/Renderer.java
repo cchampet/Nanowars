@@ -152,9 +152,10 @@ public class Renderer{
 	/**
 	 * Update the TowerSprite of a newly specialized Tower in the Sprite Array
 	 * @param newTower The new specialized Tower
+	 * @param oldID id of the old non-specialize tower
 	 */
-	public void updateTowerSprite(Tower newTower){
-		this.mapRenderer.updateTowerSprite(newTower);
+	public void updateTowerSprite(Tower newTower, int oldID){
+		this.mapRenderer.updateTowerSprite(newTower, oldID);
 	}
 	
 	//UIRENDERER INDIRECTIONS

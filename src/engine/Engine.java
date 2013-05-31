@@ -149,6 +149,20 @@ public class Engine{
 	}
 	
 	/**
+	 * Unspecialize a tower by building a no-type tower
+	 * @param towerToUnspecialize
+	 * @return basic tower
+	 */
+	public Tower unspecializeTower(Tower towerToUnspecialize){
+		Tower newTower = specializeTower(TypeOfTower.NONE, towerToUnspecialize);
+		newTower.destroyTower();
+		while(newTower.getLevel() > 0){
+			newTower.levelDown();
+		}
+		return newTower;
+	}
+	
+	/**
 	 * Construct chosen specialized Tower from a generic one
 	 * @param type Type of the tower to construct
 	 * @param other The generic Tower
@@ -157,6 +171,9 @@ public class Engine{
 	private Tower constructChosenTowerFromSimpleTower(TypeOfTower type, Tower other){
 		Tower newTower = null;
 		switch(type){
+			case NONE:
+				newTower = new Tower(other);
+				break;		
 			case DAMAGE:
 				newTower = new TowerDamage(other);
 				break;

@@ -107,8 +107,7 @@ public class Unit extends Element {
 						tmpGoal.setOwner(this.owner);
 						tmpGoal.setOwnerChanged(true);
 						tmpGoal.makeTheChangeOfCamp();
-						for(Tower t:Dispatcher.getEngine().getTowerAround(tmpGoal))
-							t.destroyTower();
+						tmpGoal.reInitTowers();
 					}
 				}
 				else{

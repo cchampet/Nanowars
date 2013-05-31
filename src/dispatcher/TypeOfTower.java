@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public enum TypeOfTower {
+	NONE("", "", UnitModifier.NONE),
 	DAMAGE("./tex/tower/subtower/subtower_damage.png", "./tex/tower/projectile/proj_damage.png", UnitModifier.NONE),
 	POISON("./tex/tower/subtower/subtower_poison.png", "./tex/tower/projectile/proj_poison.png", UnitModifier.NONE),
 	FREEZE("./tex/tower/subtower/subtower_freeze.png", "./tex/tower/projectile/proj_freeze.png", UnitModifier.NONE),
@@ -22,8 +23,13 @@ public enum TypeOfTower {
 	
 	TypeOfTower(String subSpritePath, String projPath, UnitModifier modifier){
 		try {
-			this.subSpriteImg = ImageIO.read(new File(subSpritePath));
+			this.subSpriteImg = null;
 			this.projectileImg = null;
+			
+			if(subSpritePath != ""){
+				this.subSpriteImg = ImageIO.read(new File(subSpritePath));
+			}
+			
 			if(projPath != ""){
 				this.projectileImg = ImageIO.read(new File(projPath));
 			}

@@ -225,13 +225,12 @@ public class MapRenderer implements MouseListener{
 	
 	/**
 	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
-	 * @param oldId ID of the old non-specialized Tower
 	 * @param newTower The new specialized Tower
-	 * @param type Type of the specialized Tower
+	 * @param oldId ID of the old non-specialized Tower
 	 */
-	public void updateTowerSprite(Tower newTower){
+	public void updateTowerSprite(Tower newTower, int oldID){
 		for(Sprite s:this.sprites){
-			if(s.getId() == TowerSprite.getTowerToBuild().getId()){
+			if(s.getId() == oldID){
 				TowerSprite towerToChange = (TowerSprite) s;
 				towerToChange.setId(newTower.getId());
 				towerToChange.setEngineTower(newTower);

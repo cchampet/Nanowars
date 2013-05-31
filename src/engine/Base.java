@@ -4,7 +4,9 @@ import java.awt.geom.Point2D;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import renderer.TowerSprite;
 import dispatcher.Dispatcher;
+import engine.tower.Tower;
 
 /**
  * This class represent an in-game base, physically.
@@ -68,6 +70,30 @@ public class Base extends Element {
 	public void makeTheChangeOfCamp() {
 		if(this.nbAgents < 0)
 			this.nbAgents *= -1;
+	}
+	
+	/**
+	 * Reset its towers to basic level 0 tower
+	 */
+	public void reInitTowers(){
+		for(Tower t:Dispatcher.getEngine().getTowerAround(this)){
+			//if the tower is not  built
+			if(t.getLevel() == 0){
+				t.destroyTower();
+			}else{
+				//forbidden tower construction
+				if(TowerSprite.getTowerToBuild() != null){
+					if(t.equals(TowerSprite.getTowerToBuild().getEngineTower())){
+						TowerSprite.resetTowerToBuild();
+						Dispatcher.getRenderer().hideRadialMenus();
+					}
+				}
+				
+				//build a new basic tower instead
+				Tower basicTower = Dispatcher.getEngine().unspecializeTower(t);
+				Dispatcher.getRenderer().updateTowerSprite(basicTower, t.getId());
+			}
+		}
 	}
 	
 	// GETTERS & SETTERS
