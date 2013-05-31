@@ -119,7 +119,7 @@ public class Dispatcher {
 	 * @param args input arguments
 	 * @throws IOException 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args){		
 		//init the renderer
 		try {
 			Renderer.init();
