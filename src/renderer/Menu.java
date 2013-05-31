@@ -1,6 +1,5 @@
 package renderer;
 
-import java.awt.Container;
 import java.awt.MediaTracker;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,20 +12,16 @@ public class Menu implements MouseListener {
 
 	private JLabel menuBackground;
 	
-	private Container container;
-	
 	private int width;
 	private int height;
 	private boolean gameNotBegun;
 
 
-	public Menu(Container c, int width, int height){
+	public Menu(int width, int height){
 		super();
 		
 		this.menuBackground = new JLabel();
-		
-		this.container = c;
-		
+				
 		this.height=height;
 		this.width=width;
 		this.gameNotBegun=true;

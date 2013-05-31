@@ -79,7 +79,7 @@ public class UIRenderer {
 		
 		this.playerSprites = new ArrayList<PlayerSprite>();
 		
-		this.menu = new Menu(c, height, width);
+		this.menu = new Menu(width, height);
 	}
 	
 	public void init() throws IOException{

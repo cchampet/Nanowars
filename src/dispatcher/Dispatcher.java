@@ -132,7 +132,7 @@ public class Dispatcher {
 		Renderer.render();
 		
 		// display the menu
-		Dispatcher.Renderer.displayMenu();
+		Renderer.displayMenu();
 		while(Renderer.getUIRenderer().getMenu().isGameNotBegun()){
 			// Display the menu image
 			
