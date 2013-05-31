@@ -37,6 +37,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	private static TypeOfTower chosenTowerType = null;
 	/**
+	 * Tower with Mouse Over : display its range
+	 */
+	private static TowerSprite highlightedTower = null;
+	/**
 	 * nbAgents is the JTextField which is used to display the nbAgents of the correpsonding tower.
 	 */
 	private JTextField nbAgents;
@@ -64,7 +68,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		
 		this.engineTower = newTower;
 		
-		this.timer = new Timer (500, this);
+		this.timer = new Timer (1000, this);
 	    this.blink = false;
 		
 		this.size = 24;
@@ -167,6 +171,8 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		//update the display of nbAgents
 		if(this.engineTower.isLevelMax())
 			this.nbAgents.setText("Max");
+		else if (blink)
+			this.nbAgents.setText("UP");
 		else
 			this.nbAgents.setText(String.valueOf(this.engineTower.getNbAgents()));
 		
@@ -182,18 +188,24 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		//start blinking when the tower is waiting for building (and stop when it's not)
 		if(this.engineTower.isWaitingForBuilding())
 			this.timer.start();
-		else
+		else{
 			this.timer.stop();
+			this.nbAgents.setText(String.valueOf(this.engineTower.getNbAgents()));
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent arg0) {
+		TowerSprite.highlightedTower = this;
+	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent arg0) {
+		TowerSprite.highlightedTower = null;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -223,14 +235,10 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (blink){
-			this.setBorder(BorderFactory.createLineBorder(Color.gray));
+		if (blink)
       	  	this.blink = false;
-		}
-        else{
-        	this.setBorder(BorderFactory.createLineBorder(Color.black));
+        else
         	this.blink = true;
-        }
 	}
 	
 	// GETTERS & SETTERS
@@ -278,5 +286,9 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	static public TypeOfTower getChosenTowerType(){
 		return TowerSprite.chosenTowerType;
+	}
+	
+	static public TowerSprite getHighlightedTower(){
+		return TowerSprite.highlightedTower;
 	}
 }

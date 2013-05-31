@@ -147,6 +147,9 @@ public class Dispatcher {
 			System.exit(0);
 		}
 		
+		//display the renderer
+		Renderer.render();
+		
 		//start the thread
 		Dispatcher.startThreadOfPlayers();
 

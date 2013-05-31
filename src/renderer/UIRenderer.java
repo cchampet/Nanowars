@@ -286,6 +286,7 @@ public class UIRenderer {
 			//if the player haven't chosen yet
 			case 0:
 				if(TowerSprite.isThereOneTowerToBuild()){
+					this.radialMenuTower.goToSprite(0);
 					UIRenderer.choosingTowerFlag = 1;
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this.container);

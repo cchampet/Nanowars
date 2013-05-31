@@ -1,13 +1,16 @@
 package engine.tower;
 
+import dispatcher.UnitModifier;
+
 public class TowerSpeed extends TowerAura {
 
 	public TowerSpeed(int posX, int posY) {
 		super(posX, posY);
-		// TODO Auto-generated constructor stub
+		this.modifier = UnitModifier.SPEED;
 	}
 	
 	public TowerSpeed(Tower other){
 		super(other);
+		this.modifier = UnitModifier.SPEED;
 	}
 }

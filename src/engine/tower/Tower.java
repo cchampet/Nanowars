@@ -104,7 +104,16 @@ public class Tower extends Element {
 	
 	public void action(){};
 	
-
+	/**
+	 * Remove the dead unit in the tower list
+	 * @param unitToRemove the unit to remove
+	 */
+	public void refreshTowerVisionList(Unit unitToRemove){
+		if(this.unitsInVision.contains(unitToRemove)){
+			this.unitsInVision.remove(unitToRemove);
+		}
+	}
+	
 	public void sendUnitBackToBase(int sendBackAgents, Unit unit) {
 		unit.setNbAgents(sendBackAgents);
 		Element tmpElt = unit.getStart();

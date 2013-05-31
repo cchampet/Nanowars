@@ -107,6 +107,18 @@ public class MapRenderer implements MouseListener{
 						)
 					);
 				}
+				
+				//draw the highlighted Tower range
+				if(TowerSprite.getHighlightedTower() != null){
+					if(TowerSprite.getHighlightedTower().getEngineTower().getLevel() > 0){
+						Tower hlEngineTower = TowerSprite.getHighlightedTower().getEngineTower();
+						g.setColor(Color.GRAY);
+						g.drawOval((int)(hlEngineTower.getCenter().x - hlEngineTower.getVision()),
+								   (int)(hlEngineTower.getCenter().y - hlEngineTower.getVision()), 
+								   hlEngineTower.getVision()*2,
+								   hlEngineTower.getVision()*2);
+					}
+				}
 				this.setVisible(true);
 			}
 		};
@@ -195,6 +207,20 @@ public class MapRenderer implements MouseListener{
 		newSprite.initSubSprite();
 		sprites.add(newSprite);
 		return newSprite.getId();
+	}
+	
+	/**
+	 * Remove Sprite from the Sprite list
+	 * @param idSprite the id of the sprite to remove
+	 */
+	public void removeSprite(int idSprite){
+		for(Sprite s:this.sprites){
+			if(s.getId() == idSprite){
+				this.sprites.remove(s);
+				this.container.remove(s);
+				break;
+			}
+		}
 	}
 	
 	/**
