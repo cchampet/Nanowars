@@ -40,9 +40,9 @@ public class Menu extends JLabel {
 		this.setIcon(bgMenuImage);	
 		
 		//currently 3 levels
-		this.addLvlSprite("./tex/datamap/datamap_tower.png", "1", 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_tower.png", "2", 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_tower.png", "3", 470, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_1.png", "1", 270, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_2.png", "2", 370, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_3.png", "3", 470, this.height - 100);
 	}
 	
 	/**

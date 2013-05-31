@@ -83,8 +83,8 @@ public class Dispatcher {
 					else if(color.getGreen() >= 50  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
 						if(!Players.containsKey("IA_2"))
 							Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
-						float pixelRed = mapData.getSampleFloat(x, y, 0);
-						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), Players.get("IA_2"));
+						float pixelGreen = mapData.getSampleFloat(x, y, 1);
+						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelGreen/150.)), Players.get("IA_2"));
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
@@ -131,7 +131,7 @@ public class Dispatcher {
 		//display the renderer
 		Renderer.render();
 		
-		//display the menu
+		//the menu
 		Renderer.displayMenu();
 		while(Renderer.isGameNotBegun()){}
 		Renderer.hideMenu();
@@ -144,9 +144,6 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		
-		//display the renderer
-		Renderer.render();
 		
 		//start the thread
 		Dispatcher.startThreadOfPlayers();

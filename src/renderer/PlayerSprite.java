@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import javax.swing.JTextField;
 
 import playable.Player;
-import playable.TypeOfPlayer;
 
 /**
  * This class display a player at the bottom of the window (the number of agents, of towers...)
@@ -66,6 +65,7 @@ public class PlayerSprite extends Sprite {
 		super.paintComponent(g);
 		
 		//update the JTextField which represents the nbAgents
+		this.nbAgents.setText("");
 		this.nbAgents.setText(String.valueOf(this.enginePlayer.getTotalNbAgents()));
 
 	}
