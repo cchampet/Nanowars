@@ -13,7 +13,8 @@ public enum UnitModifier {
 	DIVISION("DIVISION", "./tex/unit/modifiers/mod_division.png"),
 	RESISTANT("RESISTANT", "./tex/unit/modifiers/mod_resistant.png"),
 	/* Bad Modifiers */
-	POISONED("POISONED", "");
+	POISONED("POISONED", ""),
+	SLOWED("SLOWED", "");
 	
 	private String name;
 	private BufferedImage modIcon;

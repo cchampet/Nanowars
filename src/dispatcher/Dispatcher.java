@@ -19,7 +19,6 @@ import renderer.TowerSprite;
 import engine.Base;
 import engine.Engine;
 import engine.tower.Tower;
-import engine.tower.TowerPoison;
 
 /**
  * This class represents the link between the engine, the renderer, and the IHM of the player.
@@ -107,8 +106,7 @@ public class Dispatcher {
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
 					//blue [200], red [200], green [200] => a tower
 					if(color.getBlue() == 200 && color.getRed() == 200 && color.getGreen() == 200){
-						TowerPoison newTower = new TowerPoison(MAP_SCALE*x, MAP_SCALE*y);
-						newTower.levelUp();
+						Tower newTower = new Tower(MAP_SCALE*x, MAP_SCALE*y);
 						newTower.setId(Renderer.addTowerSprite(newTower));
 						Engine.addTower(newTower);
 					}
