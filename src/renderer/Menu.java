@@ -1,29 +1,33 @@
 package renderer;
 
+import java.awt.Container;
 import java.awt.MediaTracker;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import playable.TypeOfPlayer;
+
 @SuppressWarnings("serial")
-public class Menu extends JLabel implements MouseListener {
+public class Menu extends JLabel {
 	
+	private Container container;
 	private int width;
 	private int height;
-	private boolean gameNotBegun;
+		
+	private LinkedList<LvlSprite> lvlSprites;
 
 
-	public Menu(int width, int height){
+	public Menu(Container c, int width, int height){
 		super();
-						
+		
+		this.container = c;
 		this.height = height;
 		this.width = width;
-		this.gameNotBegun = true;
 		
-		this.addMouseListener(this);
+		this.lvlSprites = new LinkedList<LvlSprite>();
 	}
 	
 	public void init() throws IOException{
@@ -33,29 +37,49 @@ public class Menu extends JLabel implements MouseListener {
 			throw new IOException();
 		}
 		this.setBounds(0, 0, this.width, this.height);
-		this.setIcon(bgMenuImage);		
+		this.setIcon(bgMenuImage);	
+		
+		//currently 3 levels
+		this.addLvlSprite("./tex/datamap/datamap_tower.png", "1", 270, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_tower.png", "2", 370, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_tower.png", "3", 470, this.height - 100);
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		this.gameNotBegun = false;
+	
+	/**
+	 * Add a level to the menu.
+	 * @param pathOfTheLevel : path of the corresponding image of the level.
+	 * @param nameOfTheLevel : the name of the level, display in the menu.
+	 * @param x : position 
+	 */
+	public int addLvlSprite(String pathOfTheLevel, String nameOfTheLevel, int x, int y){
+		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, nameOfTheLevel);
+		newSprite.setSize(50);
+		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+		newSprite.setBounds(x, y, 50, 50);
+		container.add(newSprite, Layer.UI.id());
+		lvlSprites.add(newSprite);
+		return newSprite.getId();
 	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
-
-	@Override
-	public void mousePressed(MouseEvent e) {}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {}
 	
 	// GETTERS
 
+	public LinkedList<LvlSprite> getLvlSprites(){
+		return lvlSprites;
+	}
+	
 	public boolean isGameNotBegun() {
-		return gameNotBegun;
+		for(LvlSprite lvl:this.lvlSprites){
+			if(lvl.isSelected())
+				return false;
+		}
+		return true;
+	}
+	
+	public String getPathOfTheLevelSelected(){
+		for(LvlSprite lvl:this.lvlSprites){
+			if(lvl.isSelected())
+				return lvl.getPathOfTheLevel();
+		}
+		return null;
 	}
 }

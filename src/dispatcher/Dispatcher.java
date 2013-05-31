@@ -131,16 +131,14 @@ public class Dispatcher {
 		//display the renderer
 		Renderer.render();
 		
-		// display the menu
+		//display the menu
 		Renderer.displayMenu();
-		while(Renderer.getUIRenderer().getMenu().isGameNotBegun()){
-			System.out.println(Renderer.getUIRenderer().getMenu().isGameNotBegun());
-		}
+		while(Renderer.isGameNotBegun()){}
 		Renderer.hideMenu();
 		
 		//load the map
 		try {
-			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");
+			Dispatcher.loadMap(Renderer.getPathOfTheLevelSelected());
 			Renderer.addPlayerSprites(Players);
 		} catch (IOException e) {
 			e.printStackTrace();

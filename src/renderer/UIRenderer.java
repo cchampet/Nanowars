@@ -79,7 +79,7 @@ public class UIRenderer {
 		
 		this.playerSprites = new ArrayList<PlayerSprite>();
 		
-		this.menu = new Menu(width, height);
+		this.menu = new Menu(c, width, height);
 	}
 	
 	public void init() throws IOException{
@@ -332,6 +332,8 @@ public class UIRenderer {
 	 * Hide the menu
 	 */
 	public void hideMenu(){
+		for(Sprite s:this.menu.getLvlSprites())
+			this.container.remove(s);
 		this.container.remove(this.menu);
 	}
 	
@@ -410,6 +412,14 @@ public class UIRenderer {
 
 	public ArrayList<PlayerSprite> getPlayerSprites() {
 		return playerSprites;
+	}
+	
+	public boolean isGameNotBegun() {
+		return this.menu.isGameNotBegun();
+	}
+	
+	public String getPathOfTheLevelSelected(){
+		return this.menu.getPathOfTheLevelSelected();
 	}
 }
 
