@@ -32,7 +32,7 @@ public class Menu extends JLabel {
 	
 	public void init() throws IOException{
 		//Load the menu background image
-		ImageIcon bgMenuImage = new ImageIcon("./tex/youWin.png");
+		ImageIcon bgMenuImage = new ImageIcon("./tex/MENU.png");
 		if(bgMenuImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}

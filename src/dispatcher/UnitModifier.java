@@ -11,7 +11,10 @@ public enum UnitModifier {
 	SPEED("SPEED", "./tex/unit/modifiers/mod_speed.png"),
 	PROLIFERATION("PROLIFERATION", "./tex/unit/modifiers/mod_proliferation.png"),
 	DIVISION("DIVISION", "./tex/unit/modifiers/mod_division.png"),
-	RESISTANT("RESISTANT", "./tex/unit/modifiers/mod_resistant.png");
+	RESISTANT("RESISTANT", "./tex/unit/modifiers/mod_resistant.png"),
+	/* Bad Modifiers */
+	POISONED("POISONED", ""),
+	SLOWED("SLOWED", "");
 	
 	private String name;
 	private BufferedImage modIcon;
@@ -36,5 +39,12 @@ public enum UnitModifier {
 	
 	public BufferedImage getIcon(){
 		return this.modIcon;
+	}
+	
+	public boolean isToDisplay(){
+		if(this.name() == ""){
+			return false;
+		}
+		return true;
 	}
 }

@@ -37,8 +37,8 @@ public class Dispatcher {
 	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
 		
 	/**
-	 * This method load the map from a datamap image.
-	 * For making the map (from photoshop for example) :
+	 * This method loads the map from a datamap image.
+	 * To make the map (from Photoshop for example) :
 	 * 	- blue[50, 150], red[0], green[0] => a base for the player
 	 * 	- red[50, 150], blue[0], green[0] => a base for the IA_1
 	 * 	- green[50, 150], blue[0], red[0] => a base for the IA_2
@@ -98,7 +98,7 @@ public class Dispatcher {
 				}
 			}
 		}
-		//For each pixels, create the towers
+		//For each pixel, create the towers
 		for(int y=0;y<map.getHeight();++y){
 			for(int x=0;x<map.getWidth();++x){
 				Color color = new Color(map.getRGB(x, y));
@@ -119,7 +119,7 @@ public class Dispatcher {
 	 * @param args input arguments
 	 * @throws IOException 
 	 */
-	public static void main(String[] args){
+	public static void main(String[] args){		
 		//init the renderer
 		try {
 			Renderer.init();
@@ -221,7 +221,7 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * This function start the thread of each player concerned.
+	 * This function starts the thread of each player concerned.
 	 */
 	private static void startThreadOfPlayers() {
 		Players.get("Player").start();
