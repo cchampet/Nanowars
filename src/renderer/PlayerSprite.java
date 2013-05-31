@@ -68,9 +68,6 @@ public class PlayerSprite extends Sprite {
 		//update the JTextField which represents the nbAgents
 		this.nbAgents.setText(String.valueOf(this.enginePlayer.getTotalNbAgents()));
 
-		//update the sprite of the player if it's necessary
-		if(!this.enginePlayer.isAlive())
-			this.setImage(TypeOfPlayer.NEUTRAL.getImageOfPlayer());
 	}
 	
 	// GETTERS & SETTERS
