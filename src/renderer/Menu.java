@@ -8,9 +8,8 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class Menu implements MouseListener {
-
-	private JLabel menuBackground;
+@SuppressWarnings("serial")
+public class Menu extends JLabel implements MouseListener {
 	
 	private int width;
 	private int height;
@@ -19,12 +18,12 @@ public class Menu implements MouseListener {
 
 	public Menu(int width, int height){
 		super();
+						
+		this.height = height;
+		this.width = width;
+		this.gameNotBegun = true;
 		
-		this.menuBackground = new JLabel();
-				
-		this.height=height;
-		this.width=width;
-		this.gameNotBegun=true;
+		this.addMouseListener(this);
 	}
 	
 	public void init() throws IOException{
@@ -33,52 +32,30 @@ public class Menu implements MouseListener {
 		if(bgMenuImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}
-		this.menuBackground.setBounds(0, 0, this.width, this.height);
-		this.menuBackground.setIcon(bgMenuImage);				
-	}
-
-	// GETTERS
-	
-	public JLabel getMenuBackground() {
-		return menuBackground;
-	}
-
-	public boolean isGameNotBegun() {
-		return gameNotBegun;
+		this.setBounds(0, 0, this.width, this.height);
+		this.setIcon(bgMenuImage);		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
 		this.gameNotBegun = false;
-		System.out.println("Ca affiche quelque chose");
-		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	public void mouseEntered(MouseEvent e) {}
 
+	@Override
+	public void mouseExited(MouseEvent e) {}
+
+	@Override
+	public void mousePressed(MouseEvent e) {}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {}
 	
-	
+	// GETTERS
+
+	public boolean isGameNotBegun() {
+		return gameNotBegun;
+	}
 }

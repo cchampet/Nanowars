@@ -173,6 +173,13 @@ public class Renderer{
 	public void displayMenu() {
 		this.uiRenderer.displayMenu();		
 	}
+	
+	/**
+	 * Hide the menu
+	 */	
+	public void hideMenu() {
+		this.uiRenderer.hideMenu();		
+	}
 
 	/**
 	 * Hide the radial menu

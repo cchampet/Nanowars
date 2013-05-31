@@ -134,12 +134,10 @@ public class Dispatcher {
 		// display the menu
 		Renderer.displayMenu();
 		while(Renderer.getUIRenderer().getMenu().isGameNotBegun()){
-			// Display the menu image
-			
-			// Localize the user's click
-			// Redirect the user to the right level
+			System.out.println(Renderer.getUIRenderer().getMenu().isGameNotBegun());
 		}
-		//enlever le menu
+		Renderer.hideMenu();
+		
 		//load the map
 		try {
 			Dispatcher.loadMap("./tex/datamap/datamap_tower.png");

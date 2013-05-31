@@ -85,7 +85,6 @@ public class UIRenderer {
 	public void init() throws IOException{
 		
 		// Initialize menu
-		
 		this.menu.init();
 		
 		//Load the winner background image
@@ -241,7 +240,7 @@ public class UIRenderer {
 	 * Display the menu at the beginning of the game
 	 */	
 	public void displayMenu(){
-		this.container.add(this.menu.getMenuBackground(), Layer.UI.id());
+		this.container.add(this.menu, Layer.UI.id());
 	}
 	
 	/**
@@ -326,6 +325,13 @@ public class UIRenderer {
 			default:
 				break;
 		}
+	}
+	
+	/**
+	 * Hide the menu
+	 */
+	public void hideMenu(){
+		this.container.remove(this.menu);
 	}
 	
 	/**
