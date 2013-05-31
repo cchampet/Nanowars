@@ -19,7 +19,7 @@ import engine.tower.Tower;
 
 /**
  * Renderer is the main class for all displaying stuff. It creates all specific renderers like MapRenderer.
- * It also manage the main frame.
+ * It also manages the main frame.
  * 
  * @author Jijidici
  *
@@ -85,7 +85,7 @@ public class Renderer{
 	}
 	
 	/**
-	 * This method is called every frame, in order to refresh all important element in our frame.
+	 * This method is called every frame, in order to refresh all important elements in our frame.
 	 * @param idDeletedInEngine this ArrayList<Integer> contains all id of engine elements just deleted.
 	 */
 	public void refreshView(ArrayList<Integer> idDeletedInEngine) {
@@ -150,7 +150,7 @@ public class Renderer{
 	}
 	
 	/**
-	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * Update the TowerSprite of a newly specialized Tower in the Sprite Array
 	 * @param newTower The new specialized Tower
 	 */
 	public void updateTowerSprite(Tower newTower){
@@ -168,13 +168,30 @@ public class Renderer{
 	}
 	
 	/**
-	 * Display looser message
+	 * Display loser message
 	 */
 	public void displayLoser(){
 		//Set up the frame
 		this.uiRenderer.displayLoser();
 	}
+
+	/**
+	 * Display the menu
+	 */	
+	public void displayMenu() {
+		this.uiRenderer.displayMenu();		
+	}
 	
+	/**
+	 * Hide the menu
+	 */	
+	public void hideMenu() {
+		this.uiRenderer.hideMenu();		
+	}
+
+	/**
+	 * Hide the radial menu
+	 */		
 	public void hideRadialMenuMovment(){
 		this.uiRenderer.hideRadialMenuMovment();
 	}
@@ -191,8 +208,8 @@ public class Renderer{
 		return this.uiRenderer.getUnitPercentChosen();
 	}
 	/**
-	 * Check if the player have chosen his tower type
-	 * @return boolean - true if te tower type is chosen
+	 * Check if the player has chosen his tower type
+	 * @return boolean - true if the tower type is chosen
 	 */
 	public boolean isTowerTypeChosen(){
 		return this.uiRenderer.isTowerTypeChosen();
@@ -214,7 +231,7 @@ public class Renderer{
 	//GETTERS & SETTERS
 	
 	/**
-	 * Get the sprite by knowledge of his id.
+	 * Get the sprite by knowledge of its id.
 	 * @param id : the id of the sprite.
 	 * @return a sprite
 	 */
@@ -260,5 +277,9 @@ public class Renderer{
 
 	public MapRenderer getMapRenderer() {
 		return mapRenderer;
+	}
+
+	public UIRenderer getUIRenderer() {
+		return uiRenderer;
 	}
 }

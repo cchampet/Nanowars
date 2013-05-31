@@ -37,8 +37,8 @@ public class Dispatcher {
 	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
 		
 	/**
-	 * This method load the map from a datamap image.
-	 * For making the map (from photoshop for example) :
+	 * This method loads the map from a datamap image.
+	 * To make the map (from Photoshop for example) :
 	 * 	- blue[50, 150], red[0], green[0] => a base for the player
 	 * 	- red[50, 150], blue[0], green[0] => a base for the IA_1
 	 * 	- green[50, 150], blue[0], red[0] => a base for the IA_2
@@ -98,7 +98,7 @@ public class Dispatcher {
 				}
 			}
 		}
-		//For each pixels, create the towers
+		//For each pixel, create the towers
 		for(int y=0;y<map.getHeight();++y){
 			for(int x=0;x<map.getWidth();++x){
 				Color color = new Color(map.getRGB(x, y));
@@ -127,6 +127,16 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
+
+		//display the renderer
+		Renderer.render();
+		
+		// display the menu
+		Renderer.displayMenu();
+		while(Renderer.getUIRenderer().getMenu().isGameNotBegun()){
+			System.out.println(Renderer.getUIRenderer().getMenu().isGameNotBegun());
+		}
+		Renderer.hideMenu();
 		
 		//load the map
 		try {
@@ -140,9 +150,10 @@ public class Dispatcher {
 		//display the renderer
 		Renderer.render();
 		
-		//start the thrad
+		//start the thread
 		Dispatcher.startThreadOfPlayers();
 
+		
 		//start the game
 		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
@@ -212,7 +223,7 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * This function start the thread of each player concerned.
+	 * This function starts the thread of each player concerned.
 	 */
 	private static void startThreadOfPlayers() {
 		Players.get("Player").start();
@@ -257,6 +268,7 @@ public class Dispatcher {
 	public static Renderer getRenderer() {
 		return Dispatcher.Renderer;
 	}
+	
 	
 	public static HashMap<String, Player> getPlayers() {
 		return Dispatcher.Players;
