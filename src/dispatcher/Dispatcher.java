@@ -182,7 +182,7 @@ public class Dispatcher {
 			if(TowerSprite.isThereOneTowerToBuild()){
 				if(Dispatcher.Renderer.isTowerTypeChosen()){
 					Tower specTower = Dispatcher.Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
-					Dispatcher.Renderer.updateTowerSprite(specTower);
+					Dispatcher.Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId());
 					TowerSprite.resetTowerToBuild();
 				}
 			}

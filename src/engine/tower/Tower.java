@@ -3,8 +3,6 @@ package engine.tower;
 import java.awt.geom.Point2D;
 import java.util.LinkedHashSet;
 
-import renderer.sprite.TowerSprite;
-
 import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Element;
@@ -55,6 +53,17 @@ public class Tower extends Element {
 	
 	public void levelUp() {
 		this.level++;
+		this.updateStats();
+	}
+	
+	public void levelDown(){
+		if(this.level >= 1){
+			this.level--;
+			this.updateStats();
+		}
+	}
+	
+	public void updateStats(){
 		this.vision = 500 * this.level;
 	}
 	
@@ -96,10 +105,7 @@ public class Tower extends Element {
 	
 	public void destroyTower(){
 		this.nbAgents = 0;
-		this.level = 0;
 		this.waitingForBuilding = false;
-		TowerSprite.resetTowerToBuild();
-		Dispatcher.getRenderer().hideRadialMenus();
 	}
 	
 	public void action(){};
