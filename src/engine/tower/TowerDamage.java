@@ -6,17 +6,17 @@ public class TowerDamage extends TowerAttack {
 
 	public TowerDamage(int posX, int posY) {
 		super(posX, posY);
-		this.setDamage(2+2*this.level);
+		this.updateStats();
 	}
 	
 	public TowerDamage(Tower other){
 		super(other);
-		this.setDamage(2+2*this.level);
+		this.updateStats();
 	}
 	
 	@Override
-	public void levelUp(){
-		super.levelUp();
+	public void updateStats(){
+		super.updateStats();
 		this.setDamage(2+2*this.level);
 	}
 	

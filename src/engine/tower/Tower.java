@@ -55,6 +55,17 @@ public class Tower extends Element {
 	
 	public void levelUp() {
 		this.level++;
+		this.updateStats();
+	}
+	
+	public void levelDown(){
+		if(this.level >= 1){
+			this.level--;
+			this.updateStats();
+		}
+	}
+	
+	public void updateStats(){
 		this.vision = 500 * this.level;
 	}
 	

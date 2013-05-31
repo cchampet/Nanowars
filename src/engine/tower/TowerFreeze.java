@@ -7,17 +7,17 @@ public class TowerFreeze extends TowerAttack {
 
 	public TowerFreeze(int posX, int posY) {
 		super(posX, posY);
-		this.setDamage(this.level);
+		this.updateStats();
 	}
 	
 	public TowerFreeze(Tower other){
 		super(other);
-		this.setDamage(this.level);
+		this.updateStats();
 	}
 	
 	@Override
-	public void levelUp(){
-		super.levelUp();
+	public void updateStats(){
+		super.updateStats();
 		this.setDamage(this.level);
 	}
 	
