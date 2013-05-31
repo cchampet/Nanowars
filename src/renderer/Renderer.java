@@ -164,7 +164,6 @@ public class Renderer{
 	 * Display winner message
 	 */
 	public void displayWinner(){
-		//Set up the frame
 		this.uiRenderer.displayWinner();
 	}
 	
@@ -172,7 +171,6 @@ public class Renderer{
 	 * Display loser message
 	 */
 	public void displayLoser(){
-		//Set up the frame
 		this.uiRenderer.displayLoser();
 	}
 
@@ -196,6 +194,19 @@ public class Renderer{
 	public void hideRadialMenuMovment(){
 		this.uiRenderer.hideRadialMenuMovment();
 	}
+	
+	public void hideRadialMenus(){
+		this.uiRenderer.hideRadialMenuMovment();
+		this.uiRenderer.hideRadialMenuTower();
+	}
+	
+	/**
+	 * Add the Player Sprite to the Sprite Collection of the uiRenderer
+	 * @param newPlayer : the player engine, corresponding to the next created sprite.
+	 */
+	public void addPlayerSprites(HashMap<String, Player> newPlayers) {
+		this.uiRenderer.addPlayerSprites(newPlayers);
+	}
 
 	/**
 	 * Indicates if the player is choosing the number of agents to send with the radial menu
@@ -215,21 +226,16 @@ public class Renderer{
 	public boolean isTowerTypeChosen(){
 		return this.uiRenderer.isTowerTypeChosen();
 	}
-
-	/**
-	 * Add the Player Sprite to the Sprite Collection of the uiRenderer
-	 * @param newPlayer : the player engine, corresponding to the next created sprite.
-	 */
-	public void addPlayerSprites(HashMap<String, Player> newPlayers) {
-		this.uiRenderer.addPlayerSprites(newPlayers);
+	
+	public boolean isGameNotBegun() {
+		return this.uiRenderer.isGameNotBegun();
 	}
 	
-	
-	public void hideRadialMenus(){
-		this.uiRenderer.hideRadialMenuMovment();
-		this.uiRenderer.hideRadialMenuTower();
+	public String getPathOfTheLevelSelected(){
+		return this.uiRenderer.getPathOfTheLevelSelected();
 	}
-	//GETTERS & SETTERS
+	
+	// GETTERS & SETTERS
 	
 	/**
 	 * Get the sprite by knowledge of its id.

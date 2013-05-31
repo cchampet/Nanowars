@@ -90,4 +90,8 @@ public class UnitSprite extends Sprite{
 	public void setSize(int size){
 		this.size = UnitSprite.MIN_SIZE + size/2;
 	}
+
+	public static int getMinSize() {
+		return MIN_SIZE;
+	}
 }
