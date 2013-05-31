@@ -8,7 +8,9 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+
 import playable.TypeOfPlayer;
+import renderer.sprite.LvlSprite;
 
 @SuppressWarnings("serial")
 public class Menu extends JLabel {

@@ -12,10 +12,10 @@ import javax.imageio.ImageIO;
 
 import playable.Player;
 import playable.TypeOfPlayer;
-import renderer.BaseSprite;
 import renderer.Renderer;
-import renderer.SelectedSprite;
-import renderer.TowerSprite;
+import renderer.sprite.BaseSprite;
+import renderer.sprite.SelectedSprite;
+import renderer.sprite.TowerSprite;
 import engine.Base;
 import engine.Engine;
 import engine.tower.Tower;

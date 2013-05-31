@@ -1,5 +1,6 @@
 package engine.tower;
 
+import engine.Projectile;
 import engine.Unit;
 
 
@@ -10,8 +11,7 @@ public class TowerAttack extends Tower {
 	private static int ATTACK_COUNTER_LIMIT = 20;
 	private int damage;
 	private int attackCounter=0;
-	//temporary flag to practise the projectile system
-	private boolean hasHitTarget = false;
+	private Projectile projectile;
 
 	public TowerAttack(int posX, int posY) {
 		super(posX, posY);
@@ -48,17 +48,11 @@ public class TowerAttack extends Tower {
 		//Attack if there is target
 		if(attackCounter>=ATTACK_COUNTER_LIMIT){
 			if(this.unitsInVision.size() > 0){
-				// TODO: Ici creer un Projectile
-				/*
-				 * Un Projectile a comme attribut 
-				 * - une position
-				 * - une unité cible
-				 * - un flag "a touché"
-				 * Lui donner comme unité cible unitsInVision.getFirst()
-				 * Quand le Projectile arrive sur l'unité, son flag "a touché" passe à vrai
-				 */
-				this.hasHitTarget = true;
-				// Fin TO DO
+				projectile = new Projectile(this.getCenter());
+				for(Unit unit:unitsInVision){
+					projectile.setAimedUnit(unit);
+					break;
+				}
 				attackCounter=0;
 			}
 		}
@@ -67,17 +61,14 @@ public class TowerAttack extends Tower {
 		}
 		
 		//Manage Tower effect
-		if(this.hasHitTarget){
-			for(Unit unit:unitsInVision){
-				applyEffect(unit);
-				this.hasHitTarget = false;
-				break;
+		if(projectile!=null){	
+			if(projectile.hasTouchedFlag()){	
+				applyEffect(projectile.getAimedUnit());
+				projectile=null;
 			}
-			//TODO: Ici remplacer
-			/*
-			 * - Le if par un test sur le flag "a touché" du Projectile
-			 * - Passer l'unité cible du Projectile a applyEffect
-			 */
+			else{
+				projectile.move();
+			}
 		}
 	}
 	
@@ -86,7 +77,8 @@ public class TowerAttack extends Tower {
 	 * The applied effect is implemented in daughter classes.
 	 * @param targetedUnit Unit on which apply a special effect.
 	 */
-	public void applyEffect(Unit targetedUnit){}
+	public void applyEffect(Unit aimedUnit){
+	}
 	
 	// GETTERS & SETTERS
 	

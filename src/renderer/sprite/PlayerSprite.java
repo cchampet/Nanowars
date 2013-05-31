@@ -1,4 +1,4 @@
-package renderer;
+package renderer.sprite;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

@@ -3,7 +3,7 @@ package engine.tower;
 import java.awt.geom.Point2D;
 import java.util.LinkedHashSet;
 
-import renderer.TowerSprite;
+import renderer.sprite.TowerSprite;
 
 import dispatcher.Dispatcher;
 import engine.Base;

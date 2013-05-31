@@ -1,4 +1,4 @@
-package renderer.sprite;
+package renderer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 import javax.swing.JTextField;
+
+import renderer.sprite.Sprite;
 
 import dispatcher.UnitModifier;
 
@@ -89,5 +91,9 @@ public class UnitSprite extends Sprite{
 	@Override
 	public void setSize(int size){
 		this.size = UnitSprite.MIN_SIZE + size/2;
+	}
+
+	public static int getMinSize() {
+		return MIN_SIZE;
 	}
 }

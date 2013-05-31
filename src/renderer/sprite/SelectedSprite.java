@@ -1,4 +1,4 @@
-package renderer;
+package renderer.sprite;
 
 import java.util.ArrayList;
 

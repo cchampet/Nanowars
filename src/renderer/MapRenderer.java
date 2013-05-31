@@ -20,6 +20,10 @@ import javax.swing.SwingUtilities;
 import dispatcher.Dispatcher;
 
 import playable.TypeOfPlayer;
+import renderer.sprite.BaseSprite;
+import renderer.sprite.Sprite;
+import renderer.sprite.TowerSprite;
+import renderer.sprite.UnitSprite;
 import engine.Base;
 import engine.Unit;
 import engine.tower.Tower;

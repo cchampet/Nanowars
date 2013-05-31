@@ -19,6 +19,11 @@ import javax.swing.SwingUtilities;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import renderer.sprite.MultipleSprite;
+import renderer.sprite.PlayerSprite;
+import renderer.sprite.SelectedSprite;
+import renderer.sprite.Sprite;
+import renderer.sprite.TowerSprite;
 import dispatcher.Dispatcher;
 import dispatcher.TypeOfTower;
 import engine.Base;
@@ -131,7 +136,7 @@ public class UIRenderer {
 			public void mouseClicked(MouseEvent arg0) {
 				//fix the bug of controling opponent units when he takes our base during the choice
 				boolean aSeletedBaseIsNotAPlayerBase = false;
-				for(Element element:SelectedSprite.startingElements){
+				for(Element element:SelectedSprite.getStartingElements()){
 					if(element.getClass() == Base.class){
 						if(!((Base) element).isAPlayerBase())
 							aSeletedBaseIsNotAPlayerBase = true;
@@ -354,20 +359,20 @@ public class UIRenderer {
 	public void addPlayerSprites(HashMap<String, Player> newPlayers){		
 		PlayerSprite newSpritePlayer = new PlayerSprite(newPlayers.get("Player"));
 		newSpritePlayer.setImage(TypeOfPlayer.PLAYER.getImageOfPlayer());
-		newSpritePlayer.setBounds(10, this.height - newSpritePlayer.size - 30, newSpritePlayer.size, newSpritePlayer.size);
+		newSpritePlayer.setBounds(10, this.height - newSpritePlayer.getSpriteSize() - 30, newSpritePlayer.getSpriteSize(), newSpritePlayer.getSpriteSize());
 		this.container.add(newSpritePlayer, new Integer(UI_LAYER));
 		this.playerSprites.add(newSpritePlayer);
 		
 		PlayerSprite newSpriteIA_1 = new PlayerSprite(newPlayers.get("IA_1"));
 		newSpriteIA_1.setImage(TypeOfPlayer.IA_1.getImageOfPlayer());
-		newSpriteIA_1.setBounds(this.width - 10 - newSpriteIA_1.size, this.height - newSpriteIA_1.size - 30, newSpriteIA_1.size, newSpriteIA_1.size);
+		newSpriteIA_1.setBounds(this.width - 10 - newSpriteIA_1.getSpriteSize(), this.height - newSpriteIA_1.getSpriteSize() - 30, newSpriteIA_1.getSpriteSize(), newSpriteIA_1.getSpriteSize());
 		this.container.add(newSpriteIA_1, new Integer(UI_LAYER));
 		this.playerSprites.add(newSpriteIA_1);
 		
 		if(newPlayers.size() == 3){
 			PlayerSprite newSpriteIA_2 = new PlayerSprite(newPlayers.get("IA_2"));
 			newSpriteIA_2.setImage(TypeOfPlayer.IA_2.getImageOfPlayer());
-			newSpriteIA_2.setBounds(this.width / 2, this.height - newSpriteIA_2.size - 30, newSpriteIA_2.size, newSpriteIA_2.size);
+			newSpriteIA_2.setBounds(this.width / 2, this.height - newSpriteIA_2.getSpriteSize() - 30, newSpriteIA_2.getSpriteSize(), newSpriteIA_2.getSpriteSize());
 			this.container.add(newSpriteIA_2, new Integer(UI_LAYER));
 			this.playerSprites.add(newSpriteIA_2);
 		}

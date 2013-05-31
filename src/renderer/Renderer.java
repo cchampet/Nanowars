@@ -11,6 +11,12 @@ import javax.swing.JFrame;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import renderer.sprite.BaseSprite;
+import renderer.sprite.PlayerSprite;
+import renderer.sprite.SelectedSprite;
+import renderer.sprite.Sprite;
+import renderer.sprite.TowerSprite;
+import renderer.sprite.UnitSprite;
 import dispatcher.Dispatcher;
 import engine.Base;
 import engine.Unit;

@@ -1,4 +1,4 @@
-package renderer;
+package renderer.sprite;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +16,7 @@ import javax.swing.Timer;
 import javax.swing.text.JTextComponent;
 
 import playable.TypeOfPlayer;
+import renderer.Layer;
 import dispatcher.Dispatcher;
 import dispatcher.TypeOfTower;
 import engine.tower.Tower;
