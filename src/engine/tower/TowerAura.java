@@ -4,7 +4,7 @@ import dispatcher.UnitModifier;
 import engine.Unit;
 
 
-public class TowerAura extends Tower {
+public abstract class TowerAura extends Tower {
 	protected UnitModifier modifier;
 	public TowerAura(int posX, int posY) {
 		super(posX, posY);

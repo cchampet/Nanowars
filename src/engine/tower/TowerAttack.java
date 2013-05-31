@@ -1,10 +1,11 @@
 package engine.tower;
 
+import dispatcher.Dispatcher;
 import engine.Projectile;
 import engine.Unit;
 
 
-public class TowerAttack extends Tower {
+public abstract class TowerAttack extends Tower {
 	/**
 	 * ATTACK_COUNTER_LIMIT allows to fix the attack speed of the Tower
 	 */
@@ -49,6 +50,7 @@ public class TowerAttack extends Tower {
 		if(attackCounter>=ATTACK_COUNTER_LIMIT){
 			if(this.unitsInVision.size() > 0){
 				projectile = new Projectile(this.getCenter());
+				Dispatcher.getRenderer().addProjectileSprite(projectile); //it's bad !
 				for(Unit unit:unitsInVision){
 					projectile.setAimedUnit(unit);
 					break;

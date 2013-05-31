@@ -20,7 +20,7 @@ public class Base extends Element {
 	private double capacity;
 	private Player owner;
 	/**
-	 * 
+	 * ownerChanged is a flag, up when the owner of the base has just changed.
 	 */
 	private boolean ownerChanged;
 		

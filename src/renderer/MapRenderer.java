@@ -11,20 +11,21 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.lang.Math;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import dispatcher.Dispatcher;
-
 import playable.TypeOfPlayer;
 import renderer.sprite.BaseSprite;
+import renderer.sprite.ProjectileSprite;
 import renderer.sprite.Sprite;
 import renderer.sprite.TowerSprite;
 import renderer.sprite.UnitSprite;
+import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import engine.Base;
+import engine.Projectile;
 import engine.Unit;
 import engine.tower.Tower;
 
@@ -209,6 +210,22 @@ public class MapRenderer implements MouseListener{
 		newSprite.setBounds((int)newTower.getPosition().x, (int)newTower.getPosition().y, newSprite.getSpriteSize(), newSprite.getSpriteSize());
 		container.add(newSprite, Layer.TOWER.id());
 		newSprite.initSubSprite();
+		sprites.add(newSprite);
+		return newSprite.getId();
+	}
+	
+	/**
+	 * Add a unit to the Sprite collection in the renderer.
+	 * @param newUnit : the unit engine, corresponding to the next created sprite.
+	 */
+	public int addProjectileSprite(Projectile newProjectile){
+		ProjectileSprite newSprite = new ProjectileSprite(newProjectile);
+		//we need to choose the right sprite of projectile
+		newSprite.setImage(TypeOfTower.DAMAGE.getProjectileSprite());
+		
+		newSprite.setBounds((int)(newProjectile.getPosition().x - newSprite.getSpriteSize()/2), (int)(newProjectile.getPosition().y - newSprite.getSpriteSize()/2), newSprite.getSpriteSize(), newSprite.getSpriteSize());
+
+		container.add(newSprite, Layer.UNIT.id());
 		sprites.add(newSprite);
 		return newSprite.getId();
 	}

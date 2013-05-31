@@ -1,7 +1,6 @@
 package engine;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Float;
 
 import renderer.UnitSprite;
 
@@ -30,7 +29,7 @@ public class Projectile {
 		System.out.println("position: "+this.position);
 	}
 	
-	// Getters and setters
+	// GETTERS & SETTERS
 	
 	public Point2D.Float getPosition() {
 		return position;
@@ -56,12 +55,7 @@ public class Projectile {
 	}
 	public void setHasTouchedFlag(boolean hasTouchedFlag) {
 		this.hasTouchedFlag = hasTouchedFlag;
-	}
-	
-	
-	
-	
-	
+	}	
 }
 
 

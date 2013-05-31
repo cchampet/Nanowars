@@ -13,12 +13,14 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.sprite.BaseSprite;
 import renderer.sprite.PlayerSprite;
+import renderer.sprite.ProjectileSprite;
 import renderer.sprite.SelectedSprite;
 import renderer.sprite.Sprite;
 import renderer.sprite.TowerSprite;
 import renderer.sprite.UnitSprite;
 import dispatcher.Dispatcher;
 import engine.Base;
+import engine.Projectile;
 import engine.Unit;
 import engine.tower.Tower;
 
@@ -105,6 +107,14 @@ public class Renderer{
 				this.mapRenderer.getContainer().remove(sprite);
 				iterSprites.remove();
 			}
+			if(sprite.getClass() == ProjectileSprite.class){
+				ProjectileSprite projectileSprite = (ProjectileSprite) sprite;
+				if(projectileSprite.getEngineProjectile().hasTouchedFlag()){
+					projectileSprite.setVisible(false);
+					this.mapRenderer.getContainer().remove(projectileSprite);
+					iterSprites.remove();
+				}
+			}
 		}
 
 		// ----- manage uiRenderer ----- //
@@ -145,6 +155,14 @@ public class Renderer{
 	 */
 	public int addTowerSprite(Tower newTower){
 		return this.mapRenderer.addTowerSprite(newTower);
+	}
+	
+	/**
+	 * Add the Projectile Sprite to the MapRenderer Sprite Collection
+	 * @param newProjectile : the projectile engine, corresponding to the next created sprite.
+	 */
+	public int addProjectileSprite(Projectile newProjectile){
+		return this.mapRenderer.addProjectileSprite(newProjectile);
 	}
 	
 	/**
