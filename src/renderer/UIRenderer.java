@@ -223,14 +223,14 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Display a "WINNER" message when the player win and before exit program
+	 * Display a "WINNER" message when the player wins
 	 */
 	public void displayWinner(){
 		this.container.add(this.winnerBackground, Layer.UI.id());
 	}
 	
 	/**
-	 * Display a "LOSER" message when the player lose and before exit program
+	 * Display a "LOSER" message when the player loses
 	 */
 	public void displayLoser(){
 		this.container.add(this.loserBackground, Layer.UI.id());
@@ -244,7 +244,7 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Display or hide a radial menu to choose how many units send 
+	 * Display or hide a radial menu to choose how many units to send 
 	 */
 	public void refreshRadialMenuMovment(){
 		switch(UIRenderer.choosingUnitFlag){
@@ -267,7 +267,7 @@ public class UIRenderer {
 				}
 				break;
 			
-			//if the player have just chosen
+			//if the player has just chosen
 			case 2:
 				this.container.remove(this.radialMenuMovment);
 				UIRenderer.choosingUnitFlag = 0;
@@ -313,7 +313,7 @@ public class UIRenderer {
 				this.radialMenuTower.goToSprite(2);
 				break;
 			
-			//if the player have just chosen
+			//if the player has just chosen
 			case 4:
 				if(!TowerSprite.isThereOneTowerToBuild()){
 					this.container.remove(this.radialMenuTower);
@@ -399,7 +399,7 @@ public class UIRenderer {
 	
 	/**
 	 * Check if the player have chosen his tower type
-	 * @return boolean - true if te tower type is chosen
+	 * @return boolean - true if the tower type is chosen
 	 */
 	public boolean isTowerTypeChosen(){
 		if(UIRenderer.choosingTowerFlag == 4){

@@ -150,7 +150,7 @@ public class Renderer{
 	}
 	
 	/**
-	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * Update the TowerSprite of a newly specialized Tower in the Sprite Array
 	 * @param newTower The new specialized Tower
 	 */
 	public void updateTowerSprite(Tower newTower){
@@ -208,8 +208,8 @@ public class Renderer{
 		return this.uiRenderer.getUnitPercentChosen();
 	}
 	/**
-	 * Check if the player have chosen his tower type
-	 * @return boolean - true if te tower type is chosen
+	 * Check if the player has chosen his tower type
+	 * @return boolean - true if the tower type is chosen
 	 */
 	public boolean isTowerTypeChosen(){
 		return this.uiRenderer.isTowerTypeChosen();
@@ -231,7 +231,7 @@ public class Renderer{
 	//GETTERS & SETTERS
 	
 	/**
-	 * Get the sprite by knowledge of his id.
+	 * Get the sprite by knowledge of its id.
 	 * @param id : the id of the sprite.
 	 * @return a sprite
 	 */
