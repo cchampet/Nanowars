@@ -222,4 +222,8 @@ public class Unit extends Element {
 	public boolean isDivided(){
 		return this.isDivided;
 	}
+
+	public int getMoveSpeed() {
+		return moveSpeed;
+	}
 }
