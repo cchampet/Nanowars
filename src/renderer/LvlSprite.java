@@ -13,7 +13,7 @@ import playable.TypeOfPlayer;
 @SuppressWarnings("serial")
 public class LvlSprite extends Sprite implements MouseListener{
 	/**
-	 * isSelected is a bollean which warn if the level is selected by the player.
+	 * isSelected is a boolean which warn if the level is selected by the player.
 	 */
 	private boolean isSelected;
 	/**

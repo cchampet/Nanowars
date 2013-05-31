@@ -49,7 +49,8 @@ public class Menu extends JLabel {
 	 * Add a level to the menu.
 	 * @param pathOfTheLevel : path of the corresponding image of the level.
 	 * @param nameOfTheLevel : the name of the level, display in the menu.
-	 * @param x : position 
+	 * @param x : x position 
+	 * @param y : y position
 	 */
 	public int addLvlSprite(String pathOfTheLevel, String nameOfTheLevel, int x, int y){
 		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, nameOfTheLevel);
