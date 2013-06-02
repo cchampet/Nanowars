@@ -148,9 +148,8 @@ public class Dispatcher {
 		//start the thread
 		Dispatcher.startThreadOfPlayers();
 
-		
 		//start the game
-		ArrayList<Integer> idDeleted = new ArrayList<Integer>();
+		ArrayList<Integer> idOfElementsDeleted = new ArrayList<Integer>();
 		boolean endOfGame = false;
 		//=>what we have to do in each frame
 		while(!endOfGame) {	
@@ -160,9 +159,9 @@ public class Dispatcher {
 			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
 			
 			//work of the engine
-			idDeleted = Dispatcher.Engine.doATurnGame();
+			idOfElementsDeleted = Dispatcher.Engine.doATurnGame();
 			//work of the renderer
-			Dispatcher.Renderer.refreshView(idDeleted);
+			Dispatcher.Renderer.refreshView(idOfElementsDeleted);
 			
 			//work of the dispatcher : manage interactions between players and the engine
 			//create units
@@ -192,9 +191,7 @@ public class Dispatcher {
 					Dispatcher.Renderer.displayWinner();
 				else
 					Dispatcher.Renderer.displayLoser();
-				
-				Dispatcher.Renderer.render();
-				
+								
 				try {
 					Thread.sleep(5000);
 					endOfGame = true;
@@ -243,10 +240,8 @@ public class Dispatcher {
 		else if(Players.size() == 3){
 			if(Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive())
 				return Players.get("Player");
-			else if(!Players.get("Player").isAlive() && Players.get("IA_1").isAlive() && !Players.get("IA_2").isAlive())
+			else if(!Players.get("Player").isAlive() && (Players.get("IA_1").isAlive() || Players.get("IA_2").isAlive()))
 				return Players.get("IA_1");
-			else if(!Players.get("Player").isAlive() && !Players.get("IA_1").isAlive() && Players.get("IA_2").isAlive())
-				return Players.get("IA_2");
 			else
 				return null;
 		}
