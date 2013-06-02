@@ -25,7 +25,7 @@ public abstract class TowerAttack extends Tower {
 	public TowerAttack(Tower other){
 		super(other);
 		this.damage = 0;
-		projectiles = new LinkedList<Projectile>(); // To be verified
+		projectiles = new LinkedList<Projectile>();
 	}
 	
 	@Override
