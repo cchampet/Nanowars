@@ -19,14 +19,17 @@ public class Projectile {
 	public void move(){
 		if(this.position.distance(aimedUnit.getPosition())<=(UnitSprite.getMinSize()+aimedUnit.getNbAgents()/2)){
 			this.hasTouchedFlag=true;
-			System.out.println("Effect Applied");
 		}
 		else{
+			Point2D.Float startingPosition = this.position;
+			Point2D.Float endingPosition = aimedUnit.getPosition();
+			this.direction = new Point2D.Float(endingPosition.x - startingPosition.x, endingPosition.y - startingPosition.y);
+			float normDirection = (float) this.direction.distance(0, 0);
+			this.direction.x /= normDirection;
+			this.direction.y /= normDirection;
 			this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed), 
 					this.position.y + (this.direction.y * this.moveSpeed));
 		}
-		System.out.println(this.hasTouchedFlag);
-		System.out.println("position: "+this.position);
 	}
 	
 	// GETTERS & SETTERS

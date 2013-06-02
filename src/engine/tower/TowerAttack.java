@@ -1,5 +1,7 @@
 package engine.tower;
 
+import java.util.LinkedList;
+
 import dispatcher.Dispatcher;
 import engine.Projectile;
 import engine.Unit;
@@ -12,16 +14,18 @@ public abstract class TowerAttack extends Tower {
 	private static int ATTACK_COUNTER_LIMIT = 20;
 	private int damage;
 	private int attackCounter=0;
-	private Projectile projectile;
+	private LinkedList<Projectile> projectiles;
 
 	public TowerAttack(int posX, int posY) {
 		super(posX, posY);
 		this.damage = 0;
+		projectiles = new LinkedList<Projectile>();
 	}
 	
 	public TowerAttack(Tower other){
 		super(other);
 		this.damage = 0;
+		projectiles = new LinkedList<Projectile>(); // To be verified
 	}
 	
 	@Override
@@ -34,13 +38,13 @@ public abstract class TowerAttack extends Tower {
 	@Override
 	public void action(){
 		//remove far enough units
-		boolean cleanList = false;
-		while(cleanList){
-			cleanList = true;
+		boolean cleanUnitList = true;
+		while(cleanUnitList){ // there was while(cleanList) but cleanList is defined to false right before!
+			cleanUnitList = false;
 			for(Unit unit:this.unitsInVision){
 				if(unit.distanceToElement(this) > this.vision){
 					this.unitsInVision.remove(unit);
-					cleanList = false;
+					cleanUnitList = true;
 					break;
 				}	
 			}
@@ -49,7 +53,8 @@ public abstract class TowerAttack extends Tower {
 		//Attack if there is target
 		if(attackCounter>=ATTACK_COUNTER_LIMIT){
 			if(this.unitsInVision.size() > 0){
-				projectile = new Projectile(this.getCenter());
+				Projectile projectile = new Projectile(this.getCenter());
+				projectiles.add(projectile);
 				Dispatcher.getRenderer().addProjectileSprite(projectile); //it's bad !
 				for(Unit unit:unitsInVision){
 					projectile.setAimedUnit(unit);
@@ -63,13 +68,21 @@ public abstract class TowerAttack extends Tower {
 		}
 		
 		//Manage Tower effect
-		if(projectile!=null){	
-			if(projectile.hasTouchedFlag()){	
-				applyEffect(projectile.getAimedUnit());
-				projectile=null;
-			}
-			else{
-				projectile.move();
+		boolean cleanProjectileList = true;
+		while(cleanProjectileList){
+			cleanProjectileList=false;
+			if(projectiles.size()>0){	
+				for(Projectile projectile:projectiles){
+					if(projectile.hasTouchedFlag()){	
+						applyEffect(projectile.getAimedUnit());
+						projectiles.remove(projectile);
+						cleanProjectileList=true;
+						break;
+					}
+					else{
+						projectile.move();
+					}
+				}	
 			}
 		}
 	}
