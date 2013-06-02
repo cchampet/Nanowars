@@ -226,6 +226,7 @@ public class Dispatcher {
 
 	/**
 	 * Return the winner of the game (or null if there is no winner yet).
+	 * Note : we don't care who is the winner if it's not the player : we return "IA_1" in that case.
 	 * @return Player : the winner if there is one, or null if not
 	 */
 	public static Player theWinner(){
