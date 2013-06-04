@@ -11,7 +11,7 @@ public abstract class TowerAttack extends Tower {
 	/**
 	 * ATTACK_COUNTER_LIMIT allows to fix the attack speed of the Tower
 	 */
-	private static int ATTACK_COUNTER_LIMIT = 20;
+	private static int ATTACK_COUNTER_LIMIT = 40;
 	private int damage;
 	private int attackCounter=0;
 	private LinkedList<Projectile> projectiles;
@@ -53,13 +53,7 @@ public abstract class TowerAttack extends Tower {
 		//Attack if there is target
 		if(attackCounter>=ATTACK_COUNTER_LIMIT){
 			if(this.unitsInVision.size() > 0){
-				Projectile projectile = new Projectile(this.getCenter());
-				projectiles.add(projectile);
-				Dispatcher.getRenderer().addProjectileSprite(projectile); //it's bad !
-				for(Unit unit:unitsInVision){
-					projectile.setAimedUnit(unit);
-					break;
-				}
+				this.createProjectile();
 				attackCounter=0;
 			}
 		}
@@ -93,6 +87,27 @@ public abstract class TowerAttack extends Tower {
 	 * @param targetedUnit Unit on which apply a special effect.
 	 */
 	public void applyEffect(Unit aimedUnit){
+	}
+	
+	/**
+	 * Creation of projectile targeting opponent unit
+	 */
+	public void createProjectile(){
+		for(Unit unit:unitsInVision){
+			Projectile projectile = new Projectile(this.getCenter());
+			projectiles.add(projectile);
+			initCorrespondantProjectileSprite(projectile);
+			projectile.setAimedUnit(unit);
+			break;
+		}
+	}
+	
+	/**
+	 * Add the projectile sprite. Must be override by specialized tower
+	 * @param projectile
+	 */
+	public void initCorrespondantProjectileSprite(Projectile projectile){
+		Dispatcher.getRenderer().addProjectileSprite(projectile); //it's bad !
 	}
 	
 	// GETTERS & SETTERS
