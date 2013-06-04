@@ -122,6 +122,9 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	 */
 	public void updateSubSprite(TypeOfTower type){
 		switch(type){
+			case NONE:
+				this.subSprite.setImage(null);
+				break;
 			case DAMAGE:
 				this.subSprite.setImage(TypeOfTower.DAMAGE.getSubSprite());
 				break;
@@ -275,6 +278,7 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 	
 	static public void resetTowerToBuild(){
 		TowerSprite.towerToBuild = null;
+		TowerSprite.chosenTowerType = TypeOfTower.NONE;
 	}
 	
 	static public TowerSprite getTowerToBuild(){

@@ -108,6 +108,13 @@ public abstract class TowerAttack extends Tower {
 	public void initCorrespondantProjectileSprite(Projectile projectile){
 	}
 	
+	public void destroyProjectiles(){
+		for(Projectile projectile:this.projectiles){
+			projectile.setHasTouchedFlag(true);
+		}
+		this.projectiles.clear();
+	}
+	
 	// GETTERS & SETTERS
 	
 	public int getDamage() {
