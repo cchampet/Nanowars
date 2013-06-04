@@ -1,5 +1,8 @@
 package engine.tower;
 
+import engine.Projectile;
+import engine.Unit;
+
 public class TowerZone extends TowerAttack {
 
 	public TowerZone(int posX, int posY) {
@@ -9,5 +12,26 @@ public class TowerZone extends TowerAttack {
 	
 	public TowerZone(Tower other){
 		super(other);
+	}
+	
+	@Override
+	public void createProjectile(){
+		for(Unit unit:unitsInVision){
+			Projectile projectile = new Projectile(this.getCenter());
+			projectiles.add(projectile);
+			initCorrespondantProjectileSprite(projectile);
+			projectile.setAimedUnit(unit);
+		}
+	}
+	
+	@Override
+	public void updateStats(){
+		super.updateStats();
+		this.setDamage(this.level);
+	}
+	
+	@Override
+	public void applyEffect(Unit targetedUnit){
+		targetedUnit.reduceNbAgents(this.getDamage());
 	}
 }

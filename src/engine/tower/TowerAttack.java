@@ -14,7 +14,7 @@ public abstract class TowerAttack extends Tower {
 	private static int ATTACK_COUNTER_LIMIT = 40;
 	private int damage;
 	private int attackCounter=0;
-	private LinkedList<Projectile> projectiles;
+	protected LinkedList<Projectile> projectiles;
 
 	public TowerAttack(int posX, int posY) {
 		super(posX, posY);
