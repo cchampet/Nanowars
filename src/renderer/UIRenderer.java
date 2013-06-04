@@ -30,7 +30,6 @@ import engine.Base;
 import engine.Element;
 
 public class UIRenderer {
-	private final int UI_LAYER = 200;
 	
 	private JLabel winnerBackground;
 	private JLabel loserBackground;
@@ -352,6 +351,16 @@ public class UIRenderer {
 	}
 	
 	/**
+	 * Hide the radial menu for tower choice and re-initialize it
+	 */
+	public void hideRadialMenuTower(){
+		UIRenderer.choosingTowerFlag = 0;
+		if(this.radialMenuTower.getParent() != null){
+			this.container.remove(this.radialMenuTower);
+		}
+	}
+	
+	/**
 	 * Add the player's images at the bottom of the window.
 	 * @param newPlayers
 	 */
@@ -359,20 +368,20 @@ public class UIRenderer {
 		PlayerSprite newSpritePlayer = new PlayerSprite(newPlayers.get("Player"));
 		newSpritePlayer.setImage(TypeOfPlayer.PLAYER.getImageOfPlayer());
 		newSpritePlayer.setBounds(10, this.height - newSpritePlayer.getSpriteSize() - 30, newSpritePlayer.getSpriteSize(), newSpritePlayer.getSpriteSize());
-		this.container.add(newSpritePlayer, new Integer(UI_LAYER));
+		this.container.add(newSpritePlayer, new Integer(Layer.UI.id()));
 		this.playerSprites.add(newSpritePlayer);
 		
 		PlayerSprite newSpriteIA_1 = new PlayerSprite(newPlayers.get("IA_1"));
 		newSpriteIA_1.setImage(TypeOfPlayer.IA_1.getImageOfPlayer());
 		newSpriteIA_1.setBounds(this.width - 10 - newSpriteIA_1.getSpriteSize(), this.height - newSpriteIA_1.getSpriteSize() - 30, newSpriteIA_1.getSpriteSize(), newSpriteIA_1.getSpriteSize());
-		this.container.add(newSpriteIA_1, new Integer(UI_LAYER));
+		this.container.add(newSpriteIA_1, new Integer(Layer.UI.id()));
 		this.playerSprites.add(newSpriteIA_1);
 		
 		if(newPlayers.size() == 3){
 			PlayerSprite newSpriteIA_2 = new PlayerSprite(newPlayers.get("IA_2"));
 			newSpriteIA_2.setImage(TypeOfPlayer.IA_2.getImageOfPlayer());
 			newSpriteIA_2.setBounds(this.width / 2, this.height - newSpriteIA_2.getSpriteSize() - 30, newSpriteIA_2.getSpriteSize(), newSpriteIA_2.getSpriteSize());
-			this.container.add(newSpriteIA_2, new Integer(UI_LAYER));
+			this.container.add(newSpriteIA_2, new Integer(Layer.UI.id()));
 			this.playerSprites.add(newSpriteIA_2);
 		}
 	}
@@ -381,15 +390,6 @@ public class UIRenderer {
 	
 	public Menu getMenu(){
 		return menu;
-	}
-	/**
-	 * Hide the radial menu for tower choice and re-initialize it
-	 */
-	public void hideRadialMenuTower(){
-		UIRenderer.choosingTowerFlag = 0;
-		if(this.radialMenuTower.getParent() != null){
-			this.container.remove(this.radialMenuTower);
-		}
 	}
 	
 	public boolean isChoosingUnitFlag(){
