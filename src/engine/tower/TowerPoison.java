@@ -1,6 +1,9 @@
 package engine.tower;
 
+import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import dispatcher.UnitModifier;
+import engine.Projectile;
 import engine.Unit;
 
 public class TowerPoison extends TowerAttack {
@@ -19,5 +22,10 @@ public class TowerPoison extends TowerAttack {
 	@Override
 	public void applyEffect(Unit targetedUnit){
 		targetedUnit.addModifier(UnitModifier.POISONED);
+	}
+	
+	@Override
+	public void initCorrespondantProjectileSprite(Projectile projectile){
+		Dispatcher.getRenderer().addProjectileSprite(projectile, TypeOfTower.POISON); //it's bad !
 	}
 }

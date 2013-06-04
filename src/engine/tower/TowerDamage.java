@@ -1,5 +1,8 @@
 package engine.tower;
 
+import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
+import engine.Projectile;
 import engine.Unit;
 
 public class TowerDamage extends TowerAttack {
@@ -23,5 +26,10 @@ public class TowerDamage extends TowerAttack {
 	@Override
 	public void applyEffect(Unit targetedUnit){
 		targetedUnit.reduceNbAgents(this.getDamage());
+	}
+	
+	@Override
+	public void initCorrespondantProjectileSprite(Projectile projectile){
+		Dispatcher.getRenderer().addProjectileSprite(projectile, TypeOfTower.DAMAGE); //it's bad !
 	}
 }

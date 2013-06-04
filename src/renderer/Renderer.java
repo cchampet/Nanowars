@@ -19,6 +19,7 @@ import renderer.sprite.Sprite;
 import renderer.sprite.TowerSprite;
 import renderer.sprite.UnitSprite;
 import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import engine.Base;
 import engine.Projectile;
 import engine.Unit;
@@ -160,9 +161,10 @@ public class Renderer{
 	/**
 	 * Add the Projectile Sprite to the MapRenderer Sprite Collection
 	 * @param newProjectile : the projectile engine, corresponding to the next created sprite.
+	 * @param type the type of tower which have created the projectile
 	 */
-	public int addProjectileSprite(Projectile newProjectile){
-		return this.mapRenderer.addProjectileSprite(newProjectile);
+	public int addProjectileSprite(Projectile newProjectile, TypeOfTower type){
+		return this.mapRenderer.addProjectileSprite(newProjectile, type);
 	}
 	
 	/**

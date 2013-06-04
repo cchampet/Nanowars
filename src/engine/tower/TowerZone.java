@@ -1,5 +1,7 @@
 package engine.tower;
 
+import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import engine.Projectile;
 import engine.Unit;
 
@@ -22,6 +24,11 @@ public class TowerZone extends TowerAttack {
 			initCorrespondantProjectileSprite(projectile);
 			projectile.setAimedUnit(unit);
 		}
+	}
+	
+	@Override
+	public void initCorrespondantProjectileSprite(Projectile projectile){
+		Dispatcher.getRenderer().addProjectileSprite(projectile, TypeOfTower.ZONE); //it's bad !
 	}
 	
 	@Override

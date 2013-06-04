@@ -1,6 +1,9 @@
 package engine.tower;
 
+import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import dispatcher.UnitModifier;
+import engine.Projectile;
 import engine.Unit;
 
 public class TowerFreeze extends TowerAttack {
@@ -28,5 +31,10 @@ public class TowerFreeze extends TowerAttack {
 	public void applyEffect(Unit targetedUnit){
 		targetedUnit.addModifier(UnitModifier.SLOWED);
 		targetedUnit.reduceNbAgents(this.getDamage());
+	}
+	
+	@Override
+	public void initCorrespondantProjectileSprite(Projectile projectile){
+		Dispatcher.getRenderer().addProjectileSprite(projectile, TypeOfTower.FREEZE); //it's bad !
 	}
 }

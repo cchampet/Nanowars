@@ -216,12 +216,13 @@ public class MapRenderer implements MouseListener{
 	
 	/**
 	 * Add a unit to the Sprite collection in the renderer.
-	 * @param newUnit : the unit engine, corresponding to the next created sprite.
+	 * @param newUnit the unit engine, corresponding to the next created sprite.
+	 * @param type the type of tower which have created the projectile
 	 */
-	public int addProjectileSprite(Projectile newProjectile){
+	public int addProjectileSprite(Projectile newProjectile, TypeOfTower type){
 		ProjectileSprite newSprite = new ProjectileSprite(newProjectile);
 		//we need to choose the right sprite of projectile
-		newSprite.setImage(TypeOfTower.DAMAGE.getProjectileSprite());
+		newSprite.setImage(type.getProjectileSprite());
 		
 		newSprite.setBounds((int)(newProjectile.getPosition().x - newSprite.getSpriteSize()/2), (int)(newProjectile.getPosition().y - newSprite.getSpriteSize()/2), newSprite.getSpriteSize(), newSprite.getSpriteSize());
 

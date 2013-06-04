@@ -64,7 +64,7 @@ public class Tower extends Element {
 	}
 	
 	public void updateStats(){
-		this.vision = 500 * this.level;
+		this.vision = 70 + 50 * this.level;
 	}
 	
 	/**

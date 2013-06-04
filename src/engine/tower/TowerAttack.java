@@ -2,7 +2,6 @@ package engine.tower;
 
 import java.util.LinkedList;
 
-import dispatcher.Dispatcher;
 import engine.Projectile;
 import engine.Unit;
 
@@ -107,7 +106,6 @@ public abstract class TowerAttack extends Tower {
 	 * @param projectile
 	 */
 	public void initCorrespondantProjectileSprite(Projectile projectile){
-		Dispatcher.getRenderer().addProjectileSprite(projectile); //it's bad !
 	}
 	
 	// GETTERS & SETTERS
