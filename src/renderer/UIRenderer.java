@@ -425,6 +425,10 @@ public class UIRenderer {
 	public String getPathOfTheLevelSelected(){
 		return this.menu.getPathOfTheLevelSelected();
 	}
+	
+	public ImageIcon getSelectedBacckgroundImage(){
+		return this.menu.getBackgroundImage();
+	}
 }
 
 

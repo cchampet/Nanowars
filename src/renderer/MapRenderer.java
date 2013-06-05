@@ -138,7 +138,7 @@ public class MapRenderer implements MouseListener{
 	 */
 	public void init() throws IOException{
 		//Load the background image
-		ImageIcon bgImage = new ImageIcon("./tex/background.jpg");
+		ImageIcon bgImage = new ImageIcon("./tex/background/background.jpg");
 		if(bgImage.getImageLoadStatus() != MediaTracker.COMPLETE){
 			throw new IOException();
 		}		
@@ -370,6 +370,14 @@ public class MapRenderer implements MouseListener{
 	 */
 	public Container getContainer() {
 		return container;
+	}
+	
+	/**
+	 * Change the Icon of background JLabel 
+	 * @param img new background Icon
+	 */
+	public void setBackgroundImage(ImageIcon img){
+		this.background.setIcon(img);
 	}
 	
 	/**

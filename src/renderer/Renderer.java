@@ -184,6 +184,13 @@ public class Renderer{
 		this.mapRenderer.updateTowerSprite(newTower, oldID);
 	}
 	
+	/**
+	 * Change the image of background 
+	 */
+	public void setBackgroundImage(){
+		this.mapRenderer.setBackgroundImage(this.uiRenderer.getSelectedBacckgroundImage());
+	}
+	
 	//UIRENDERER INDIRECTIONS
 	
 	/**

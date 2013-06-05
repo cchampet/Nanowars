@@ -139,6 +139,7 @@ public class Dispatcher {
 		//load the map
 		try {
 			Dispatcher.loadMap(Renderer.getPathOfTheLevelSelected());
+			Renderer.setBackgroundImage();
 			Renderer.addPlayerSprites(Players);
 		} catch (IOException e) {
 			e.printStackTrace();

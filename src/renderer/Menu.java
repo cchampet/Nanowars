@@ -42,9 +42,9 @@ public class Menu extends JLabel {
 		this.setIcon(bgMenuImage);	
 		
 		//currently 3 levels
-		this.addLvlSprite("./tex/datamap/datamap_1.png", "1", 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_2.png", "2", 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_3.png", "3", 470, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_1.png", "./tex/background/background_lvl1.jpg", "1", 270, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_2.png", "./tex/background/background.jpg", "2", 370, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_3.png", "./tex/background/background.jpg", "3", 470, this.height - 100);
 	}
 	
 	/**
@@ -53,9 +53,10 @@ public class Menu extends JLabel {
 	 * @param nameOfTheLevel : the name of the level, display in the menu.
 	 * @param x : x position 
 	 * @param y : y position
+	 * @throws IOException 
 	 */
-	public int addLvlSprite(String pathOfTheLevel, String nameOfTheLevel, int x, int y){
-		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, nameOfTheLevel);
+	public int addLvlSprite(String pathOfTheLevel, String pathOfTheBackground, String nameOfTheLevel, int x, int y) throws IOException{
+		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, pathOfTheBackground, nameOfTheLevel);
 		newSprite.setSize(50);
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(x, y, 50, 50);
@@ -82,6 +83,15 @@ public class Menu extends JLabel {
 		for(LvlSprite lvl:this.lvlSprites){
 			if(lvl.isSelected())
 				return lvl.getPathOfTheLevel();
+		}
+		return null;
+	}
+	
+	public ImageIcon getBackgroundImage(){
+		for(LvlSprite lvl:this.lvlSprites){
+			if(lvl.isSelected()){
+				return lvl.getBackgroundImage();
+			}
 		}
 		return null;
 	}

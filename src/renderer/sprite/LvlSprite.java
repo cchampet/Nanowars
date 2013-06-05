@@ -3,9 +3,12 @@ package renderer.sprite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.MediaTracker;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 
 import playable.TypeOfPlayer;
@@ -24,8 +27,12 @@ public class LvlSprite extends Sprite implements MouseListener{
 	 * lvl is the JTextField which is used to display the name of the level.
 	 */
 	private JTextField lvl;
+	/**
+	 * Image of the background of the level
+	 */
+	private ImageIcon backgroundImage;
 	
-	public LvlSprite(String pathOfTheLevel, String nameOfTheLevel){
+	public LvlSprite(String pathOfTheLevel, String pathOfTheBackground, String nameOfTheLevel) throws IOException{
 		super();
 		
 		this.isSelected = false;
@@ -43,6 +50,11 @@ public class LvlSprite extends Sprite implements MouseListener{
 		this.lvl.setIgnoreRepaint(false); // for better performance
 		this.lvl.addMouseListener(this);
 		this.add(this.lvl, BorderLayout.CENTER);
+		
+		this.backgroundImage = new ImageIcon(pathOfTheBackground);
+		if(this.backgroundImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}
 	}
 	
 	
@@ -75,5 +87,8 @@ public class LvlSprite extends Sprite implements MouseListener{
 	public String getPathOfTheLevel(){
 		return pathOfTheLevel;
 	}
-
+	
+	public ImageIcon getBackgroundImage(){
+		return this.backgroundImage;
+	}
 }
