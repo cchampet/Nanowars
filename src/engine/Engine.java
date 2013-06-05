@@ -251,7 +251,12 @@ public class Engine{
 		tmpListOfUnits.add(childUnit1);
 		tmpListOfUnits.add(childUnit2);
 		units = tmpListOfUnits;
-		
+	}
+	
+	public void resetTheGame(){
+		bases.clear();
+		units.clear();
+		towers.clear();
 	}
 	
 	// GETTERS & SETTERS

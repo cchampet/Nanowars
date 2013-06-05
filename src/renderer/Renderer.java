@@ -133,6 +133,27 @@ public class Renderer{
 		
 	}
 	
+	public void resetTheGame(String resultOfTheGame){
+		mapRenderer.hideSprites();
+		mapRenderer.getSprites().clear();
+		uiRenderer.hidePlayerSprites();
+		uiRenderer.getPlayerSprites().clear();
+		
+		MapRenderer.resetSelectionStartingCorner();
+		MapRenderer.resetSelectionEndingCorner();
+		
+		SelectedSprite.resetStartingElements();
+		SelectedSprite.resetEndingElement();
+		TowerSprite.resetTowerToBuild();
+		TowerSprite.resetChosenTowerType();
+		TowerSprite.resetHighlightedTower();
+		
+		if(resultOfTheGame == "win")
+			uiRenderer.hideWinnerBackground();
+		else
+			uiRenderer.hideLoserBackground();
+	}
+	
 	//MAPRENDERER INDIRECTIONS
 	
 	/**
@@ -256,6 +277,14 @@ public class Renderer{
 	
 	public LvlSprite getLvlSelected() {
 		return this.uiRenderer.getLvlSelected();
+	}
+	
+	public void resetLvlSelected(){
+		this.uiRenderer.resetLvlSelected();
+	}
+	
+	public void addLvlsToTheMenu(){
+		this.uiRenderer.addLvlsToTheMenu();
 	}
 	
 	// GETTERS & SETTERS

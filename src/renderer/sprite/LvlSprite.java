@@ -77,6 +77,10 @@ public class LvlSprite extends Sprite implements MouseListener{
 		return isSelected;
 	}
 	
+	public void resetIsSelected(){
+		this.isSelected = false;
+	}
+	
 	public String getPathOfTheLevel(){
 		return pathOfTheLevel;
 	}

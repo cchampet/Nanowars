@@ -333,12 +333,17 @@ public class UIRenderer {
 	}
 	
 	/**
-	 * Hide the menu
+	 * Hide the winnerBackground
 	 */
-	public void hideMenu(){
-		for(Sprite s:this.menu.getLvlSprites())
-			this.container.remove(s);
-		this.container.remove(this.menu);
+	public void hideWinnerBackground(){
+		this.container.remove(this.winnerBackground);
+	}
+	
+	/**
+	 * Hide the loserBackground
+	 */
+	public void hideLoserBackground(){
+		this.container.remove(this.loserBackground);
 	}
 	
 	/**
@@ -358,6 +363,24 @@ public class UIRenderer {
 		UIRenderer.choosingTowerFlag = 0;
 		if(this.radialMenuTower.getParent() != null){
 			this.container.remove(this.radialMenuTower);
+		}
+	}
+	
+	/**
+	 * Hide the menu
+	 */
+	public void hideMenu(){
+		for(Sprite s:this.menu.getLvlSprites())
+			this.container.remove(s);
+		this.container.remove(this.menu);
+	}
+	
+	/**
+	 * Hide the playerSprites
+	 */
+	public void hidePlayerSprites(){
+		for(PlayerSprite p:playerSprites){
+			this.container.remove(p);
 		}
 	}
 	
@@ -385,6 +408,14 @@ public class UIRenderer {
 			this.container.add(newSpriteIA_2, new Integer(Layer.UI.id()));
 			this.playerSprites.add(newSpriteIA_2);
 		}
+	}
+	
+	public void addLvlsToTheMenu(){
+		this.menu.addLvlsToTheMenu();
+	}
+	
+	public void resetLvlSelected(){
+		this.menu.resetLvlSelected();
 	}
 	
 	// GETTERS & SETTERS
