@@ -42,6 +42,9 @@ public class UIRenderer {
 	
 	private Menu menu;
 	
+	// The classes EndingMessage and FinalOptions were created to manage the ending screen and the 2 options it offers if the player Wins/Loses
+	private EndingMessage endingMessage;
+	
 	private int width;
 	private int height;
 	
@@ -85,12 +88,17 @@ public class UIRenderer {
 		this.playerSprites = new ArrayList<PlayerSprite>();
 		
 		this.menu = new Menu(c, width, height);
+		
+		this.endingMessage = new EndingMessage(c, width, height);
 	}
 	
 	public void init() throws IOException{
 		
 		// Initialize menu
 		this.menu.init();
+		
+		// Initialize endingMessage
+		//this.endingMessage.init();
 		
 		//Load the winner background image
 		ImageIcon bgWinnerImage = new ImageIcon("./tex/youWin.png");
@@ -232,6 +240,7 @@ public class UIRenderer {
 	 */
 	public void displayWinner(){
 		this.container.add(this.winnerBackground, Layer.UI.id());
+		//this.container.add(this.endingMessage, Layer.UI.id());
 	}
 	
 	/**
