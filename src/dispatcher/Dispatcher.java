@@ -195,14 +195,16 @@ public class Dispatcher {
 				
 				Dispatcher.Renderer.render();
 				
-				try {
+				
+				// Code below commented to prevent the window from closing automatically at the end of the game and display the Next / Back / Retry screen.
+				/*try {
 					Thread.sleep(5000);
 					endOfGame = true;
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				Renderer.getFrame().dispose();
-				Player.flagThread = false;
+				Player.flagThread = false;*/
 			}
 			
 			//if the loop is too fast, we need to wait 
