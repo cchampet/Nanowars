@@ -42,20 +42,20 @@ public class Menu extends JLabel {
 		this.setIcon(bgMenuImage);	
 		
 		//currently 3 levels
-		this.addLvlSprite("./tex/datamap/datamap_1.png", "1", 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_2.png", "2", 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_3.png", "3", 470, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_1.png", 1, 270, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_2.png", 2, 370, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_3.png", 3, 470, this.height - 100);
 	}
 	
 	/**
 	 * Add a level to the menu.
 	 * @param pathOfTheLevel : path of the corresponding image of the level.
-	 * @param nameOfTheLevel : the name of the level, display in the menu.
+	 * @param numOfTheLevel : the number of the level, display in the menu.
 	 * @param x : x position 
 	 * @param y : y position
 	 */
-	public int addLvlSprite(String pathOfTheLevel, String nameOfTheLevel, int x, int y){
-		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, nameOfTheLevel);
+	public int addLvlSprite(String pathOfTheLevel, int numOfTheLevel, int x, int y){
+		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, numOfTheLevel);
 		newSprite.setSize(50);
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(x, y, 50, 50);
@@ -70,18 +70,22 @@ public class Menu extends JLabel {
 		return lvlSprites;
 	}
 	
-	public boolean isGameNotBegun() {
+	public LvlSprite getLvlSprite(int id){
 		for(LvlSprite lvl:this.lvlSprites){
-			if(lvl.isSelected())
-				return false;
+			if(lvl.getId() == id)
+				return lvl;
 		}
-		return true;
+		return null;
 	}
 	
-	public String getPathOfTheLevelSelected(){
+	/**
+	 * This function returns the level selected in the menu, or null if the user doesn't make a choice yet.
+	 * @return
+	 */
+	public LvlSprite getLvlSelected() {
 		for(LvlSprite lvl:this.lvlSprites){
 			if(lvl.isSelected())
-				return lvl.getPathOfTheLevel();
+				return lvl;
 		}
 		return null;
 	}

@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.sprite.BaseSprite;
+import renderer.sprite.LvlSprite;
 import renderer.sprite.PlayerSprite;
 import renderer.sprite.ProjectileSprite;
 import renderer.sprite.SelectedSprite;
@@ -253,12 +254,8 @@ public class Renderer{
 		return this.uiRenderer.isTowerTypeChosen();
 	}
 	
-	public boolean isGameNotBegun() {
-		return this.uiRenderer.isGameNotBegun();
-	}
-	
-	public String getPathOfTheLevelSelected(){
-		return this.uiRenderer.getPathOfTheLevelSelected();
+	public LvlSprite getLvlSelected() {
+		return this.uiRenderer.getLvlSelected();
 	}
 	
 	// GETTERS & SETTERS

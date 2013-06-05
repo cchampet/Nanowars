@@ -32,6 +32,8 @@ public class Dispatcher {
 	
 	private static final int MAP_SCALE =  5;
 	
+	private static int currentLevel = 0;
+	
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
 	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
@@ -133,12 +135,13 @@ public class Dispatcher {
 		
 		//the menu
 		Renderer.displayMenu();
-		while(Renderer.isGameNotBegun()){}
+		while(Renderer.getLvlSelected() == null){}
+		Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();
 		Renderer.hideMenu();
 		
 		//load the map
 		try {
-			Dispatcher.loadMap(Renderer.getPathOfTheLevelSelected());
+			Dispatcher.loadMap(Renderer.getLvlSelected().getPathOfTheLevel());
 			Renderer.addPlayerSprites(Players);
 		} catch (IOException e) {
 			e.printStackTrace();

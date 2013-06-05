@@ -21,19 +21,24 @@ public class LvlSprite extends Sprite implements MouseListener{
 	 */
 	private String pathOfTheLevel;
 	/**
+	 * numLvl is the number of the level.
+	 */
+	private final int numLvl;
+	/**
 	 * lvl is the JTextField which is used to display the name of the level.
 	 */
 	private JTextField lvl;
 	
-	public LvlSprite(String pathOfTheLevel, String nameOfTheLevel){
+	public LvlSprite(String pathOfTheLevel, int numOfTheLevel){
 		super();
 		
 		this.isSelected = false;
 		this.pathOfTheLevel = pathOfTheLevel;
+		this.numLvl = numOfTheLevel;
 		
 		this.setLayout(new BorderLayout());
 		
-		this.lvl = new JTextField(nameOfTheLevel);
+		this.lvl = new JTextField(String.valueOf(numOfTheLevel));
 		this.lvl.setPreferredSize(new Dimension(23, 20));
 		this.lvl.setDisabledTextColor(new Color(255, 255, 255));
 		this.lvl.setEnabled(false);
@@ -74,6 +79,10 @@ public class LvlSprite extends Sprite implements MouseListener{
 	
 	public String getPathOfTheLevel(){
 		return pathOfTheLevel;
+	}
+	
+	public int getNumLvl(){
+		return this.numLvl;
 	}
 
 }

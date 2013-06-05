@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 
 import playable.Player;
 import playable.TypeOfPlayer;
+import renderer.sprite.LvlSprite;
 import renderer.sprite.MultipleSprite;
 import renderer.sprite.PlayerSprite;
 import renderer.sprite.SelectedSprite;
@@ -418,12 +419,8 @@ public class UIRenderer {
 		return playerSprites;
 	}
 	
-	public boolean isGameNotBegun() {
-		return this.menu.isGameNotBegun();
-	}
-	
-	public String getPathOfTheLevelSelected(){
-		return this.menu.getPathOfTheLevelSelected();
+	public LvlSprite getLvlSelected() {
+		return this.menu.getLvlSelected();
 	}
 }
 
