@@ -266,9 +266,9 @@ public class MapRenderer implements MouseListener{
 	 * Hide the sprites
 	 */
 	public void hideSprites(){
-		for(Sprite s:sprites){
-			this.container.remove(s);
-		}
+		this.container.removeAll();
+		this.container.add(this.background, Layer.BACKGROUND.id());
+		this.container.add(this.effectsLayer, Layer.EFFECT.id());
 	}
 	
 	@Override

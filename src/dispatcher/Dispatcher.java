@@ -129,7 +129,15 @@ public class Dispatcher {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
+		
+		//Load levels
+		try {
+			Renderer.addLvlsToTheMenu();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
 		//display the renderer
 		Renderer.render();
 		
@@ -140,12 +148,6 @@ public class Dispatcher {
 			//the menu : choose a level//
 			/////////////////////////////
 			if(Renderer.getLvlSelected() == null){
-				try {
-					Renderer.addLvlsToTheMenu();
-				} catch (IOException e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
 				Renderer.displayMenu();
 				while(Renderer.getLvlSelected() == null){}
 				Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();

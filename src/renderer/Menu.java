@@ -1,6 +1,5 @@
 package renderer;
 
-import java.awt.Container;
 import java.awt.MediaTracker;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -14,16 +13,14 @@ import renderer.sprite.LvlSprite;
 @SuppressWarnings("serial")
 public class Menu extends JLabel {
 	
-	private Container container;
 	private int width;
 	private int height;
 		
 	private LinkedList<LvlSprite> lvlSprites;
 
-	public Menu(Container c, int width, int height){
+	public Menu(int width, int height){
 		super();
 		
-		this.container = c;
 		this.height = height;
 		this.width = width;
 				
@@ -53,7 +50,6 @@ public class Menu extends JLabel {
 		newSprite.setSize(50);
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(x, y, 50, 50);
-		container.add(newSprite, Layer.UI.id());
 		lvlSprites.add(newSprite);
 		return newSprite.getId();
 	}
@@ -74,6 +70,20 @@ public class Menu extends JLabel {
 		this.addLvlSprite(Level.LVL_8.getPath(), Level.LVL_8.getBackgroundPath(), Level.LVL_8.getId(), 370, this.height - 100);
 		this.addLvlSprite(Level.LVL_9.getPath(), Level.LVL_9.getBackgroundPath(), Level.LVL_9.getId(), 470, this.height - 100);
 		this.addLvlSprite(Level.LVL_10.getPath(), Level.LVL_10.getBackgroundPath(), Level.LVL_10.getId(), 570, this.height - 100);
+	}
+	
+	//replace menu button
+	public void reset(){
+		int cpt = 0;
+		int nbRow = 0;
+		for(LvlSprite lSp:this.lvlSprites){
+			lSp.changeTheNameOfTheLvlDisplay(String.valueOf(lSp.getNumLvl()));
+			lSp.setLocation(170 + 100*(cpt-nbRow*5), this.height - 200 + 100*nbRow);
+			if(cpt >= 4){
+				nbRow = 1;
+			}
+			cpt++;			
+		}
 	}
 	
 	// GETTERS

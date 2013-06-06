@@ -79,7 +79,7 @@ public class UIRenderer {
 		
 		this.playerSprites = new ArrayList<PlayerSprite>();
 		
-		this.menu = new Menu(c, width, height);
+		this.menu = new Menu(width, height);
 		
 		this.endingMessage = new EndingMessage(c, width, height);
 	}
@@ -254,6 +254,8 @@ public class UIRenderer {
 	 * Display the menu at the beginning of the game
 	 */	
 	public void displayMenu(){
+		for(LvlSprite l:this.menu.getLvlSprites())
+			this.container.add(l,  Layer.UI.id());
 		this.container.add(this.menu, Layer.UI.id());
 	}
 	
@@ -359,6 +361,7 @@ public class UIRenderer {
 			}
 		}
 		this.container.remove(this.endingMessage.getWinnerBackground());
+		this.menu.reset();
 	}
 	
 	/**
@@ -379,6 +382,7 @@ public class UIRenderer {
 			}
 		}
 		this.container.remove(this.endingMessage.getLoserBackground());
+		this.menu.reset();
 	}
 	
 	/**
@@ -417,6 +421,8 @@ public class UIRenderer {
 		for(PlayerSprite p:playerSprites){
 			this.container.remove(p);
 		}
+		this.hideRadialMenuMovment();
+		this.hideRadialMenuTower();
 	}
 	
 	/**
