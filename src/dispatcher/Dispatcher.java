@@ -61,8 +61,8 @@ public class Dispatcher {
 				Color color = new Color(map.getRGB(x, y));
 				//if the pixel is not black
 				if(color.getRed() > 0 || color.getBlue() > 0 || color.getGreen() > 0){
-					//blue [50, 150] => a base for the player
-					if(color.getBlue() >= 50 && color.getBlue() <= 150 && color.getRed() == 0 && color.getGreen() == 0){
+					//blue [20, 150] => a base for the player
+					if(color.getBlue() >= 20 && color.getBlue() <= 150 && color.getRed() == 0 && color.getGreen() == 0){
 						if(!Players.containsKey("Player"))
 							Players.put("Player", new Player("You", TypeOfPlayer.PLAYER));
 						float pixelBlue = mapData.getSampleFloat(x, y, 2);
@@ -70,8 +70,8 @@ public class Dispatcher {
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
-					//red [50, 150] => a base for the IA_1
-					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() == 0 && color.getGreen() == 0){
+					//red [20, 150] => a base for the IA_1
+					else if(color.getRed() >= 20  && color.getRed() <= 150 && color.getBlue() == 0 && color.getGreen() == 0){
 						if(!Players.containsKey("IA_1"))
 							Players.put("IA_1", new Player("Jean Vilain", TypeOfPlayer.IA_1));
 						float pixelRed = mapData.getSampleFloat(x, y, 0);
@@ -79,8 +79,8 @@ public class Dispatcher {
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
-					//green [50, 150] => a base for the IA_2
-					else if(color.getGreen() >= 50  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
+					//green [20, 150] => a base for the IA_2
+					else if(color.getGreen() >= 20  && color.getGreen() <= 150 && color.getBlue() == 0 && color.getRed() == 0){
 						if(!Players.containsKey("IA_2"))
 							Players.put("IA_2", new Player("Mr Smith", TypeOfPlayer.IA_2));
 						float pixelGreen = mapData.getSampleFloat(x, y, 1);
@@ -88,9 +88,9 @@ public class Dispatcher {
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);
 					}
-					//white [50, 150] => a neutral base
-					else if(color.getRed() >= 50  && color.getRed() <= 150 && color.getBlue() >= 50  && color.getBlue() <= 150 && color.getGreen() >= 50  && color.getGreen() <= 150){
-						float pixelRed = mapData.getSampleFloat(x, y, 0);
+					//white [20, 150] => a neutral base
+					else if(color.getRed() >= 20  && color.getRed() <= 150 && color.getBlue() >= 20  && color.getBlue() <= 150 && color.getGreen() >= 20  && color.getGreen() <= 150){
+						float pixelRed = mapData.getSampleFloat(x, y, 0); 
 						Base newBase = new Base(MAP_SCALE*x, MAP_SCALE*y, (int)(Base.MAX_CAPACITY*(pixelRed/150.)), null);
 						newBase.setId(Renderer.addBaseSprite(newBase));
 						Engine.addBase(newBase);

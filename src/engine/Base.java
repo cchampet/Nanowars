@@ -17,7 +17,7 @@ public class Base extends Element {
 	/**
 	 * Best capacity a base can have.
 	 */
-	public static final int MAX_CAPACITY = 100;
+	public static final int MAX_CAPACITY = 200;
 	
 	private double capacity;
 	private Player owner;

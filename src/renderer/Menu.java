@@ -43,8 +43,8 @@ public class Menu extends JLabel {
 		
 		//currently 3 levels
 		this.addLvlSprite("./tex/datamap/datamap_1.png", "./tex/background/background_lvl1.jpg", "1", 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_2.png", "./tex/background/background.jpg", "2", 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_3.png", "./tex/background/background.jpg", "3", 470, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_2.png", "./tex/background/background_lvl2.jpg", "2", 370, this.height - 100);
+		this.addLvlSprite("./tex/datamap/datamap_10.png", "./tex/background/background.jpg", "3", 470, this.height - 100);
 	}
 	
 	/**
