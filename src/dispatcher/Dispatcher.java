@@ -242,6 +242,7 @@ public class Dispatcher {
 			///////reset the game////////
 			/////////////////////////////
 			Dispatcher.resetTheGame();
+			Renderer.setBackgroundImage();
 		}
 	}
 

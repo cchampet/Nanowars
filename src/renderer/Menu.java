@@ -108,6 +108,6 @@ public class Menu extends JLabel {
 				return lvl.getBackgroundImage();
 			}
 		}
-		return null;
+		return this.lvlSprites.getLast().getBackgroundImage();
 	}
 }

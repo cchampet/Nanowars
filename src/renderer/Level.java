@@ -16,7 +16,7 @@ public enum Level {
 	private String path;
 	private String bgPath;
 	private int id;
-	public static final int idOfLastLevel = 3;
+	public static final int idOfLastLevel = 10;
 	
 	Level(String path, String bgPath, int id){
 		this.path = path;
