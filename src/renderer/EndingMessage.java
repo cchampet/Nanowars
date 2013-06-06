@@ -23,6 +23,7 @@ public class EndingMessage extends JLabel {
 	private JLabel winnerBackground;
 	
 	private LvlSprite previousLvl;
+	private LvlSprite currentLvl;
 	private LvlSprite nextLvl;
 
 	public EndingMessage(Container c, int width, int height){
@@ -69,6 +70,20 @@ public class EndingMessage extends JLabel {
 	}
 	
 	/**
+	 * Add a current level button at the end of a game (you win or you loose).
+	 * @param currentLevel : the lvlSprite of the current level.
+	 */
+	public int addLvlSpriteCurrent(LvlSprite currentLvl){
+		currentLvl.changeTheNameOfTheLvlDisplay("retry");
+		currentLvl.setSize(50);
+		currentLvl.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+		currentLvl.setBounds(400, 430, 50, 50);
+		container.add(currentLvl, Layer.UI.id());
+		this.currentLvl = currentLvl;
+		return currentLvl.getId();
+	}
+	
+	/**
 	 * Add a next level button at the end of a game (you win or you loose).
 	 * @param nextLevel : the lvlSprite of the next level.
 	 */
@@ -98,5 +113,9 @@ public class EndingMessage extends JLabel {
 
 	public LvlSprite getNextLvl() {
 		return nextLvl;
+	}
+	
+	public LvlSprite getCurrentLvl(){
+		return currentLvl;
 	}
 }

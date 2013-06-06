@@ -215,6 +215,7 @@ public class UIRenderer {
 	 */
 	public void displayWinner(int currentLvl){
 		if(currentLvl > 0){
+			this.endingMessage.addLvlSpriteCurrent(this.menu.getLvlSprite(currentLvl));
 			if(currentLvl == 1){
 				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
 			}
@@ -234,6 +235,7 @@ public class UIRenderer {
 	 */
 	public void displayLoser(int currentLvl){
 		if(currentLvl > 0){
+			this.endingMessage.addLvlSpriteCurrent(this.menu.getLvlSprite(currentLvl));
 			if(currentLvl == 1){
 				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
 			}
@@ -344,6 +346,7 @@ public class UIRenderer {
 	 */
 	public void hideWinnerBackground(int currentLvl){
 		if(currentLvl > 0){
+			this.container.remove(this.endingMessage.getCurrentLvl());
 			if(currentLvl == 1){
 				this.container.remove(this.endingMessage.getNextLvl());
 			}
@@ -363,6 +366,7 @@ public class UIRenderer {
 	 */
 	public void hideLoserBackground(int currentLvl){
 		if(currentLvl > 0){
+			this.container.remove(this.endingMessage.getCurrentLvl());
 			if(currentLvl == 1){
 				this.container.remove(this.endingMessage.getNextLvl());
 			}
