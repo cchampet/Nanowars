@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.sprite.BaseSprite;
+import renderer.sprite.LvlSprite;
 import renderer.sprite.PlayerSprite;
 import renderer.sprite.ProjectileSprite;
 import renderer.sprite.SelectedSprite;
@@ -132,6 +133,27 @@ public class Renderer{
 		
 	}
 	
+	public void resetTheGame(Player theWinner){
+		mapRenderer.hideSprites();
+		mapRenderer.getSprites().clear();
+		uiRenderer.hidePlayerSprites();
+		uiRenderer.getPlayerSprites().clear();
+		
+		MapRenderer.resetSelectionStartingCorner();
+		MapRenderer.resetSelectionEndingCorner();
+		
+		SelectedSprite.resetStartingElements();
+		SelectedSprite.resetEndingElement();
+		TowerSprite.resetTowerToBuild();
+		TowerSprite.resetChosenTowerType();
+		TowerSprite.resetHighlightedTower();
+		
+		if(theWinner.isPlayer())
+			uiRenderer.hideWinnerBackground(Dispatcher.getCurrentLevel());
+		else
+			uiRenderer.hideLoserBackground(Dispatcher.getCurrentLevel());
+	}
+	
 	//MAPRENDERER INDIRECTIONS
 	
 	/**
@@ -196,15 +218,15 @@ public class Renderer{
 	/**
 	 * Display winner message
 	 */
-	public void displayWinner(){
-		this.uiRenderer.displayWinner();
+	public void displayWinner(int currentLevel){
+		this.uiRenderer.displayWinner(currentLevel);
 	}
 	
 	/**
 	 * Display loser message
 	 */
-	public void displayLoser(){
-		this.uiRenderer.displayLoser();
+	public void displayLoser(int currentLevel){
+		this.uiRenderer.displayLoser(currentLevel);
 	}
 
 	/**
@@ -260,12 +282,16 @@ public class Renderer{
 		return this.uiRenderer.isTowerTypeChosen();
 	}
 	
-	public boolean isGameNotBegun() {
-		return this.uiRenderer.isGameNotBegun();
+	public LvlSprite getLvlSelected() {
+		return this.uiRenderer.getLvlSelected();
 	}
 	
-	public String getPathOfTheLevelSelected(){
-		return this.uiRenderer.getPathOfTheLevelSelected();
+	public void resetLvlSelected(){
+		this.uiRenderer.resetLvlSelected();
+	}
+	
+	public void addLvlsToTheMenu() throws IOException{
+		this.uiRenderer.addLvlsToTheMenu();
 	}
 	
 	// GETTERS & SETTERS

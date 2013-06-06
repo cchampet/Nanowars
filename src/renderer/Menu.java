@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
 import playable.TypeOfPlayer;
 import renderer.sprite.LvlSprite;
 
@@ -21,14 +20,13 @@ public class Menu extends JLabel {
 		
 	private LinkedList<LvlSprite> lvlSprites;
 
-
 	public Menu(Container c, int width, int height){
 		super();
 		
 		this.container = c;
 		this.height = height;
 		this.width = width;
-		
+				
 		this.lvlSprites = new LinkedList<LvlSprite>();
 	}
 	
@@ -36,27 +34,22 @@ public class Menu extends JLabel {
 		//Load the menu background image
 		ImageIcon bgMenuImage = new ImageIcon("./tex/MENU.png");
 		if(bgMenuImage.getImageLoadStatus() != MediaTracker.COMPLETE){
-			throw new IOException();
 		}
 		this.setBounds(0, 0, this.width, this.height);
 		this.setIcon(bgMenuImage);	
-		
-		//currently 3 levels
-		this.addLvlSprite("./tex/datamap/datamap_1.png", "./tex/background/background_lvl1.jpg", "1", 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_2.png", "./tex/background/background_lvl2.jpg", "2", 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_10.png", "./tex/background/background.jpg", "3", 470, this.height - 100);
 	}
 	
 	/**
 	 * Add a level to the menu.
 	 * @param pathOfTheLevel : path of the corresponding image of the level.
-	 * @param nameOfTheLevel : the name of the level, display in the menu.
+	 * @param numOfTheLevel : the number of the level, display in the menu.
 	 * @param x : x position 
 	 * @param y : y position
 	 * @throws IOException 
 	 */
-	public int addLvlSprite(String pathOfTheLevel, String pathOfTheBackground, String nameOfTheLevel, int x, int y) throws IOException{
-		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, pathOfTheBackground, nameOfTheLevel);
+
+	public int addLvlSprite(String pathOfTheLevel, String pathOfTheBackground, int numOfTheLevel, int x, int y) throws IOException{
+		LvlSprite newSprite = new LvlSprite(pathOfTheLevel, pathOfTheBackground, numOfTheLevel);
 		newSprite.setSize(50);
 		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
 		newSprite.setBounds(x, y, 50, 50);
@@ -65,24 +58,46 @@ public class Menu extends JLabel {
 		return newSprite.getId();
 	}
 	
+	public void resetLvlSelected(){
+		this.getLvlSelected().resetIsSelected();
+	}
+	
+	public void addLvlsToTheMenu() throws IOException{
+		//currently 3 levels
+		this.addLvlSprite(Level.LVL_1.getPath(), Level.LVL_1.getBackgroundPath(), Level.LVL_1.getId(), 170, this.height - 200);
+		this.addLvlSprite(Level.LVL_2.getPath(), Level.LVL_2.getBackgroundPath(), Level.LVL_2.getId(), 270, this.height - 200);
+		this.addLvlSprite(Level.LVL_3.getPath(), Level.LVL_3.getBackgroundPath(), Level.LVL_3.getId(), 370, this.height - 200);
+		this.addLvlSprite(Level.LVL_4.getPath(), Level.LVL_4.getBackgroundPath(), Level.LVL_4.getId(), 470, this.height - 200);
+		this.addLvlSprite(Level.LVL_5.getPath(), Level.LVL_5.getBackgroundPath(), Level.LVL_5.getId(), 570, this.height - 200);
+		this.addLvlSprite(Level.LVL_6.getPath(), Level.LVL_6.getBackgroundPath(), Level.LVL_6.getId(), 170, this.height - 100);
+		this.addLvlSprite(Level.LVL_7.getPath(), Level.LVL_7.getBackgroundPath(), Level.LVL_7.getId(), 270, this.height - 100);
+		this.addLvlSprite(Level.LVL_8.getPath(), Level.LVL_8.getBackgroundPath(), Level.LVL_8.getId(), 370, this.height - 100);
+		this.addLvlSprite(Level.LVL_9.getPath(), Level.LVL_9.getBackgroundPath(), Level.LVL_9.getId(), 470, this.height - 100);
+		this.addLvlSprite(Level.LVL_10.getPath(), Level.LVL_10.getBackgroundPath(), Level.LVL_10.getId(), 570, this.height - 100);
+	}
+	
 	// GETTERS
 
 	public LinkedList<LvlSprite> getLvlSprites(){
 		return lvlSprites;
 	}
 	
-	public boolean isGameNotBegun() {
+	public LvlSprite getLvlSprite(int id){
 		for(LvlSprite lvl:this.lvlSprites){
-			if(lvl.isSelected())
-				return false;
+			if(lvl.getId() == id)
+				return lvl;
 		}
-		return true;
+		return null;
 	}
 	
-	public String getPathOfTheLevelSelected(){
+	/**
+	 * This function returns the level selected in the menu, or null if the user doesn't make a choice yet.
+	 * @return
+	 */
+	public LvlSprite getLvlSelected() {
 		for(LvlSprite lvl:this.lvlSprites){
 			if(lvl.isSelected())
-				return lvl.getPathOfTheLevel();
+				return lvl;
 		}
 		return null;
 	}

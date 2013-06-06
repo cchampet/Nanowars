@@ -32,6 +32,8 @@ public class Dispatcher {
 	
 	private static final int MAP_SCALE =  5;
 	
+	private static int currentLevel = 0;
+	
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
 	private static final HashMap<String, Player> Players = new HashMap<String, Player>();
@@ -131,98 +133,132 @@ public class Dispatcher {
 		//display the renderer
 		Renderer.render();
 		
-		//the menu
-		Renderer.displayMenu();
-		while(Renderer.isGameNotBegun()){}
-		Renderer.hideMenu();
-		
-		//load the map
-		try {
-			Dispatcher.loadMap(Renderer.getPathOfTheLevelSelected());
-			Renderer.setBackgroundImage();
-			Renderer.addPlayerSprites(Players);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
 		//start the thread
-		Dispatcher.startThreadOfPlayers();
+		boolean endOfTheWholeGame = false;
+		while(!endOfTheWholeGame){
+			/////////////////////////////
+			//the menu : choose a level//
+			/////////////////////////////
+			if(Renderer.getLvlSelected() == null){
+				try {
+					Renderer.addLvlsToTheMenu();
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.exit(0);
+				}
+				Renderer.displayMenu();
+				while(Renderer.getLvlSelected() == null){}
+				Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();
+				Renderer.hideMenu();
+				Renderer.setBackgroundImage();
+			}
 
-		//start the game
-		ArrayList<Integer> idOfElementsDeleted = new ArrayList<Integer>();
-		boolean endOfGame = false;
-		//=>what we have to do in each frame
-		while(!endOfGame) {	
-			
-			long begin = System.currentTimeMillis();
-			
-			Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
-			
-			//work of the engine
-			idOfElementsDeleted = Dispatcher.Engine.doATurnGame();
-			//work of the renderer
-			Dispatcher.Renderer.refreshView(idOfElementsDeleted);
-			
-			//work of the dispatcher : manage interactions between players and the engine
-			//create units
-			if(SelectedSprite.isThereAtLeastOneStartingElement() && SelectedSprite.isThereAnEndingElement()) {
-				if(!Dispatcher.Renderer.isChoosingUnit()){
-					for(Base b:BaseSprite.getStartingBases()){
-						double nbAgentsOfUnitSent = b.getNbAgents() * Dispatcher.Renderer.getUnitPercentChosen(); 
-						if(nbAgentsOfUnitSent == b.getNbAgents()){
-							nbAgentsOfUnitSent -= 1;
+			/////////////////////////////
+			////////load the map/////////
+			/////////////////////////////
+			try {
+				Dispatcher.loadMap(Renderer.getLvlSelected().getPathOfTheLevel());
+				Renderer.addPlayerSprites(Players);
+				Renderer.resetLvlSelected();
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(0);
+			}
+
+			////////////////////////////////////
+			//start the thread of the players///
+			////////////////////////////////////
+			Dispatcher.startThreadOfPlayers();
+	
+			/////////////////////////////
+			///////start a game//////////
+			/////////////////////////////
+			ArrayList<Integer> idOfElementsDeleted = new ArrayList<Integer>();
+			boolean endOfAGame = false;
+			//=>what we have to do in each frame
+			while(!endOfAGame) {	
+				
+				long begin = System.currentTimeMillis();
+				
+				Dispatcher.nbFrame = Dispatcher.nbFrame + 1;
+				
+				//work of the engine
+				idOfElementsDeleted = Engine.doATurnGame();
+				//work of the renderer
+				Renderer.refreshView(idOfElementsDeleted);
+				
+				//work of the dispatcher : manage interactions between players and the engine
+				//create units
+				if(SelectedSprite.isThereAtLeastOneStartingElement() && SelectedSprite.isThereAnEndingElement()) {
+					if(!Renderer.isChoosingUnit()){
+						for(Base b:BaseSprite.getStartingBases()){
+							double nbAgentsOfUnitSent = b.getNbAgents() * Renderer.getUnitPercentChosen(); 
+							if(nbAgentsOfUnitSent == b.getNbAgents()){
+								nbAgentsOfUnitSent -= 1;
+							}
+							b.sendUnit(nbAgentsOfUnitSent, SelectedSprite.getEndingElement());
 						}
-						b.sendUnit(nbAgentsOfUnitSent, SelectedSprite.getEndingElement());
+						SelectedSprite.resetEndingElement();
 					}
-					SelectedSprite.resetEndingElement();
+				}
+				//build specialized tower
+				if(TowerSprite.isThereOneTowerToBuild()){
+					if(Renderer.isTowerTypeChosen()){
+						Tower specTower = Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
+						Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId());
+						TowerSprite.resetTowerToBuild();
+					}
+				}
+				//check if there is a winner
+				if(Dispatcher.theWinner() != null){
+					if(Dispatcher.theWinner().isPlayer()){
+						Renderer.displayWinner(Dispatcher.currentLevel);
+					}
+					else{
+						Renderer.displayLoser(Dispatcher.currentLevel);
+					}
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+						System.exit(0);
+					}
+					Player.flagThread = false;
+					endOfAGame = true;
+				}
+				
+				//if the loop is too fast, we need to wait 
+				long end = System.currentTimeMillis();
+				if ((end - begin) < Dispatcher.MILLISECOND_PER_FRAME) {
+					try {
+						Thread.sleep(Dispatcher.MILLISECOND_PER_FRAME - (end - begin));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+						System.exit(0);
+					}
 				}
 			}
-			//build specialized tower
-			if(TowerSprite.isThereOneTowerToBuild()){
-				if(Dispatcher.Renderer.isTowerTypeChosen()){
-					Tower specTower = Dispatcher.Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
-					Dispatcher.Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId());
-					TowerSprite.resetTowerToBuild();
-				}
-			}
-			//check if there is a winner
-			if(Dispatcher.theWinner() != null){
-				if(Dispatcher.theWinner().isPlayer())
-					Dispatcher.Renderer.displayWinner();
-				else
-					Dispatcher.Renderer.displayLoser();
-								
-				try {
-					Thread.sleep(5000);
-					endOfGame = true;
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				Renderer.getFrame().dispose();
-				Player.flagThread = false;
-			}
-			
-			//if the loop is too fast, we need to wait 
-			long end = System.currentTimeMillis();
-			if ((end - begin) < Dispatcher.MILLISECOND_PER_FRAME) {
-				try {
-					Thread.sleep(Dispatcher.MILLISECOND_PER_FRAME - (end - begin));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+			/////////////////////////////
+			///////reset the game////////
+			/////////////////////////////
+			Dispatcher.resetTheGame();
 		}
 	}
-	
+
 	/**
 	 * This function starts the thread of each player concerned.
 	 */
 	private static void startThreadOfPlayers() {
-		Players.get("Player").start();
-		Players.get("IA_1").start();
-		if(Players.size() == 3)
-			Players.get("IA_2").start();
+		if(Players.get("Player").getState() == Thread.State.NEW)
+			Players.get("Player").start();
+		
+		if(Players.get("IA_1").getState() == Thread.State.NEW)
+			Players.get("IA_1").start();
+		
+		if(Players.size() == 3){
+			if(Players.get("IA_2").getState() == Thread.State.NEW)
+				Players.get("IA_2").start();
+		}
 	}
 
 	/**
@@ -251,6 +287,16 @@ public class Dispatcher {
 			return null;
 	}
 	
+	/**
+	 * Reset all the data of the game, in order to restart a new game (from a different map for example) properly.
+	 */
+	private static void resetTheGame() {
+		Renderer.resetTheGame(Dispatcher.theWinner());
+		Engine.resetTheGame();
+		Player.resetFlagThread();
+		Players.clear();
+	}
+	
 	// GETTERS & SETTERS
 	
 	public static Engine getEngine() {
@@ -261,8 +307,11 @@ public class Dispatcher {
 		return Dispatcher.Renderer;
 	}
 	
-	
 	public static HashMap<String, Player> getPlayers() {
 		return Dispatcher.Players;
+	}
+	
+	public static int getCurrentLevel(){
+		return Dispatcher.currentLevel;
 	}
 }

@@ -262,6 +262,15 @@ public class MapRenderer implements MouseListener{
 		}
 	}
 	
+	/**
+	 * Hide the sprites
+	 */
+	public void hideSprites(){
+		for(Sprite s:sprites){
+			this.container.remove(s);
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		BaseSprite.resetStartingElements();
@@ -387,6 +396,10 @@ public class MapRenderer implements MouseListener{
 	public static Point2D.Float getSelectionStartingCorner() {
 		return selectionStartingCorner;
 	}
+	
+	public static void resetSelectionStartingCorner(){
+		selectionStartingCorner = null;
+	}
 
 	/**
 	 * Static function.
@@ -394,5 +407,9 @@ public class MapRenderer implements MouseListener{
 	 */
 	public static Point2D.Float getSelectionEndingCorner() {
 		return selectionEndingCorner;
+	}
+	
+	public static void resetSelectionEndingCorner(){
+		selectionEndingCorner = null;
 	}
 }

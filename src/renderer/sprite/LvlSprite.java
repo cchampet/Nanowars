@@ -24,6 +24,10 @@ public class LvlSprite extends Sprite implements MouseListener{
 	 */
 	private String pathOfTheLevel;
 	/**
+	 * numLvl is the number of the level.
+	 */
+	private final int numLvl;
+	/**
 	 * lvl is the JTextField which is used to display the name of the level.
 	 */
 	private JTextField lvl;
@@ -32,15 +36,16 @@ public class LvlSprite extends Sprite implements MouseListener{
 	 */
 	private ImageIcon backgroundImage;
 	
-	public LvlSprite(String pathOfTheLevel, String pathOfTheBackground, String nameOfTheLevel) throws IOException{
+	public LvlSprite(String pathOfTheLevel, String pathOfTheBackground, int numOfTheLevel) throws IOException{
 		super();
 		
 		this.isSelected = false;
 		this.pathOfTheLevel = pathOfTheLevel;
+		this.numLvl = numOfTheLevel;
 		
 		this.setLayout(new BorderLayout());
 		
-		this.lvl = new JTextField(nameOfTheLevel);
+		this.lvl = new JTextField(String.valueOf(numOfTheLevel));
 		this.lvl.setPreferredSize(new Dimension(23, 20));
 		this.lvl.setDisabledTextColor(new Color(255, 255, 255));
 		this.lvl.setEnabled(false);
@@ -57,6 +62,9 @@ public class LvlSprite extends Sprite implements MouseListener{
 		}
 	}
 	
+	public void changeTheNameOfTheLvlDisplay(String newName){
+		this.lvl.setText(newName);
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -70,7 +78,8 @@ public class LvlSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());}
+		this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {}
@@ -84,11 +93,20 @@ public class LvlSprite extends Sprite implements MouseListener{
 		return isSelected;
 	}
 	
+	public void resetIsSelected(){
+		this.isSelected = false;
+	}
+	
 	public String getPathOfTheLevel(){
 		return pathOfTheLevel;
 	}
 	
+
 	public ImageIcon getBackgroundImage(){
 		return this.backgroundImage;
+	}
+	
+	public int getNumLvl(){
+		return this.numLvl;
 	}
 }

@@ -74,6 +74,10 @@ public class Player extends Thread implements Playable {
 		return (Dispatcher.getEngine().getBasesOfAPlayer(this).isEmpty() && Dispatcher.getEngine().getUnitsOfAPlayer(this).isEmpty()) ? true : false;
 	}
 	
+	public static void resetFlagThread(){
+		flagThread = true;
+	}
+	
 	// GETTERS & SETTERS
 
 	public String getNameOfPlayer() {

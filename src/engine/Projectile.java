@@ -2,7 +2,7 @@ package engine;
 
 import java.awt.geom.Point2D;
 
-import renderer.UnitSprite;
+import renderer.sprite.UnitSprite;
 
 public class Projectile {
 

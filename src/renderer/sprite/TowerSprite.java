@@ -293,7 +293,15 @@ public class TowerSprite extends SelectedSprite implements MouseListener, Action
 		return TowerSprite.chosenTowerType;
 	}
 	
+	static public void resetChosenTowerType(){
+		TowerSprite.chosenTowerType = null;
+	}
+	
 	static public TowerSprite getHighlightedTower(){
 		return TowerSprite.highlightedTower;
+	}
+	
+	static public void resetHighlightedTower(){
+		TowerSprite.highlightedTower = null;
 	}
 }
