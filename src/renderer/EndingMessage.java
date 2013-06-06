@@ -1,12 +1,14 @@
 package renderer;
 
 import java.awt.Container;
+import java.awt.MediaTracker;
 import java.io.IOException;
-import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import playable.TypeOfPlayer;
+import renderer.sprite.LvlSprite;
 
 // This is a vain attempt to store the elements necessary to trigger an option in the option defined in FinalOption.java.
 
@@ -16,9 +18,12 @@ public class EndingMessage extends JLabel {
 	private Container container;
 	private int width;
 	private int height;
-		
-	private LinkedList<FinalOptions> finalOptions;
 
+	private JLabel loserBackground;
+	private JLabel winnerBackground;
+	
+	private LvlSprite previousLvl;
+	private LvlSprite nextLvl;
 
 	public EndingMessage(Container c, int width, int height){
 		super();
@@ -27,34 +32,71 @@ public class EndingMessage extends JLabel {
 		this.width = width;
 		this.height = height;
 		
-		this.finalOptions = new LinkedList<FinalOptions>();
+		this.winnerBackground = new JLabel();
+		this.loserBackground = new JLabel();
 	}
 	
 	public void init() throws IOException{
+		//Load the winner background image
+		ImageIcon bgWinnerImage = new ImageIcon("./tex/youWin.png");
+		if(bgWinnerImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}		
+		this.winnerBackground.setBounds(0, 0, this.width, this.height);
+		this.winnerBackground.setIcon(bgWinnerImage);
 		
-		// The image is already displayed by UIRenderer's displayWinner(); or displayLoser();
-		
-		// 2 possible choices
-		this.addFinalOptions("./tex/MENU.png", "Back", 270, this.height - 100);
-		this.addFinalOptions("./tex/datamap/datamap_tower2.png", "Next", 470, this.height - 100);
+		//Load the loser background image
+		ImageIcon bgLoserImage = new ImageIcon("./tex/youLose.png");
+		if(bgLoserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
+			throw new IOException();
+		}
+		this.loserBackground.setBounds(0, 0, this.width, this.height);
+		this.loserBackground.setIcon(bgLoserImage);
 	}
 	
 	/**
-	 * Implementing the possible options
+	 * Add a previous level button at the end of a game (you win or you loose).
+	 * @param previousLevel : the lvlSprite of the previous level.
 	 */
-	public int addFinalOptions(String pathOfTheOption, String nameOfTheOption, int x, int y){
-		FinalOptions newSprite = new FinalOptions(pathOfTheOption, nameOfTheOption);
-		newSprite.setSize(50);
-		newSprite.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
-		newSprite.setBounds(x, y, 50, 50);
-		container.add(newSprite, Layer.UI.id());
-		finalOptions.add(newSprite);
-		return newSprite.getId();
+	public int addLvlSpritePrevious(LvlSprite previousLvl){
+		previousLvl.changeTheNameOfTheLvlDisplay("<");
+		previousLvl.setSize(50);
+		previousLvl.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+		previousLvl.setBounds(130, 280, 50, 50);
+		container.add(previousLvl, Layer.UI.id());
+		this.previousLvl = previousLvl;
+		return previousLvl.getId();
+	}
+	
+	/**
+	 * Add a next level button at the end of a game (you win or you loose).
+	 * @param nextLevel : the lvlSprite of the next level.
+	 */
+	public int addLvlSpriteNext(LvlSprite nextLevel){
+		nextLevel.changeTheNameOfTheLvlDisplay(">");
+		nextLevel.setSize(50);
+		nextLevel.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+		nextLevel.setBounds(620, 280, 50, 50);
+		container.add(nextLevel, Layer.UI.id());
+		this.nextLvl = nextLevel;
+		return nextLevel.getId();
 	}
 	
 	// GETTERS
 
-	public LinkedList<FinalOptions> getFinalOptions(){
-		return finalOptions;
+	public JLabel getLoserBackground() {
+		return loserBackground;
+	}
+
+	public JLabel getWinnerBackground() {
+		return winnerBackground;
+	}
+	
+	public LvlSprite getPreviousLvl() {
+		return previousLvl;
+	}
+
+	public LvlSprite getNextLvl() {
+		return nextLvl;
 	}
 }

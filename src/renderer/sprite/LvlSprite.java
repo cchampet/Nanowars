@@ -50,6 +50,9 @@ public class LvlSprite extends Sprite implements MouseListener{
 		this.add(this.lvl, BorderLayout.CENTER);
 	}
 	
+	public void changeTheNameOfTheLvlDisplay(String newName){
+		this.lvl.setText(newName);
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -63,7 +66,8 @@ public class LvlSprite extends Sprite implements MouseListener{
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());}
+		this.setImage(TypeOfPlayer.NEUTRAL.getImageOfBase());
+	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {}
@@ -88,5 +92,4 @@ public class LvlSprite extends Sprite implements MouseListener{
 	public int getNumLvl(){
 		return this.numLvl;
 	}
-
 }

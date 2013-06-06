@@ -33,7 +33,6 @@ public class Dispatcher {
 	private static final int MAP_SCALE =  5;
 	
 	private static int currentLevel = 0;
-	private static String resultOfTheGame;
 	
 	private static final Engine Engine = new Engine();
 	private static final Renderer Renderer = new Renderer("Nano WAAAARS!!!");
@@ -139,11 +138,13 @@ public class Dispatcher {
 			/////////////////////////////
 			//the menu : choose a level//
 			/////////////////////////////
-			Renderer.addLvlsToTheMenu();
-			Renderer.displayMenu();
-			while(Renderer.getLvlSelected() == null){}
-			Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();
-			Renderer.hideMenu();
+			if(Renderer.getLvlSelected() == null){
+				Renderer.addLvlsToTheMenu();
+				Renderer.displayMenu();
+				while(Renderer.getLvlSelected() == null){}
+				Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();
+				Renderer.hideMenu();
+			}
 
 			/////////////////////////////
 			////////load the map/////////
@@ -151,6 +152,7 @@ public class Dispatcher {
 			try {
 				Dispatcher.loadMap(Renderer.getLvlSelected().getPathOfTheLevel());
 				Renderer.addPlayerSprites(Players);
+				Renderer.resetLvlSelected();
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(0);
@@ -203,14 +205,11 @@ public class Dispatcher {
 				//check if there is a winner
 				if(Dispatcher.theWinner() != null){
 					if(Dispatcher.theWinner().isPlayer()){
-						Renderer.displayWinner();
-						Dispatcher.resultOfTheGame = "win";
+						Renderer.displayWinner(Dispatcher.currentLevel);
 					}
 					else{
-						Renderer.displayLoser();
-						Dispatcher.resultOfTheGame = "loose";
+						Renderer.displayLoser(Dispatcher.currentLevel);
 					}
-						
 					try {
 						Thread.sleep(5000);
 					} catch (InterruptedException e) {
@@ -285,9 +284,8 @@ public class Dispatcher {
 	 * Reset all the data of the game, in order to restart a new game (from a different map for example) properly.
 	 */
 	private static void resetTheGame() {
+		Renderer.resetTheGame(Dispatcher.theWinner());
 		Engine.resetTheGame();
-		Renderer.resetTheGame(Dispatcher.resultOfTheGame);
-		Renderer.resetLvlSelected();
 		Player.resetFlagThread();
 		Players.clear();
 	}
@@ -302,8 +300,11 @@ public class Dispatcher {
 		return Dispatcher.Renderer;
 	}
 	
-	
 	public static HashMap<String, Player> getPlayers() {
 		return Dispatcher.Players;
+	}
+	
+	public static int getCurrentLevel(){
+		return Dispatcher.currentLevel;
 	}
 }

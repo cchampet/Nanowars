@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
 import playable.TypeOfPlayer;
 import renderer.sprite.LvlSprite;
 
@@ -21,14 +20,13 @@ public class Menu extends JLabel {
 		
 	private LinkedList<LvlSprite> lvlSprites;
 
-
 	public Menu(Container c, int width, int height){
 		super();
 		
 		this.container = c;
 		this.height = height;
 		this.width = width;
-		
+				
 		this.lvlSprites = new LinkedList<LvlSprite>();
 	}
 	
@@ -64,9 +62,9 @@ public class Menu extends JLabel {
 	
 	public void addLvlsToTheMenu(){
 		//currently 3 levels
-		this.addLvlSprite("./tex/datamap/datamap_1.png", 1, 270, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_2.png", 2, 370, this.height - 100);
-		this.addLvlSprite("./tex/datamap/datamap_3.png", 3, 470, this.height - 100);
+		this.addLvlSprite(Level.LVL_1.getPath(), Level.LVL_1.getId(), 270, this.height - 100);
+		this.addLvlSprite(Level.LVL_2.getPath(), Level.LVL_2.getId(), 370, this.height - 100);
+		this.addLvlSprite(Level.LVL_3.getPath(), Level.LVL_3.getId(), 470, this.height - 100);
 	}
 	
 	// GETTERS

@@ -23,7 +23,6 @@ import renderer.sprite.LvlSprite;
 import renderer.sprite.MultipleSprite;
 import renderer.sprite.PlayerSprite;
 import renderer.sprite.SelectedSprite;
-import renderer.sprite.Sprite;
 import renderer.sprite.TowerSprite;
 import dispatcher.Dispatcher;
 import dispatcher.TypeOfTower;
@@ -32,8 +31,7 @@ import engine.Element;
 
 public class UIRenderer {
 	
-	private JLabel winnerBackground;
-	private JLabel loserBackground;
+	private EndingMessage endingMessage;
 	
 	private JLabel radialMenuMovment;
 	private MultipleSprite radialMenuTower;
@@ -41,9 +39,6 @@ public class UIRenderer {
 	private Container container;
 	
 	private Menu menu;
-	
-	// The classes EndingMessage and FinalOptions were created to manage the ending screen and the 2 options it offers if the player Wins/Loses
-	private EndingMessage endingMessage;
 	
 	private int width;
 	private int height;
@@ -74,9 +69,6 @@ public class UIRenderer {
 	public UIRenderer(Container c, int width, int height){
 		super();
 		
-		this.winnerBackground = new JLabel();
-		this.loserBackground = new JLabel();
-		
 		this.radialMenuMovment = new JLabel();
 		this.radialMenuTower = new MultipleSprite(3);
 		
@@ -98,24 +90,7 @@ public class UIRenderer {
 		this.menu.init();
 		
 		// Initialize endingMessage
-		//this.endingMessage.init();
-		
-		//Load the winner background image
-		ImageIcon bgWinnerImage = new ImageIcon("./tex/youWin.png");
-		if(bgWinnerImage.getImageLoadStatus() != MediaTracker.COMPLETE){
-			throw new IOException();
-		}		
-		this.winnerBackground.setBounds(0, 0, this.width, this.height);
-		this.winnerBackground.setIcon(bgWinnerImage);
-		
-		//Load the loser background image
-		ImageIcon bgLoserImage = new ImageIcon("./tex/youLose.png");
-		if(bgLoserImage.getImageLoadStatus() != MediaTracker.COMPLETE){
-			throw new IOException();
-		}
-		this.loserBackground.setBounds(0, 0, this.width, this.height);
-		this.loserBackground.setIcon(bgLoserImage);
-				
+		this.endingMessage.init();
 		
 		//Load the radial menu image for unit choice
 		ImageIcon rmImage = new ImageIcon("./tex/radialmenu_movment.png");
@@ -238,16 +213,39 @@ public class UIRenderer {
 	/**
 	 * Display a "WINNER" message when the player wins
 	 */
-	public void displayWinner(){
-		this.container.add(this.winnerBackground, Layer.UI.id());
-		//this.container.add(this.endingMessage, Layer.UI.id());
+	public void displayWinner(int currentLvl){
+		if(currentLvl > 0){
+			if(currentLvl == 1){
+				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
+			}
+			else if(currentLvl > 1 && currentLvl < Level.idOfLastLevel){
+				this.endingMessage.addLvlSpritePrevious(this.menu.getLvlSprite(currentLvl-1));
+				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
+			}
+			else if(currentLvl == Level.idOfLastLevel){
+				this.endingMessage.addLvlSpritePrevious(this.menu.getLvlSprite(currentLvl-1));
+			}
+		}
+		this.container.add(this.endingMessage.getWinnerBackground(), Layer.UI.id());
 	}
 	
 	/**
 	 * Display a "LOSER" message when the player loses
 	 */
-	public void displayLoser(){
-		this.container.add(this.loserBackground, Layer.UI.id());
+	public void displayLoser(int currentLvl){
+		if(currentLvl > 0){
+			if(currentLvl == 1){
+				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
+			}
+			else if(currentLvl > 1 && currentLvl < Level.idOfLastLevel){
+				this.endingMessage.addLvlSpritePrevious(this.menu.getLvlSprite(currentLvl-1));
+				this.endingMessage.addLvlSpriteNext(this.menu.getLvlSprite(currentLvl+1));
+			}
+			else if(currentLvl == Level.idOfLastLevel){
+				this.endingMessage.addLvlSpritePrevious(this.menu.getLvlSprite(currentLvl-1));
+			}
+		}
+		this.container.add(this.endingMessage.getLoserBackground(), Layer.UI.id());
 	}
 	
 	/**
@@ -344,15 +342,39 @@ public class UIRenderer {
 	/**
 	 * Hide the winnerBackground
 	 */
-	public void hideWinnerBackground(){
-		this.container.remove(this.winnerBackground);
+	public void hideWinnerBackground(int currentLvl){
+		if(currentLvl > 0){
+			if(currentLvl == 1){
+				this.container.remove(this.endingMessage.getNextLvl());
+			}
+			else if(currentLvl > 1 && currentLvl < Level.idOfLastLevel){
+				this.container.remove(this.endingMessage.getPreviousLvl());
+				this.container.remove(this.endingMessage.getNextLvl());
+			}
+			else if(currentLvl == Level.idOfLastLevel){
+				this.container.remove(this.endingMessage.getPreviousLvl());
+			}
+		}
+		this.container.remove(this.endingMessage.getWinnerBackground());
 	}
 	
 	/**
 	 * Hide the loserBackground
 	 */
-	public void hideLoserBackground(){
-		this.container.remove(this.loserBackground);
+	public void hideLoserBackground(int currentLvl){
+		if(currentLvl > 0){
+			if(currentLvl == 1){
+				this.container.remove(this.endingMessage.getNextLvl());
+			}
+			else if(currentLvl > 1 && currentLvl < Level.idOfLastLevel){
+				this.container.remove(this.endingMessage.getPreviousLvl());
+				this.container.remove(this.endingMessage.getNextLvl());
+			}
+			else if(currentLvl == Level.idOfLastLevel){
+				this.container.remove(this.endingMessage.getPreviousLvl());
+			}
+		}
+		this.container.remove(this.endingMessage.getLoserBackground());
 	}
 	
 	/**
@@ -379,8 +401,8 @@ public class UIRenderer {
 	 * Hide the menu
 	 */
 	public void hideMenu(){
-		for(Sprite s:this.menu.getLvlSprites())
-			this.container.remove(s);
+		for(LvlSprite l:this.menu.getLvlSprites())
+			this.container.remove(l);
 		this.container.remove(this.menu);
 	}
 	

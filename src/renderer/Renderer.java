@@ -133,7 +133,7 @@ public class Renderer{
 		
 	}
 	
-	public void resetTheGame(String resultOfTheGame){
+	public void resetTheGame(Player theWinner){
 		mapRenderer.hideSprites();
 		mapRenderer.getSprites().clear();
 		uiRenderer.hidePlayerSprites();
@@ -148,10 +148,10 @@ public class Renderer{
 		TowerSprite.resetChosenTowerType();
 		TowerSprite.resetHighlightedTower();
 		
-		if(resultOfTheGame == "win")
-			uiRenderer.hideWinnerBackground();
+		if(theWinner.isPlayer())
+			uiRenderer.hideWinnerBackground(Dispatcher.getCurrentLevel());
 		else
-			uiRenderer.hideLoserBackground();
+			uiRenderer.hideLoserBackground(Dispatcher.getCurrentLevel());
 	}
 	
 	//MAPRENDERER INDIRECTIONS
@@ -211,15 +211,15 @@ public class Renderer{
 	/**
 	 * Display winner message
 	 */
-	public void displayWinner(){
-		this.uiRenderer.displayWinner();
+	public void displayWinner(int currentLevel){
+		this.uiRenderer.displayWinner(currentLevel);
 	}
 	
 	/**
 	 * Display loser message
 	 */
-	public void displayLoser(){
-		this.uiRenderer.displayLoser();
+	public void displayLoser(int currentLevel){
+		this.uiRenderer.displayLoser(currentLevel);
 	}
 
 	/**
