@@ -136,7 +136,7 @@ public class Unit extends Element {
 	
 	/**
 	 * Reduce the number of agents of a unit when attacked by a TowerAttack
-	 * @param reduceNbAgents
+	 * @param damage
 	 */
 	public void reduceNbAgents(double damage){		
 		if(this.modifiers.contains(UnitModifier.RESISTANT)){

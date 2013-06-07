@@ -74,7 +74,7 @@ public class UnitSprite extends Sprite{
 	
 	/**
 	 * Change the number of agents to display
-	 * @param nbAgents
+	 * @ param nbAgents
 	 */
 	//public void updateNbAgents(int nbAgents){
 		
