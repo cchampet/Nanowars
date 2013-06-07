@@ -45,7 +45,7 @@ public class Engine{
 	
 	/**
 	 * Add a unit to the list of units, contained by the Engine.
-	 * @param newBase 
+	 * @param newUnit 
 	 */
 	public void addUnit(Unit newUnit){
 		units.add(newUnit);
@@ -53,7 +53,7 @@ public class Engine{
 	
 	/**
 	 * Add a created tower to the list of towers, contained by the Engine.
-	 * @param newBase 
+	 * @param newTower 
 	 */
 	public void addTower(Tower newTower){
 		towers.add(newTower);

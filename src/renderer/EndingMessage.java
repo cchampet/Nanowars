@@ -56,7 +56,7 @@ public class EndingMessage extends JLabel {
 	
 	/**
 	 * Add a previous level button at the end of a game (you win or you loose).
-	 * @param previousLevel : the lvlSprite of the previous level.
+	 * @param previousLvl : the lvlSprite of the previous level.
 	 */
 	public int addLvlSpritePrevious(LvlSprite previousLvl){
 		previousLvl.changeTheNameOfTheLvlDisplay("<");
@@ -70,7 +70,7 @@ public class EndingMessage extends JLabel {
 	
 	/**
 	 * Add a current level button at the end of a game (you win or you loose).
-	 * @param currentLevel : the lvlSprite of the current level.
+	 * @param currentLvl : the lvlSprite of the current level.
 	 */
 	public int addLvlSpriteCurrent(LvlSprite currentLvl){
 		currentLvl.changeTheNameOfTheLvlDisplay("retry");

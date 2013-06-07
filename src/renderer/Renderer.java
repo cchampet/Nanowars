@@ -257,7 +257,7 @@ public class Renderer{
 	
 	/**
 	 * Add the Player Sprite to the Sprite Collection of the uiRenderer
-	 * @param newPlayer : the player engine, corresponding to the next created sprite.
+	 * @param newPlayers : the player engine, corresponding to the next created sprite.
 	 */
 	public void addPlayerSprites(HashMap<String, Player> newPlayers) {
 		this.uiRenderer.addPlayerSprites(newPlayers);
