@@ -48,7 +48,6 @@ public class Dispatcher {
 	 * 
 	 * 	- blue [200], red [200], green [200] => a tower
 	 * 
-	 * 	- blue [255], red [255], green [255] => the gold base
 	 * 
 	 * @param filepath path of the datamap grey-scale image
 	 * @throws IOException
