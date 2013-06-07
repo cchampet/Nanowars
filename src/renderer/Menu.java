@@ -102,7 +102,7 @@ public class Menu extends JLabel {
 	
 	/**
 	 * This function returns the level selected in the menu, or null if the user doesn't make a choice yet.
-	 * @return
+	 * @return lvl;
 	 */
 	public LvlSprite getLvlSelected() {
 		for(LvlSprite lvl:this.lvlSprites){
