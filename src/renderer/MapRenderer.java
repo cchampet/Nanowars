@@ -217,7 +217,7 @@ public class MapRenderer implements MouseListener{
 	
 	/**
 	 * Add a unit to the Sprite collection in the renderer.
-	 * @param newUnit the unit engine, corresponding to the next created sprite.
+	 * @param newProjectile the unit engine, corresponding to the next created sprite.
 	 * @param type the type of tower which have created the projectile
 	 */
 	public int addProjectileSprite(Projectile newProjectile, TypeOfTower type){
@@ -247,9 +247,9 @@ public class MapRenderer implements MouseListener{
 	}
 	
 	/**
-	 * Update the TowerSprite of a newly spacialized Tower in the Sprite Array
+	 * Update the TowerSprite of a newly specialized Tower in the Sprite Array
 	 * @param newTower The new specialized Tower
-	 * @param oldId ID of the old non-specialized Tower
+	 * @param oldID ID of the old non-specialized Tower
 	 */
 	public void updateTowerSprite(Tower newTower, int oldID, TypeOfTower chosenType){
 		for(Sprite s:this.sprites){

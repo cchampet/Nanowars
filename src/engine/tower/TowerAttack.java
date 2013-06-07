@@ -83,7 +83,7 @@ public abstract class TowerAttack extends Tower {
 	/**
 	 * Abstract function to apply an effect on the targeted unit. This function is call when a tower's projectile hit its target.
 	 * The applied effect is implemented in daughter classes.
-	 * @param targetedUnit Unit on which apply a special effect.
+	 * @param aimedUnit Unit on which apply a special effect.
 	 */
 	public void applyEffect(Unit aimedUnit){
 	}
