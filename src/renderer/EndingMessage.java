@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import playable.TypeOfPlayer;
 import renderer.sprite.LvlSprite;
 
-// This is a vain attempt to store the elements necessary to trigger an option in the option defined in FinalOption.java.
 
 @SuppressWarnings("serial")
 public class EndingMessage extends JLabel {

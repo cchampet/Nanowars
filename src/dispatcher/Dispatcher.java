@@ -48,7 +48,6 @@ public class Dispatcher {
 	 * 
 	 * 	- blue [200], red [200], green [200] => a tower
 	 * 
-	 * 	- blue [255], red [255], green [255] => the gold base
 	 * 
 	 * @param filepath path of the datamap grey-scale image
 	 * @throws IOException
@@ -207,7 +206,7 @@ public class Dispatcher {
 				if(TowerSprite.isThereOneTowerToBuild()){
 					if(Renderer.isTowerTypeChosen()){
 						Tower specTower = Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
-						Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId());
+						Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId(), TowerSprite.getChosenTowerType());
 						TowerSprite.resetTowerToBuild();
 					}
 				}

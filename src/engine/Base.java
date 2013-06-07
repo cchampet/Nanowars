@@ -6,6 +6,7 @@ import playable.Player;
 import playable.TypeOfPlayer;
 import renderer.TowerSprite;
 import dispatcher.Dispatcher;
+import dispatcher.TypeOfTower;
 import engine.tower.Tower;
 
 /**
@@ -91,7 +92,7 @@ public class Base extends Element {
 				}
 				//build a new basic tower instead
 				Tower basicTower = Dispatcher.getEngine().unspecializeTower(t);
-				Dispatcher.getRenderer().updateTowerSprite(basicTower, t.getId());
+				Dispatcher.getRenderer().updateTowerSprite(basicTower, t.getId(), TypeOfTower.NONE);
 			}
 		}
 	}

@@ -251,13 +251,13 @@ public class MapRenderer implements MouseListener{
 	 * @param newTower The new specialized Tower
 	 * @param oldId ID of the old non-specialized Tower
 	 */
-	public void updateTowerSprite(Tower newTower, int oldID){
+	public void updateTowerSprite(Tower newTower, int oldID, TypeOfTower chosenType){
 		for(Sprite s:this.sprites){
 			if(s.getId() == oldID){
 				TowerSprite towerToChange = (TowerSprite) s;
 				towerToChange.setId(newTower.getId());
 				towerToChange.setEngineTower(newTower);
-				towerToChange.updateSubSprite(TowerSprite.getChosenTowerType());
+				towerToChange.updateSubSprite(chosenType);
 				break;
 			}
 		}

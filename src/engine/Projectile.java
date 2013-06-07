@@ -10,7 +10,7 @@ public class Projectile {
 	private Unit aimedUnit;
 	private boolean hasTouchedFlag=false;
 	private Point2D.Float direction;
-	private int moveSpeed = 5;
+	private int moveSpeed = 8;
 	
 	public Projectile(Point2D.Float position){
 		this.position = position;
