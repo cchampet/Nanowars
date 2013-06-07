@@ -91,6 +91,7 @@ public class MapRenderer implements MouseListener{
 				}
 				//draw the selection rectangle 
 				if(MapRenderer.mouseDown == true){
+					g.setColor(Color.WHITE);
 					Point mousePosition = MouseInfo.getPointerInfo().getLocation();
 					SwingUtilities.convertPointFromScreen(mousePosition, this);
 					g.drawRect(

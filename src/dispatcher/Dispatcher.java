@@ -244,6 +244,8 @@ public class Dispatcher {
 			///////reset the game////////
 			/////////////////////////////
 			Dispatcher.resetTheGame();
+			if (Renderer.getLvlSelected() != null)
+				Dispatcher.currentLevel = Renderer.getLvlSelected().getNumLvl();
 			Renderer.setBackgroundImage();
 		}
 	}

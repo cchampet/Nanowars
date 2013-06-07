@@ -71,7 +71,6 @@ public class Renderer{
 					SelectedSprite.resetEndingElement();
 					TowerSprite.resetTowerToBuild();
 					Dispatcher.getRenderer().hideRadialMenus();
-					
 				}
 			}
 
