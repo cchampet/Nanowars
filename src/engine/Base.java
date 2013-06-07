@@ -80,7 +80,8 @@ public class Base extends Element {
 			//if the tower is not  built
 			if(t.getLevel() == 0){
 				t.destroyTower();
-			}else{
+			}
+			else{
 				//forbidden tower construction
 				if(TowerSprite.getTowerToBuild() != null){
 					if(t.equals(TowerSprite.getTowerToBuild().getEngineTower())){
@@ -88,7 +89,6 @@ public class Base extends Element {
 						Dispatcher.getRenderer().hideRadialMenus();
 					}
 				}
-				
 				//build a new basic tower instead
 				Tower basicTower = Dispatcher.getEngine().unspecializeTower(t);
 				Dispatcher.getRenderer().updateTowerSprite(basicTower, t.getId());

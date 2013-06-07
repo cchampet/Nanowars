@@ -83,7 +83,8 @@ public class Tower extends Element {
 				this.nbAgents -= agentsExcess;
 				return agentsExcess;
 			}
-		}else{
+		}
+		else{
 			//Leveling step
 			while(this.nbAgents > (this.level+1)*Tower.STEP_FOR_NEXT_LVL && this.level < Tower.MAX_LVL){
 				levelUp();

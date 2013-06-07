@@ -73,7 +73,6 @@ public class Unit extends Element {
 		//Slow modifier
 		if(this.modifiers.contains(UnitModifier.SLOWED)){
 			coefSpeed *= 0.5f;
-			System.out.println(true);
 		}
 		
 		this.position.setLocation(this.position.x + (this.direction.x * this.moveSpeed * coefSpeed), 
