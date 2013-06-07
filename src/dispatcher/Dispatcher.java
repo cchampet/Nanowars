@@ -206,7 +206,7 @@ public class Dispatcher {
 				if(TowerSprite.isThereOneTowerToBuild()){
 					if(Renderer.isTowerTypeChosen()){
 						Tower specTower = Engine.specializeTower(TowerSprite.getChosenTowerType(), TowerSprite.getTowerToBuild().getEngineTower());
-						Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId());
+						Renderer.updateTowerSprite(specTower, TowerSprite.getTowerToBuild().getEngineTower().getId(), TowerSprite.getChosenTowerType());
 						TowerSprite.resetTowerToBuild();
 					}
 				}

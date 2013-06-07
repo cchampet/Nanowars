@@ -202,8 +202,8 @@ public class Renderer{
 	 * @param newTower The new specialized Tower
 	 * @param oldID id of the old non-specialize tower
 	 */
-	public void updateTowerSprite(Tower newTower, int oldID){
-		this.mapRenderer.updateTowerSprite(newTower, oldID);
+	public void updateTowerSprite(Tower newTower, int oldID, TypeOfTower chosenType){
+		this.mapRenderer.updateTowerSprite(newTower, oldID, chosenType);
 	}
 	
 	/**
