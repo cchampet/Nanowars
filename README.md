@@ -1,3 +1,6 @@
+NanoWars
+==========
+
 Student project - realized in 2013 at IMAC, a school of engineering in computer science.
 
 Contributors : 
